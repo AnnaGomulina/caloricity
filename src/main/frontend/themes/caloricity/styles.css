@@ -1,0 +1,8 @@
+/*
+   CSS styling examples for the Vaadin app.
+
+   Visit https://vaadin.com/docs/styling/application-theme/ for more information.
+*/
+
+@import url('./main-layout.css');
+@import url('./views/gridwith-filters-view.css');
