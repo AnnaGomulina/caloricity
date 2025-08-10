@@ -17,6 +17,5 @@ public class IngredientGrid extends Grid<Ingredient> {
         addColumn(Ingredient::getCarbohydrates).setAutoWidth(true).setHeader("Масса углеводов, г").setTextAlign(ColumnTextAlign.CENTER);
         addThemeVariants(GridVariant.LUMO_NO_BORDER);
         addClassNames(LumoUtility.Border.TOP, LumoUtility.BorderColor.CONTRAST_10);
-        setPageSize(20);
     }
 }

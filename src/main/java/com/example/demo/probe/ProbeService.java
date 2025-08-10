@@ -20,11 +20,15 @@ public class ProbeService {
         return repository.findById(id);
     }
 
-    public Page<Probe> findAll(Pageable springPageRequest, Specification<Probe> filters) {
+    public Page<Probe> list(Pageable springPageRequest, Specification<Probe> filters) {
         return repository.findAll(filters, springPageRequest);
     }
 
-    public void deleteById(UUID id) {
-        repository.deleteById(id);
+    public void save(Probe probe) {
+        repository.save(probe);
+    }
+
+    public void delete(Probe probe) {
+        repository.delete(probe);
     }
 }

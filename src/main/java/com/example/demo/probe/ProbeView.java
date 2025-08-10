@@ -1,4 +1,4 @@
-package com.example.demo.ingredient;
+package com.example.demo.probe;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -13,23 +13,20 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
-@PageTitle("Ингредиенты")
-@Route("ingredients")
-@Menu(order = 1, icon = LineAwesomeIconUrl.CARROT_SOLID)
-public class IngredientView extends Div {
+@PageTitle("Пробы")
+@Route("probes")
+@Menu(order = 2, icon = LineAwesomeIconUrl.FLASK_SOLID)
+public class ProbeView extends Div {
 
-    public IngredientView(IngredientService ingredientService) {
-        IngredientGrid grid = new IngredientGrid();
-        IngredientNameFilter filter = new IngredientNameFilter();
+    public ProbeView(ProbeService service) {
+        ProbeGrid grid = new ProbeGrid();
+        ProbeCodeFilter filter = new ProbeCodeFilter();
         setSizeFull();
 
-        Button addButton = new Button("Добавить ингредиент", event -> {
-            new IngredientDialog(ingredient -> {
-                var saved = ingredientService.save(ingredient);
-                grid.getDataProvider().refreshAll();
-                grid.select(saved);
-            }).open();
-        });
+        Button addButton = new Button("Добавить пробу");
+        addButton.addClickListener(e ->
+            getUI().ifPresent(ui -> ui.navigate(ProbeCreateView.class))
+        );
         addButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         Button searchBtn = new Button("Поиск");
@@ -39,7 +36,12 @@ public class IngredientView extends Div {
 
         HorizontalLayout actions = new HorizontalLayout(filter, searchBtn, addButton);
         actions.setAlignItems(FlexComponent.Alignment.BASELINE);
-        grid.setItems(query -> ingredientService.list(VaadinSpringDataHelpers.toSpringPageRequest(query), filter).stream());
+        grid.setItems(query -> service.list(VaadinSpringDataHelpers.toSpringPageRequest(query), filter).stream());
+
+        grid.setDeleteHandler(probe -> {
+            service.delete(probe);
+            grid.getDataProvider().refreshAll();
+        });
 
         VerticalLayout layout = new VerticalLayout(actions, grid);
         layout.setSizeFull();
