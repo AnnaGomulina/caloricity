@@ -15,24 +15,6 @@ public class ProteinsResearchForm extends FormLayout {
     public ProteinsResearchForm() {
         binder = new Binder<>(ProteinsResearch.class);
 
-        NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
-        titrantVolumeFirstField.setSuffixComponent(new Span("г/см³"));
-        binder.forField(titrantVolumeFirstField)
-            .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(ProteinsResearch::getTitrantVolumeParallelFirst, ProteinsResearch::setTitrantVolumeParallelFirst);
-        add(titrantVolumeFirstField);
-
-        NumberField titrantVolumeSecondField = new NumberField("Объём титранта 2 параллель");
-        titrantVolumeSecondField.setSuffixComponent(new Span("г/см³"));
-        binder.forField(titrantVolumeSecondField)
-            .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(ProteinsResearch::getTitrantVolumeParallelSecond, ProteinsResearch::setTitrantVolumeParallelSecond);
-        add(titrantVolumeSecondField);
-
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
         massNaveskiFirstField.setSuffixComponent(new Span("г"));
         binder.forField(massNaveskiFirstField)
@@ -50,6 +32,24 @@ public class ProteinsResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getMassNaveskiParallelSecond, ProteinsResearch::setMassNaveskiParallelSecond);
         add(massNaveskiSecondField);
+
+        NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
+        titrantVolumeFirstField.setSuffixComponent(new Span("г/см³"));
+        binder.forField(titrantVolumeFirstField)
+            .asRequired("Обязательное поле")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0., Double.MAX_VALUE))
+            .bind(ProteinsResearch::getTitrantVolumeParallelFirst, ProteinsResearch::setTitrantVolumeParallelFirst);
+        add(titrantVolumeFirstField);
+
+        NumberField titrantVolumeSecondField = new NumberField("Объём титранта 2 параллель");
+        titrantVolumeSecondField.setSuffixComponent(new Span("г/см³"));
+        binder.forField(titrantVolumeSecondField)
+            .asRequired("Обязательное поле")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0., Double.MAX_VALUE))
+            .bind(ProteinsResearch::getTitrantVolumeParallelSecond, ProteinsResearch::setTitrantVolumeParallelSecond);
+        add(titrantVolumeSecondField);
 
         NumberField controlVolumeField = new NumberField("Объём контроля");
         controlVolumeField.setSuffixComponent(new Span("г/см³"));

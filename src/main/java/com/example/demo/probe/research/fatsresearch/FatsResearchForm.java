@@ -13,9 +13,10 @@ public class FatsResearchForm extends FormLayout {
     private final Binder<FatsResearch> binder;
 
     public FatsResearchForm() {
+        setAutoResponsive(true);
         binder = new Binder<>(FatsResearch.class);
 
-        NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции первая параллель");
+        NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции 1 параллель");
         patronBeforeFirstField.setSuffixComponent(new Span("г"));
         binder.forField(patronBeforeFirstField)
             .asRequired("Обязательное поле")
@@ -23,9 +24,8 @@ public class FatsResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(FatsResearch::getPatronMassBeforeExtractionParallelFirst,
                 FatsResearch::setPatronMassBeforeExtractionParallelFirst);
-        add(patronBeforeFirstField);
 
-        NumberField patronBeforeSecondField = new NumberField("Масса патрона до экстракции вторая параллель");
+        NumberField patronBeforeSecondField = new NumberField("Масса патрона до экстракции 2 параллель");
         patronBeforeSecondField.setSuffixComponent(new Span("г"));
         binder.forField(patronBeforeSecondField)
             .asRequired("Обязательное поле")
@@ -33,9 +33,10 @@ public class FatsResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(FatsResearch::getPatronMassBeforeExtractionParallelSecond,
                 FatsResearch::setPatronMassBeforeExtractionParallelSecond);
-        add(patronBeforeSecondField);
 
-        NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции первая параллель");
+        addFormRow(patronBeforeFirstField, patronBeforeSecondField);
+
+        NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции 1 параллель");
         patronAfterFirstField.setSuffixComponent(new Span("г"));
         binder.forField(patronAfterFirstField)
             .asRequired("Обязательное поле")
@@ -45,9 +46,8 @@ public class FatsResearchForm extends FormLayout {
                 "Должно быть меньше массы до экстракции")
             .bind(FatsResearch::getPatronMassAfterExtractionParallelFirst,
                 FatsResearch::setPatronMassAfterExtractionParallelFirst);
-        add(patronAfterFirstField);
 
-        NumberField patronAfterSecondField = new NumberField("Масса патрона после экстракции вторая параллель");
+        NumberField patronAfterSecondField = new NumberField("Масса патрона после экстракции 2 параллель");
         patronAfterSecondField.setSuffixComponent(new Span("г"));
         binder.forField(patronAfterSecondField)
             .asRequired("Обязательное поле")
@@ -57,7 +57,8 @@ public class FatsResearchForm extends FormLayout {
                 "Должно быть меньше массы до экстракции")
             .bind(FatsResearch::getPatronMassAfterExtractionParallelSecond,
                 FatsResearch::setPatronMassAfterExtractionParallelSecond);
-        add(patronAfterSecondField);
+
+        addFormRow(patronAfterFirstField, patronAfterSecondField);
     }
 
     public void setFormDataObject(FatsResearch fatsResearch) {

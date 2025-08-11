@@ -15,24 +15,6 @@ public class DrySubstancesResearchForm extends FormLayout {
     public DrySubstancesResearchForm() {
         binder = new Binder<>(DrySubstancesResearch.class);
 
-        NumberField byuksaFirstField = new NumberField("Масса бюксы 1 параллель");
-        byuksaFirstField.setSuffixComponent(new Span("г"));
-        binder.forField(byuksaFirstField)
-            .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(DrySubstancesResearch::getByuksaParallelFirst, DrySubstancesResearch::setByuksaParallelFirst);
-        add(byuksaFirstField);
-
-        NumberField byuksaSecondField = new NumberField("Масса бюксы 2 параллель");
-        byuksaSecondField.setSuffixComponent(new Span("г"));
-        binder.forField(byuksaSecondField)
-            .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(DrySubstancesResearch::getByuksaParallelSecond, DrySubstancesResearch::setByuksaParallelSecond);
-        add(byuksaSecondField);
-
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
         massNaveskiFirstField.setSuffixComponent(new Span("г"));
         binder.forField(massNaveskiFirstField)
@@ -50,6 +32,24 @@ public class DrySubstancesResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getMassNaveskiParallelSecond, DrySubstancesResearch::setMassNaveskiParallelSecond);
         add(massNaveskiSecondField);
+
+        NumberField byuksaFirstField = new NumberField("Масса бюксы 1 параллель");
+        byuksaFirstField.setSuffixComponent(new Span("г"));
+        binder.forField(byuksaFirstField)
+            .asRequired("Обязательное поле")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0., Double.MAX_VALUE))
+            .bind(DrySubstancesResearch::getByuksaParallelFirst, DrySubstancesResearch::setByuksaParallelFirst);
+        add(byuksaFirstField);
+
+        NumberField byuksaSecondField = new NumberField("Масса бюксы 2 параллель");
+        byuksaSecondField.setSuffixComponent(new Span("г"));
+        binder.forField(byuksaSecondField)
+            .asRequired("Обязательное поле")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0., Double.MAX_VALUE))
+            .bind(DrySubstancesResearch::getByuksaParallelSecond, DrySubstancesResearch::setByuksaParallelSecond);
+        add(byuksaSecondField);
 
         NumberField afterDryingFirstField = new NumberField("Масса после высушивания 1 параллель");
         afterDryingFirstField.setSuffixComponent(new Span("г"));
