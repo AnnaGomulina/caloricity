@@ -3,6 +3,7 @@ package com.example.demo.probe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
@@ -45,6 +46,16 @@ public class ProbeGrid extends Grid<Probe> {
             .setHeader("Тип пробы")
             .setTextAlign(ColumnTextAlign.CENTER)
             .setRenderer(new ComponentRenderer<>(probe -> new ProbeTypeChip(probe.getType())));
+
+        addColumn(Probe::getIsReady)
+            .setAutoWidth(true)
+            .setHeader("Готовность пробы")
+            .setTextAlign(ColumnTextAlign.CENTER)
+            .setRenderer(new ComponentRenderer<>(probe -> {
+                Checkbox checkbox = new Checkbox(probe.getIsReady());
+                checkbox.setReadOnly(true);
+                return checkbox;
+            }));
 
         addColumn(new ComponentRenderer<>(this::createActionButtons))
             .setHeader("Действия")

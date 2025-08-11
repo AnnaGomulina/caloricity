@@ -15,26 +15,6 @@ public class FatsResearchForm extends FormLayout {
     public FatsResearchForm() {
         binder = new Binder<>(FatsResearch.class);
 
-        NumberField massNaveskiFirstField = new NumberField("Масса навески первая параллель");
-        massNaveskiFirstField.setSuffixComponent(new Span("г"));
-        binder.forField(massNaveskiFirstField)
-            .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(FatsResearch::getMassNaveskiParallelFirst,
-                FatsResearch::setMassNaveskiParallelFirst);
-        add(massNaveskiFirstField);
-
-        NumberField massNaveskiSecondField = new NumberField("Масса навески вторая параллель");
-        massNaveskiSecondField.setSuffixComponent(new Span("г"));
-        binder.forField(massNaveskiSecondField)
-            .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(FatsResearch::getMassNaveskiParallelSecond,
-                FatsResearch::setMassNaveskiParallelSecond);
-        add(massNaveskiSecondField);
-
         NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции первая параллель");
         patronBeforeFirstField.setSuffixComponent(new Span("г"));
         binder.forField(patronBeforeFirstField)

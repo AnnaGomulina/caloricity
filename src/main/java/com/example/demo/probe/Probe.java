@@ -58,6 +58,10 @@ public class Probe extends BaseEntity {
     @NotNull
     private Double bankaWithProbeMass;
 
+    @Comment("Готовность пробы")
+    @NotNull
+    private Boolean isReady = false;
+
 //    @OneToMany(mappedBy = "probeId")
 //    @ToString.Exclude
 //    private Set<ProbeIngredient> probeIngredients;

@@ -1,8 +1,6 @@
 package com.example.demo.probe.research.fatsresearch;
 
 import com.example.demo.common.BaseEntity;
-import com.example.demo.common.utils.Average;
-import com.example.demo.probe.CaloricityCoefficient;
 import com.example.demo.probe.Probe;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -45,14 +43,6 @@ public class FatsResearch extends BaseEntity {
     @NotNull
     private Double patronMassAfterExtractionParallelSecond;
 
-    @Comment("Масса навески первая параллель, г")
-    @NotNull
-    private Double massNaveskiParallelFirst;
-
-    @Comment("Масса навески вторая параллель, г")
-    @NotNull
-    private Double massNaveskiParallelSecond;
-
     @OneToOne(mappedBy = "fatsResearch")
     private Probe probe;
 
@@ -64,24 +54,24 @@ public class FatsResearch extends BaseEntity {
         return patronMassBeforeExtractionParallelSecond - patronMassAfterExtractionParallelSecond;
     }
 
-    public Double getMassForOneGramParallelFirst() {
-        return getMassParallelFirst() / massNaveskiParallelFirst;
-    }
+//    public Double getMassForOneGramParallelFirst() {
+//        return getMassParallelFirst() / massNaveskiParallelFirst;
+//    }
+//
+//    public Double getMassForOneGramParallelSecond() {
+//        return getMassParallelSecond() / massNaveskiParallelSecond;
+//    }
+//
+//    /**
+//     * @return Количество жира в одном грамме пробы
+//     */
+//    public Double getMassForOneGramAverage() {
+//        return new Average(getMassForOneGramParallelFirst(), getMassForOneGramParallelSecond()).calc();
+//    }
 
-    public Double getMassForOneGramParallelSecond() {
-        return getMassParallelSecond() / massNaveskiParallelSecond;
-    }
-
-    /**
-     * @return Количество жира в одном грамме пробы
-     */
-    public Double getMassForOneGramAverage() {
-        return new Average(getMassForOneGramParallelFirst(), getMassForOneGramParallelSecond()).calc();
-    }
-
-    public Double getFactCaloricityForOneGram() {
-        return getMassForOneGramAverage() * CaloricityCoefficient.FATS;
-    }
+//    public Double getFactCaloricityForOneGram() {
+//        return getMassForOneGramAverage() * CaloricityCoefficient.FATS;
+//    }
 
     @Override
     public final boolean equals(Object o) {
