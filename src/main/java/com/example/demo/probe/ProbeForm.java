@@ -1,5 +1,6 @@
 package com.example.demo.probe;
 
+import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.select.Select;
@@ -11,12 +12,13 @@ import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ProbeForm extends FormLayout {
     private Probe formDataObject;
     private final Binder<Probe> binder;
 
-    public ProbeForm(boolean isEdit) {
+    public ProbeForm(boolean isEdit, Consumer<AbstractField.ComponentValueChangeEvent<Select<ProbeType>, ProbeType>> probeTypeValueChangeListener) {
         binder = new Binder<>(Probe.class);
 
         // Поле наименования
@@ -41,6 +43,7 @@ public class ProbeForm extends FormLayout {
         Select<ProbeType> typeSelect = new Select<>();
         typeSelect.setLabel("Тип пробы");
         typeSelect.setReadOnly(isEdit);
+        typeSelect.addValueChangeListener(probeTypeValueChangeListener::accept);
         typeSelect.setItems(ProbeType.values());
         typeSelect.setRenderer(new ComponentRenderer<>(ProbeTypeChip::new));
         binder.forField(typeSelect)
@@ -85,8 +88,7 @@ public class ProbeForm extends FormLayout {
     }
 
     public Optional<Probe> getFormDataObject() {
-        return binder.writeBeanIfValid(formDataObject)
-            ? Optional.of(formDataObject)
-            : Optional.empty();
+        return Optional.ofNullable(formDataObject)
+            .filter(binder::writeBeanIfValid);
     }
 }

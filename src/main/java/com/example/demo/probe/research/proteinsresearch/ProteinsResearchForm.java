@@ -75,8 +75,7 @@ public class ProteinsResearchForm extends FormLayout {
     }
 
     public Optional<ProteinsResearch> getFormDataObject() {
-        return binder.writeBeanIfValid(formDataObject)
-            ? Optional.of(formDataObject)
-            : Optional.empty();
+        return Optional.ofNullable(formDataObject)
+            .filter(binder::writeBeanIfValid);
     }
 }

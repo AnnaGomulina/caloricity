@@ -86,8 +86,7 @@ public class FatsResearchForm extends FormLayout {
     }
 
     public Optional<FatsResearch> getFormDataObject() {
-        return binder.writeBeanIfValid(formDataObject)
-            ? Optional.of(formDataObject)
-            : Optional.empty();
+        return Optional.ofNullable(formDataObject)
+            .filter(binder::writeBeanIfValid);
     }
 }

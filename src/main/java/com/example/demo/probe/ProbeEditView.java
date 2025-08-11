@@ -34,8 +34,6 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
     public ProbeEditView(ProbeService service) {
         this.service = service;
 
-        probeForm = new ProbeForm(true);
-
         Card drySubstancesResearchCard = new Card();
         drySubstancesResearchForm = new DrySubstancesResearchForm();
         drySubstancesResearchCard.setTitle("Исследование на сухие остатки");
@@ -57,7 +55,16 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         Button cancelButton = new Button("Отмена", event -> getUI().ifPresent(e -> e.navigate(ProbeView.class)));
         HorizontalLayout actions = new HorizontalLayout(cancelButton, saveButton);
 
-        add(probeForm, new HorizontalLayout(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard), actions);
+        HorizontalLayout researches = new HorizontalLayout(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
+
+        probeForm = new ProbeForm(true, e -> {
+            switch (e.getValue())  {
+                case FIRST, SECOND -> researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
+                case THIRD -> researches.add(drySubstancesResearchCard, fatsResearchCard);
+            }
+        });
+
+        add(probeForm, researches, actions);
     }
 
     @Override

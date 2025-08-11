@@ -29,9 +29,6 @@ public class ProbeCreateView extends VerticalLayout {
     public ProbeCreateView(ProbeService service) {
         this.service = service;
 
-        probeForm = new ProbeForm(false);
-        probeForm.setFormDataObject(new Probe());
-
         Card drySubstancesResearchCard = new Card();
         drySubstancesResearchForm = new DrySubstancesResearchForm();
         drySubstancesResearchForm.setFormDataObject(new DrySubstancesResearch());
@@ -56,7 +53,25 @@ public class ProbeCreateView extends VerticalLayout {
         Button cancelButton = new Button("Отмена", event -> getUI().ifPresent(e -> e.navigate(ProbeView.class)));
         HorizontalLayout actions = new HorizontalLayout(cancelButton, saveButton);
 
-        add(probeForm, new HorizontalLayout(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard), actions);
+        HorizontalLayout researches = new HorizontalLayout();
+
+        probeForm = new ProbeForm(false, e -> {
+            switch (e.getValue())  {
+                case FIRST, SECOND -> {
+                    researches.removeAll();
+                    proteinsResearchForm.setFormDataObject(new ProteinsResearch());
+                    researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
+                }
+                case THIRD -> {
+                    researches.removeAll();
+                    proteinsResearchForm.setFormDataObject(null);
+                    researches.add(drySubstancesResearchCard, fatsResearchCard);
+                }
+            }
+        });
+        probeForm.setFormDataObject(new Probe());
+
+        add(probeForm, researches, actions);
     }
 
     private void save(ClickEvent<Button> event) {
