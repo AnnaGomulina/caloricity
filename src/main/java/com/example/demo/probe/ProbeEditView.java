@@ -55,10 +55,13 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         Button cancelButton = new Button("Отмена", event -> getUI().ifPresent(e -> e.navigate(ProbeView.class)));
         HorizontalLayout actions = new HorizontalLayout(cancelButton, saveButton);
 
-        HorizontalLayout researches = new HorizontalLayout(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
+        HorizontalLayout researches = new HorizontalLayout();
+        researches.setSizeFull();
+        researches.setWrap(true);
+        setFlexGrow(1, drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
 
         probeForm = new ProbeForm(true, e -> {
-            switch (e.getValue())  {
+            switch (e.getValue()) {
                 case FIRST, SECOND -> researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
                 case THIRD -> researches.add(drySubstancesResearchCard, fatsResearchCard);
             }

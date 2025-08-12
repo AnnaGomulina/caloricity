@@ -14,6 +14,8 @@ public class FatsResearchForm extends FormLayout {
 
     public FatsResearchForm() {
         setAutoResponsive(true);
+        setExpandFields(true);
+        setExpandColumns(true);
         binder = new Binder<>(FatsResearch.class);
 
         NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции 1 параллель");

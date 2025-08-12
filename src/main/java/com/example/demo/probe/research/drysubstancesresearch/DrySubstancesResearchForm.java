@@ -13,6 +13,9 @@ public class DrySubstancesResearchForm extends FormLayout {
     private final Binder<DrySubstancesResearch> binder;
 
     public DrySubstancesResearchForm() {
+        setAutoResponsive(true);
+        setExpandFields(true);
+        setExpandColumns(true);
         binder = new Binder<>(DrySubstancesResearch.class);
 
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
@@ -22,7 +25,6 @@ public class DrySubstancesResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getMassNaveskiParallelFirst, DrySubstancesResearch::setMassNaveskiParallelFirst);
-        add(massNaveskiFirstField);
 
         NumberField massNaveskiSecondField = new NumberField("Масса навески 2 параллель");
         massNaveskiSecondField.setSuffixComponent(new Span("г"));
@@ -31,7 +33,8 @@ public class DrySubstancesResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getMassNaveskiParallelSecond, DrySubstancesResearch::setMassNaveskiParallelSecond);
-        add(massNaveskiSecondField);
+
+        addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField byuksaFirstField = new NumberField("Масса бюксы 1 параллель");
         byuksaFirstField.setSuffixComponent(new Span("г"));
@@ -40,7 +43,6 @@ public class DrySubstancesResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getByuksaParallelFirst, DrySubstancesResearch::setByuksaParallelFirst);
-        add(byuksaFirstField);
 
         NumberField byuksaSecondField = new NumberField("Масса бюксы 2 параллель");
         byuksaSecondField.setSuffixComponent(new Span("г"));
@@ -49,7 +51,8 @@ public class DrySubstancesResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getByuksaParallelSecond, DrySubstancesResearch::setByuksaParallelSecond);
-        add(byuksaSecondField);
+
+        addFormRow(byuksaFirstField, byuksaSecondField);
 
         NumberField afterDryingFirstField = new NumberField("Масса после высушивания 1 параллель");
         afterDryingFirstField.setSuffixComponent(new Span("г"));
@@ -58,7 +61,6 @@ public class DrySubstancesResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getByuksaAfterDryingParallelFirst, DrySubstancesResearch::setByuksaAfterDryingParallelFirst);
-        add(afterDryingFirstField);
 
         NumberField afterDryingSecondField = new NumberField("Масса после высушивания 2 параллель");
         afterDryingSecondField.setSuffixComponent(new Span("г"));
@@ -67,7 +69,8 @@ public class DrySubstancesResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getByuksaAfterDryingParallelSecond, DrySubstancesResearch::setByuksaAfterDryingParallelSecond);
-        add(afterDryingSecondField);
+
+        addFormRow(afterDryingFirstField, afterDryingSecondField);
     }
 
     public void setFormDataObject(DrySubstancesResearch research) {

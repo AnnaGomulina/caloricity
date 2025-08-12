@@ -13,6 +13,9 @@ public class ProteinsResearchForm extends FormLayout {
     private final Binder<ProteinsResearch> binder;
 
     public ProteinsResearchForm() {
+        setAutoResponsive(true);
+        setExpandFields(true);
+        setExpandColumns(true);
         binder = new Binder<>(ProteinsResearch.class);
 
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
@@ -22,7 +25,6 @@ public class ProteinsResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getMassNaveskiParallelFirst, ProteinsResearch::setMassNaveskiParallelFirst);
-        add(massNaveskiFirstField);
 
         NumberField massNaveskiSecondField = new NumberField("Масса навески 2 параллель");
         massNaveskiSecondField.setSuffixComponent(new Span("г"));
@@ -31,7 +33,8 @@ public class ProteinsResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getMassNaveskiParallelSecond, ProteinsResearch::setMassNaveskiParallelSecond);
-        add(massNaveskiSecondField);
+
+        addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
         titrantVolumeFirstField.setSuffixComponent(new Span("г/см³"));
@@ -40,7 +43,6 @@ public class ProteinsResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getTitrantVolumeParallelFirst, ProteinsResearch::setTitrantVolumeParallelFirst);
-        add(titrantVolumeFirstField);
 
         NumberField titrantVolumeSecondField = new NumberField("Объём титранта 2 параллель");
         titrantVolumeSecondField.setSuffixComponent(new Span("г/см³"));
@@ -49,7 +51,8 @@ public class ProteinsResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getTitrantVolumeParallelSecond, ProteinsResearch::setTitrantVolumeParallelSecond);
-        add(titrantVolumeSecondField);
+
+        addFormRow(titrantVolumeFirstField, titrantVolumeSecondField);
 
         NumberField controlVolumeField = new NumberField("Объём контроля");
         controlVolumeField.setSuffixComponent(new Span("г/см³"));
@@ -58,7 +61,6 @@ public class ProteinsResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getControlVolume, ProteinsResearch::setControlVolume);
-        add(controlVolumeField);
 
         NumberField coefficientField = new NumberField("Коэффициент");
         binder.forField(coefficientField)
@@ -66,7 +68,8 @@ public class ProteinsResearchForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть от 0 до 1", 0., 1.))
             .bind(ProteinsResearch::getCoefficient, ProteinsResearch::setCoefficient);
-        add(coefficientField);
+
+        addFormRow(controlVolumeField, coefficientField);
     }
 
     public void setFormDataObject(ProteinsResearch research) {
