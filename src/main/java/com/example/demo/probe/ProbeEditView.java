@@ -1,5 +1,7 @@
 package com.example.demo.probe;
 
+import com.example.demo.common.CancelButton;
+import com.example.demo.common.SaveButton;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
 import com.example.demo.probe.research.fatsresearch.FatsResearch;
@@ -8,7 +10,6 @@ import com.example.demo.probe.research.proteinsresearch.ProteinsResearch;
 import com.example.demo.probe.research.proteinsresearch.ProteinsResearchForm;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.card.Card;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -49,11 +50,10 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
 
-        Button saveButton = new Button("Сохранить", this::save);
-        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        Button cancelButton = new Button("Отмена", event -> getUI().ifPresent(e -> e.navigate(ProbeView.class)));
-        HorizontalLayout actions = new HorizontalLayout(cancelButton, saveButton);
+        HorizontalLayout actions = new HorizontalLayout(
+            new CancelButton(event -> getUI().ifPresent(e -> e.navigate(ProbeView.class))),
+            new SaveButton(this::save)
+        );
 
         HorizontalLayout researches = new HorizontalLayout();
         researches.setSizeFull();
@@ -84,23 +84,9 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         Probe probe = probeOptional.get();
         probeForm.setFormDataObject(probe);
 
-        if (probe.getDrySubstancesResearch() != null) {
-            drySubstancesResearchForm.set(probe.getDrySubstancesResearch());
-        } else {
-            drySubstancesResearchForm.set(new DrySubstancesResearch());
-        }
-
-        if (probe.getFatsResearch() != null) {
-            fatsResearchForm.set(probe.getFatsResearch());
-        } else {
-            fatsResearchForm.set(new FatsResearch());
-        }
-
-        if (probe.getProteinsResearch() != null) {
-            proteinsResearchForm.set(probe.getProteinsResearch());
-        } else {
-            proteinsResearchForm.set(new ProteinsResearch());
-        }
+        drySubstancesResearchForm.set(probe.getDrySubstancesResearch());
+        fatsResearchForm.set(probe.getFatsResearch());
+        proteinsResearchForm.set(probe.getProteinsResearch());
     }
 
     private void save(ClickEvent<Button> event) {

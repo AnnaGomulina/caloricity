@@ -17,7 +17,7 @@ public class IngredientForm extends Composite<FormLayout> {
 
     public IngredientForm() {
         var formLayout = getContent();
-        binder = new Binder<>();
+        binder = new Binder<>(Ingredient.class);
         TextField nameField = new TextField("Наименование ингредиента");
         formLayout.add(nameField);
         binder.forField(nameField)
@@ -62,14 +62,13 @@ public class IngredientForm extends Composite<FormLayout> {
         formLayout.add(carbsField);
     }
 
-    public Optional<Ingredient> getFormDataObject() {
-        if (formDataObject == null) {
-            formDataObject = new Ingredient();
-        }
-        if (binder.writeBeanIfValid(formDataObject)) {
-            return Optional.of(formDataObject);
-        } else {
-            return Optional.empty();
-        }
+    public void setFormDataObject(Ingredient ingredient) {
+        this.formDataObject = ingredient;
+        binder.readBean(ingredient);
+    }
+
+    public Optional<Ingredient> get() {
+        return Optional.ofNullable(formDataObject)
+            .filter(binder::writeBeanIfValid);
     }
 }

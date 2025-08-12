@@ -1,5 +1,7 @@
 package com.example.demo.probe;
 
+import com.example.demo.common.CancelButton;
+import com.example.demo.common.SaveButton;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
 import com.example.demo.probe.research.fatsresearch.FatsResearch;
@@ -8,7 +10,6 @@ import com.example.demo.probe.research.proteinsresearch.ProteinsResearch;
 import com.example.demo.probe.research.proteinsresearch.ProteinsResearchForm;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.card.Card;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -47,11 +48,10 @@ public class ProbeCreateView extends VerticalLayout {
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
 
-        Button saveButton = new Button("Сохранить", this::save);
-        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        Button cancelButton = new Button("Отмена", event -> getUI().ifPresent(e -> e.navigate(ProbeView.class)));
-        HorizontalLayout actions = new HorizontalLayout(cancelButton, saveButton);
+        HorizontalLayout actions = new HorizontalLayout(
+            new CancelButton(event -> getUI().ifPresent(e -> e.navigate(ProbeView.class))),
+            new SaveButton(this::save)
+        );
 
         HorizontalLayout researches = new HorizontalLayout();
         researches.setSizeFull();
@@ -59,7 +59,7 @@ public class ProbeCreateView extends VerticalLayout {
         setFlexGrow(1, drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
 
         probeForm = new ProbeForm(false, e -> {
-            switch (e.getValue())  {
+            switch (e.getValue()) {
                 case FIRST, SECOND -> {
                     researches.removeAll();
                     proteinsResearchForm.set(new ProteinsResearch());
