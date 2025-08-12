@@ -1,5 +1,7 @@
 package com.example.demo.probe.research.fatsresearch;
 
+import com.example.demo.probe.research.ResearchForm;
+import com.example.demo.probe.research.EmptyResearchForm;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -8,17 +10,19 @@ import com.vaadin.flow.data.validator.DoubleRangeValidator;
 
 import java.util.Optional;
 
-public class FatsResearchForm extends FormLayout {
-    private FatsResearch formDataObject;
+public class FatsResearchForm implements ResearchForm<FatsResearch> {
+    private final EmptyResearchForm<FatsResearch> emptyResearchForm;
     private final Binder<FatsResearch> binder;
-    private final NumberField massFirstParallelField;
-    private final NumberField massSecondParallelField;
+    private NumberField massFirstParallelField;
+    private NumberField massSecondParallelField;
 
     public FatsResearchForm() {
-        setAutoResponsive(true);
-        setExpandFields(true);
-        setExpandColumns(true);
         binder = new Binder<>(FatsResearch.class);
+        emptyResearchForm = new EmptyResearchForm<>(binder);
+    }
+
+    public FormLayout component() {
+        FormLayout form = emptyResearchForm.component();
 
         NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции 1 параллель");
         patronBeforeFirstField.setSuffixComponent(new Span("г"));
@@ -38,7 +42,7 @@ public class FatsResearchForm extends FormLayout {
             .bind(FatsResearch::getPatronMassBeforeExtractionParallelSecond,
                 FatsResearch::setPatronMassBeforeExtractionParallelSecond);
 
-        addFormRow(patronBeforeFirstField, patronBeforeSecondField);
+        form.addFormRow(patronBeforeFirstField, patronBeforeSecondField);
 
         NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции 1 параллель");
         patronAfterFirstField.setSuffixComponent(new Span("г"));
@@ -62,7 +66,7 @@ public class FatsResearchForm extends FormLayout {
             .bind(FatsResearch::getPatronMassAfterExtractionParallelSecond,
                 FatsResearch::setPatronMassAfterExtractionParallelSecond);
 
-        addFormRow(patronAfterFirstField, patronAfterSecondField);
+        form.addFormRow(patronAfterFirstField, patronAfterSecondField);
 
         massFirstParallelField = new NumberField("Масса жира 1 параллель");
         massFirstParallelField.setSuffixComponent(new Span("г"));
@@ -76,30 +80,31 @@ public class FatsResearchForm extends FormLayout {
         binder.forField(massSecondParallelField)
             .bind(FatsResearch::getMassParallelSecond, null);
 
-        addFormRow(massFirstParallelField, massSecondParallelField);
+        form.addFormRow(massFirstParallelField, massSecondParallelField);
 
         patronBeforeFirstField.addValueChangeListener(e -> updateCalculatedFields());
         patronBeforeSecondField.addValueChangeListener(e -> updateCalculatedFields());
         patronAfterFirstField.addValueChangeListener(e -> updateCalculatedFields());
         patronAfterSecondField.addValueChangeListener(e -> updateCalculatedFields());
+
+        return form;
     }
 
-    public void setFormDataObject(FatsResearch fatsResearch) {
-        this.formDataObject = fatsResearch;
-        binder.readBean(fatsResearch);
+
+    @Override
+    public void set(FatsResearch research) {
+        emptyResearchForm.set(research);
     }
 
-    public Optional<FatsResearch> getFormDataObject() {
-        return Optional.ofNullable(formDataObject)
-            .filter(binder::writeBeanIfValid);
+    @Override
+    public Optional<FatsResearch> get() {
+        return emptyResearchForm.get();
     }
 
     private void updateCalculatedFields() {
-        if (formDataObject != null) {
-            binder.writeBeanIfValid(formDataObject);
-
-            massFirstParallelField.setValue(formDataObject.getMassParallelFirst());
-            massSecondParallelField.setValue(formDataObject.getMassParallelSecond());
-        }
+        get().ifPresent(r -> {
+            massFirstParallelField.setValue(r.getMassParallelFirst());
+            massSecondParallelField.setValue(r.getMassParallelSecond());
+        });
     }
 }

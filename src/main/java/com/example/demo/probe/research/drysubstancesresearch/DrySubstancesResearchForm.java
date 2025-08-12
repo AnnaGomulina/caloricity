@@ -1,5 +1,7 @@
 package com.example.demo.probe.research.drysubstancesresearch;
 
+import com.example.demo.probe.research.ResearchForm;
+import com.example.demo.probe.research.EmptyResearchForm;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -8,15 +10,17 @@ import com.vaadin.flow.data.validator.DoubleRangeValidator;
 
 import java.util.Optional;
 
-public class DrySubstancesResearchForm extends FormLayout {
-    private DrySubstancesResearch formDataObject;
+public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesResearch> {
+    private final EmptyResearchForm<DrySubstancesResearch> emptyResearchForm;
     private final Binder<DrySubstancesResearch> binder;
 
     public DrySubstancesResearchForm() {
-        setAutoResponsive(true);
-        setExpandFields(true);
-        setExpandColumns(true);
         binder = new Binder<>(DrySubstancesResearch.class);
+        emptyResearchForm = new EmptyResearchForm<>(binder);
+    }
+
+    public FormLayout component() {
+        FormLayout form = emptyResearchForm.component();
 
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
         massNaveskiFirstField.setSuffixComponent(new Span("г"));
@@ -34,7 +38,7 @@ public class DrySubstancesResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getMassNaveskiParallelSecond, DrySubstancesResearch::setMassNaveskiParallelSecond);
 
-        addFormRow(massNaveskiFirstField, massNaveskiSecondField);
+        form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField byuksaFirstField = new NumberField("Масса бюксы 1 параллель");
         byuksaFirstField.setSuffixComponent(new Span("г"));
@@ -52,7 +56,7 @@ public class DrySubstancesResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getByuksaParallelSecond, DrySubstancesResearch::setByuksaParallelSecond);
 
-        addFormRow(byuksaFirstField, byuksaSecondField);
+        form.addFormRow(byuksaFirstField, byuksaSecondField);
 
         NumberField afterDryingFirstField = new NumberField("Масса после высушивания 1 параллель");
         afterDryingFirstField.setSuffixComponent(new Span("г"));
@@ -70,16 +74,18 @@ public class DrySubstancesResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getByuksaAfterDryingParallelSecond, DrySubstancesResearch::setByuksaAfterDryingParallelSecond);
 
-        addFormRow(afterDryingFirstField, afterDryingSecondField);
+        form.addFormRow(afterDryingFirstField, afterDryingSecondField);
+
+        return form;
     }
 
-    public void setFormDataObject(DrySubstancesResearch research) {
-        this.formDataObject = research;
-        binder.readBean(research);
+    @Override
+    public void set(DrySubstancesResearch research) {
+        emptyResearchForm.set(research);
     }
 
-    public Optional<DrySubstancesResearch> getFormDataObject() {
-        return Optional.ofNullable(formDataObject)
-            .filter(binder::writeBeanIfValid);
+    @Override
+    public Optional<DrySubstancesResearch> get() {
+        return emptyResearchForm.get();
     }
 }

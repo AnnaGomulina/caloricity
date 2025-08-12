@@ -1,5 +1,7 @@
 package com.example.demo.probe.research.proteinsresearch;
 
+import com.example.demo.probe.research.ResearchForm;
+import com.example.demo.probe.research.EmptyResearchForm;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -8,15 +10,17 @@ import com.vaadin.flow.data.validator.DoubleRangeValidator;
 
 import java.util.Optional;
 
-public class ProteinsResearchForm extends FormLayout {
-    private ProteinsResearch formDataObject;
+public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
+    private final EmptyResearchForm<ProteinsResearch> emptyResearchForm;
     private final Binder<ProteinsResearch> binder;
 
     public ProteinsResearchForm() {
-        setAutoResponsive(true);
-        setExpandFields(true);
-        setExpandColumns(true);
         binder = new Binder<>(ProteinsResearch.class);
+        emptyResearchForm = new EmptyResearchForm<>(binder);
+    }
+
+    public FormLayout component() {
+        FormLayout form = emptyResearchForm.component();
 
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
         massNaveskiFirstField.setSuffixComponent(new Span("г"));
@@ -34,7 +38,7 @@ public class ProteinsResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getMassNaveskiParallelSecond, ProteinsResearch::setMassNaveskiParallelSecond);
 
-        addFormRow(massNaveskiFirstField, massNaveskiSecondField);
+        form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
         titrantVolumeFirstField.setSuffixComponent(new Span("г/см³"));
@@ -52,7 +56,7 @@ public class ProteinsResearchForm extends FormLayout {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getTitrantVolumeParallelSecond, ProteinsResearch::setTitrantVolumeParallelSecond);
 
-        addFormRow(titrantVolumeFirstField, titrantVolumeSecondField);
+        form.addFormRow(titrantVolumeFirstField, titrantVolumeSecondField);
 
         NumberField controlVolumeField = new NumberField("Объём контроля");
         controlVolumeField.setSuffixComponent(new Span("г/см³"));
@@ -69,16 +73,16 @@ public class ProteinsResearchForm extends FormLayout {
                 "Должно быть от 0 до 1", 0., 1.))
             .bind(ProteinsResearch::getCoefficient, ProteinsResearch::setCoefficient);
 
-        addFormRow(controlVolumeField, coefficientField);
+        form.addFormRow(controlVolumeField, coefficientField);
+
+        return form;
     }
 
-    public void setFormDataObject(ProteinsResearch research) {
-        this.formDataObject = research;
-        binder.readBean(research);
+    public void set(ProteinsResearch research) {
+        emptyResearchForm.set(research);
     }
 
-    public Optional<ProteinsResearch> getFormDataObject() {
-        return Optional.ofNullable(formDataObject)
-            .filter(binder::writeBeanIfValid);
+    public Optional<ProteinsResearch> get() {
+        return emptyResearchForm.get();
     }
 }
