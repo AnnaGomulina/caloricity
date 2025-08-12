@@ -47,10 +47,16 @@ public class FatsResearch extends BaseEntity {
     private Probe probe;
 
     public Double getMassParallelFirst() {
+        if (patronMassBeforeExtractionParallelFirst == null || patronMassAfterExtractionParallelFirst == null) {
+            return null;
+        }
         return patronMassBeforeExtractionParallelFirst - patronMassAfterExtractionParallelFirst;
     }
 
     public Double getMassParallelSecond() {
+        if (patronMassBeforeExtractionParallelSecond == null || patronMassAfterExtractionParallelSecond == null) {
+            return null;
+        }
         return patronMassBeforeExtractionParallelSecond - patronMassAfterExtractionParallelSecond;
     }
 

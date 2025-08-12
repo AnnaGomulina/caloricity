@@ -54,6 +54,9 @@ public class ProbeCreateView extends VerticalLayout {
         HorizontalLayout actions = new HorizontalLayout(cancelButton, saveButton);
 
         HorizontalLayout researches = new HorizontalLayout();
+        researches.setSizeFull();
+        researches.setWrap(true);
+        setFlexGrow(1, drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
 
         probeForm = new ProbeForm(false, e -> {
             switch (e.getValue())  {

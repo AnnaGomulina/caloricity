@@ -11,6 +11,8 @@ import java.util.Optional;
 public class FatsResearchForm extends FormLayout {
     private FatsResearch formDataObject;
     private final Binder<FatsResearch> binder;
+    private final NumberField massFirstParallelField;
+    private final NumberField massSecondParallelField;
 
     public FatsResearchForm() {
         setAutoResponsive(true);
@@ -61,6 +63,25 @@ public class FatsResearchForm extends FormLayout {
                 FatsResearch::setPatronMassAfterExtractionParallelSecond);
 
         addFormRow(patronAfterFirstField, patronAfterSecondField);
+
+        massFirstParallelField = new NumberField("Масса жира 1 параллель");
+        massFirstParallelField.setSuffixComponent(new Span("г"));
+        massFirstParallelField.setReadOnly(true);
+        binder.forField(massFirstParallelField)
+            .bind(FatsResearch::getMassParallelFirst, null);
+
+        massSecondParallelField = new NumberField("Масса жира 2 параллель");
+        massSecondParallelField.setSuffixComponent(new Span("г"));
+        massSecondParallelField.setReadOnly(true);
+        binder.forField(massSecondParallelField)
+            .bind(FatsResearch::getMassParallelSecond, null);
+
+        addFormRow(massFirstParallelField, massSecondParallelField);
+
+        patronBeforeFirstField.addValueChangeListener(e -> updateCalculatedFields());
+        patronBeforeSecondField.addValueChangeListener(e -> updateCalculatedFields());
+        patronAfterFirstField.addValueChangeListener(e -> updateCalculatedFields());
+        patronAfterSecondField.addValueChangeListener(e -> updateCalculatedFields());
     }
 
     public void setFormDataObject(FatsResearch fatsResearch) {
@@ -71,5 +92,14 @@ public class FatsResearchForm extends FormLayout {
     public Optional<FatsResearch> getFormDataObject() {
         return Optional.ofNullable(formDataObject)
             .filter(binder::writeBeanIfValid);
+    }
+
+    private void updateCalculatedFields() {
+        if (formDataObject != null) {
+            binder.writeBeanIfValid(formDataObject);
+
+            massFirstParallelField.setValue(formDataObject.getMassParallelFirst());
+            massSecondParallelField.setValue(formDataObject.getMassParallelSecond());
+        }
     }
 }
