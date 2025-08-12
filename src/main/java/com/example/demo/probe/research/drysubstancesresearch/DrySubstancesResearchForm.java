@@ -1,7 +1,7 @@
 package com.example.demo.probe.research.drysubstancesresearch;
 
-import com.example.demo.probe.research.ResearchForm;
 import com.example.demo.probe.research.EmptyResearchForm;
+import com.example.demo.probe.research.ResearchForm;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
