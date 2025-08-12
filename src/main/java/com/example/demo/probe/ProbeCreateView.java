@@ -2,12 +2,14 @@ package com.example.demo.probe;
 
 import com.example.demo.common.CancelButton;
 import com.example.demo.common.SaveButton;
+import com.example.demo.ingredient.IngredientService;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
 import com.example.demo.probe.research.fatsresearch.FatsResearch;
 import com.example.demo.probe.research.fatsresearch.FatsResearchForm;
 import com.example.demo.probe.research.proteinsresearch.ProteinsResearch;
 import com.example.demo.probe.research.proteinsresearch.ProteinsResearchForm;
+import com.example.demo.probeingredient.ProbeIngredientGridLayout;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.card.Card;
@@ -27,7 +29,7 @@ public class ProbeCreateView extends VerticalLayout {
     private final ProteinsResearchForm proteinsResearchForm;
     private final ProbeService service;
 
-    public ProbeCreateView(ProbeService service) {
+    public ProbeCreateView(ProbeService service, IngredientService ingredientService) {
         this.service = service;
 
         Card drySubstancesResearchCard = new Card();
@@ -72,9 +74,13 @@ public class ProbeCreateView extends VerticalLayout {
                 }
             }
         });
-        probeForm.setFormDataObject(new Probe());
+        Probe probe = new Probe();
+        probeForm.setFormDataObject(probe);
 
-        add(probeForm, researches, actions);
+        ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
+        probeIngredientGridLayout.setProbe(probe);
+
+        add(probeForm, researches, probeIngredientGridLayout, actions);
     }
 
     private void save(ClickEvent<Button> event) {

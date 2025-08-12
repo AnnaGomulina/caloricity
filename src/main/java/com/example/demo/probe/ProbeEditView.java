@@ -2,12 +2,14 @@ package com.example.demo.probe;
 
 import com.example.demo.common.CancelButton;
 import com.example.demo.common.SaveButton;
+import com.example.demo.ingredient.IngredientService;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
 import com.example.demo.probe.research.fatsresearch.FatsResearch;
 import com.example.demo.probe.research.fatsresearch.FatsResearchForm;
 import com.example.demo.probe.research.proteinsresearch.ProteinsResearch;
 import com.example.demo.probe.research.proteinsresearch.ProteinsResearchForm;
+import com.example.demo.probeingredient.ProbeIngredientGridLayout;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.card.Card;
@@ -30,9 +32,10 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
     private final DrySubstancesResearchForm drySubstancesResearchForm;
     private final FatsResearchForm fatsResearchForm;
     private final ProteinsResearchForm proteinsResearchForm;
+    private final ProbeIngredientGridLayout probeIngredientGridLayout;
     private final ProbeService service;
 
-    public ProbeEditView(ProbeService service) {
+    public ProbeEditView(ProbeService service, IngredientService ingredientService) {
         this.service = service;
 
         Card drySubstancesResearchCard = new Card();
@@ -67,7 +70,9 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
             }
         });
 
-        add(probeForm, researches, actions);
+        probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
+
+        add(probeForm, researches, probeIngredientGridLayout, actions);
     }
 
     @Override
@@ -83,6 +88,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
 
         Probe probe = probeOptional.get();
         probeForm.setFormDataObject(probe);
+        probeIngredientGridLayout.setProbe(probe);
 
         drySubstancesResearchForm.setResearch(probe.getDrySubstancesResearch());
         fatsResearchForm.setResearch(probe.getFatsResearch());
