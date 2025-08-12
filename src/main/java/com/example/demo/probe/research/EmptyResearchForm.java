@@ -22,13 +22,13 @@ public class EmptyResearchForm<T> implements ResearchForm<T> {
     }
 
     @Override
-    public void set(T research) {
+    public void setResearch(T research) {
         this.formDataObject = research;
         binder.readBean(research);
     }
 
     @Override
-    public Optional<T> get() {
+    public Optional<T> getResearch() {
         return Optional.ofNullable(formDataObject)
             .filter(binder::writeBeanIfValid);
     }

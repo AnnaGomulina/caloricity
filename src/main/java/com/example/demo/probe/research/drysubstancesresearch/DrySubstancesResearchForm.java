@@ -80,12 +80,12 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
     }
 
     @Override
-    public void set(DrySubstancesResearch research) {
-        emptyResearchForm.set(research);
+    public void setResearch(DrySubstancesResearch research) {
+        emptyResearchForm.setResearch(research);
     }
 
     @Override
-    public Optional<DrySubstancesResearch> get() {
-        return emptyResearchForm.get();
+    public Optional<DrySubstancesResearch> getResearch() {
+        return emptyResearchForm.getResearch();
     }
 }

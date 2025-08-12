@@ -84,20 +84,20 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         Probe probe = probeOptional.get();
         probeForm.setFormDataObject(probe);
 
-        drySubstancesResearchForm.set(probe.getDrySubstancesResearch());
-        fatsResearchForm.set(probe.getFatsResearch());
-        proteinsResearchForm.set(probe.getProteinsResearch());
+        drySubstancesResearchForm.setResearch(probe.getDrySubstancesResearch());
+        fatsResearchForm.setResearch(probe.getFatsResearch());
+        proteinsResearchForm.setResearch(probe.getProteinsResearch());
     }
 
     private void save(ClickEvent<Button> event) {
         AtomicReference<DrySubstancesResearch> drySubstancesResearch = new AtomicReference<>();
-        drySubstancesResearchForm.get().ifPresent(drySubstancesResearch::set);
+        drySubstancesResearchForm.getResearch().ifPresent(drySubstancesResearch::set);
 
         AtomicReference<FatsResearch> fatsResearch = new AtomicReference<>();
-        fatsResearchForm.get().ifPresent(fatsResearch::set);
+        fatsResearchForm.getResearch().ifPresent(fatsResearch::set);
 
         AtomicReference<ProteinsResearch> proteinsResearch = new AtomicReference<>();
-        proteinsResearchForm.get().ifPresent(proteinsResearch::set);
+        proteinsResearchForm.getResearch().ifPresent(proteinsResearch::set);
 
         probeForm.getFormDataObject().ifPresent(probe -> {
             probe.setDrySubstancesResearch(drySubstancesResearch.get());

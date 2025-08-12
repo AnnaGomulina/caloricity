@@ -78,11 +78,11 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
         return form;
     }
 
-    public void set(ProteinsResearch research) {
-        emptyResearchForm.set(research);
+    public void setResearch(ProteinsResearch research) {
+        emptyResearchForm.setResearch(research);
     }
 
-    public Optional<ProteinsResearch> get() {
-        return emptyResearchForm.get();
+    public Optional<ProteinsResearch> getResearch() {
+        return emptyResearchForm.getResearch();
     }
 }

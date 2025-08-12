@@ -92,17 +92,17 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
 
 
     @Override
-    public void set(FatsResearch research) {
-        emptyResearchForm.set(research);
+    public void setResearch(FatsResearch research) {
+        emptyResearchForm.setResearch(research);
     }
 
     @Override
-    public Optional<FatsResearch> get() {
-        return emptyResearchForm.get();
+    public Optional<FatsResearch> getResearch() {
+        return emptyResearchForm.getResearch();
     }
 
     private void updateCalculatedFields() {
-        get().ifPresent(r -> {
+        getResearch().ifPresent(r -> {
             massFirstParallelField.setValue(r.getMassParallelFirst());
             massSecondParallelField.setValue(r.getMassParallelSecond());
         });

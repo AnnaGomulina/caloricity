@@ -3,7 +3,7 @@ package com.example.demo.probe.research;
 import java.util.Optional;
 
 public interface ResearchForm<T> {
-    void set(T research);
+    void setResearch(T research);
 
-    Optional<T> get();
+    Optional<T> getResearch();
 }
