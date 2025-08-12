@@ -2,42 +2,49 @@ package com.example.demo.probeingredient;
 
 import com.example.demo.ingredient.Ingredient;
 import com.example.demo.probe.Probe;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import java.util.List;
-import java.util.Optional;
 
-public class ProbeIngredientGridLayout extends VerticalLayout {
-    private Optional<Probe> probe = Optional.empty();
-    private final ProbeIngredientGrid grid;
+public class ProbeIngredientGridLayout {
+    private Probe probe;
+    private final ProbeIngredientGrid grid = new ProbeIngredientGrid();
+    private final List<Ingredient> availableIngredients;
 
     public ProbeIngredientGridLayout(List<Ingredient> availableIngredients) {
+        this.availableIngredients = availableIngredients;
+    }
+
+    public Component component() {
+        VerticalLayout verticalLayout = new VerticalLayout();
         Button addButton = new Button("Добавить");
         HorizontalLayout header = new HorizontalLayout(new H3("Ингредиенты"), addButton);
-        header.setAlignItems(Alignment.BASELINE);
-        add(header);
-        grid = new ProbeIngredientGrid();
+        header.setAlignItems(FlexComponent.Alignment.BASELINE);
+
         grid.setDeleteHandler(probeIngredient -> {
-            probe.ifPresent(p -> p.getProbeIngredients().remove(probeIngredient));
+            probe.getProbeIngredients().remove(probeIngredient);
             probeIngredient.setProbe(null);
-            probe.map(Probe::getProbeIngredients).ifPresent(grid::setItems);
+            grid.setItems(probe.getProbeIngredients());
         });
-        probe.map(Probe::getProbeIngredients).ifPresent(grid::setItems);
         addButton.addClickListener(e -> {
             new ProbeIngredientDialog(availableIngredients, probeIngredient -> {
-                probe.map(Probe::getProbeIngredients).ifPresent(p -> p.add(probeIngredient));
-                probe.ifPresent(probeIngredient::setProbe);
-                probe.map(Probe::getProbeIngredients).ifPresent(grid::setItems);
+                probe.getProbeIngredients().add(probeIngredient);
+                probeIngredient.setProbe(probe);
+                grid.setItems(probe.getProbeIngredients());
             }).open();
         });
-        add(grid);
+        verticalLayout.add(header, grid);
+
+        return verticalLayout;
     }
 
     public void setProbe(Probe probe) {
-        this.probe = Optional.ofNullable(probe);
+        this.probe = probe;
         grid.setItems(probe.getProbeIngredients());
     }
 }

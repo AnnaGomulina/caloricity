@@ -32,7 +32,6 @@ public class ProbeIngredientForm extends Composite<FormLayout> {
         NumberField grossField = new NumberField("Масса брутто");
         grossField.setSuffixComponent(new Span("г"));
         binder.forField(grossField)
-            .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator("Масса должна быть положительной", 0., null))
             .bind(ProbeIngredient::getGross, ProbeIngredient::setGross);
         formLayout.add(grossField);
@@ -44,6 +43,18 @@ public class ProbeIngredientForm extends Composite<FormLayout> {
             .withValidator(new DoubleRangeValidator("Масса должна быть положительной", 0., null))
             .bind(ProbeIngredient::getNet, ProbeIngredient::setNet);
         formLayout.add(netField);
+
+        grossField.addValueChangeListener(e -> {
+                if (e.getValue() != null) {
+                    binder.writeBeanAsDraft(entity, true);
+                    Optional.ofNullable(entity.getIngredient())
+                        .ifPresent(
+                            ingredient ->
+                                netField.setValue(ingredient.getEdiblePart() * e.getValue())
+                        );
+                }
+            }
+        );
     }
 
     public void set(ProbeIngredient probeIngredient) {

@@ -80,7 +80,7 @@ public class ProbeCreateView extends VerticalLayout {
         ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
         probeIngredientGridLayout.setProbe(probe);
 
-        add(probeForm, researches, probeIngredientGridLayout, actions);
+        add(probeForm, researches, probeIngredientGridLayout.component(), actions);
     }
 
     private void save(ClickEvent<Button> event) {

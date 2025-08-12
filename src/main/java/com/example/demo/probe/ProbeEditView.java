@@ -72,7 +72,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
 
         probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
 
-        add(probeForm, researches, probeIngredientGridLayout, actions);
+        add(probeForm, researches, probeIngredientGridLayout.component(), actions);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.demo.probeingredient;
 import com.example.demo.common.BaseEntity;
 import com.example.demo.ingredient.Ingredient;
 import com.example.demo.probe.Probe;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
@@ -31,7 +32,7 @@ import java.util.Objects;
 @Builder
 public class ProbeIngredient extends BaseEntity {
     @Comment("Масса брутто, г")
-    @NotNull
+    @Nullable
     private Double gross;
 
     @Comment("Масса нетто, г")
