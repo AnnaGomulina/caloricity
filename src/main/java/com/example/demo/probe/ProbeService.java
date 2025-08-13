@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ import java.util.UUID;
 public class ProbeService {
     private final ProbeRepository repository;
 
-    public Optional<Probe> findById(UUID id) {
+    public Optional<Probe> findById(Integer id) {
         return repository.findById(id);
     }
 

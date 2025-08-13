@@ -64,10 +64,12 @@ public class Probe extends BaseEntity {
     private Double bankaWithProbeMass;
 
     @Comment("Готовность пробы")
+    @Builder.Default
     @NotNull
     private Boolean isReady = false;
 
     @OneToMany(mappedBy = "probe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Builder.Default
     @ToString.Exclude
     private Set<ProbeIngredient> probeIngredients = new HashSet<>();
 

@@ -22,7 +22,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteParameters;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 @PageTitle("Редактирование пробы")
@@ -78,7 +77,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         RouteParameters parameters = event.getRouteParameters();
-        UUID probeId = parameters.get("probeId").map(UUID::fromString).orElseThrow();
+        Integer probeId = parameters.get("probeId").map(Integer::valueOf).orElseThrow();
 
         Optional<Probe> probeOptional = service.findById(probeId);
         if (probeOptional.isEmpty()) {
