@@ -1,5 +1,6 @@
 package com.example.demo.probe;
 
+import com.example.demo.common.Updater;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
@@ -19,8 +20,10 @@ public class ProbeForm extends FormLayout {
     private final Binder<Probe> binder;
     private final NumberField massFactField;
     private final NumberField mineralsField;
+    private final Updater updater;
 
-    public ProbeForm(boolean isEdit, Consumer<AbstractField.ComponentValueChangeEvent<Select<ProbeType>, ProbeType>> probeTypeValueChangeListener) {
+    public ProbeForm(boolean isEdit, Updater updater, Consumer<AbstractField.ComponentValueChangeEvent<Select<ProbeType>, ProbeType>> probeTypeValueChangeListener) {
+        this.updater = updater;
         binder = new Binder<>(Probe.class);
 
         // Поле наименования
@@ -95,6 +98,13 @@ public class ProbeForm extends FormLayout {
             .bind(Probe::getMinerals, null);
         add(mineralsField);
 
+        NumberField theoryCaloricityField = new NumberField("Теоретическая калорийность");
+        theoryCaloricityField.setReadOnly(true);
+        binder.forField(theoryCaloricityField)
+            .bind(Probe::getTheoryCaloricity, null);
+        add(theoryCaloricityField);
+        updater.setTheoryCaloricityField(theoryCaloricityField);
+
         emptyBankaField.addValueChangeListener(e -> updateCalculatedFields());
         filledBankaField.addValueChangeListener(e -> updateCalculatedFields());
     }
@@ -103,6 +113,7 @@ public class ProbeForm extends FormLayout {
         binder.writeBeanAsDraft(entity);
         massFactField.setValue(entity.getMassFact());
         mineralsField.setValue(entity.getMinerals());
+        updater.trigger();
     }
 
     public void setEntity(Probe probe) {

@@ -2,6 +2,7 @@ package com.example.demo.probe;
 
 import com.example.demo.common.CancelButton;
 import com.example.demo.common.SaveButton;
+import com.example.demo.common.Updater;
 import com.example.demo.ingredient.IngredientService;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
@@ -33,6 +34,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
     private final ProteinsResearchForm proteinsResearchForm;
     private final ProbeIngredientGridLayout probeIngredientGridLayout;
     private final ProbeService service;
+    private final Updater updater = new Updater();
 
     public ProbeEditView(ProbeService service, IngredientService ingredientService) {
         this.service = service;
@@ -62,14 +64,14 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         researches.setWrap(true);
         setFlexGrow(1, drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
 
-        probeForm = new ProbeForm(true, e -> {
+        probeForm = new ProbeForm(true, updater, e -> {
             switch (e.getValue()) {
                 case FIRST, SECOND -> researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
                 case THIRD -> researches.add(drySubstancesResearchCard, fatsResearchCard);
             }
         });
 
-        probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
+        probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll(), updater);
 
         add(probeForm, researches, probeIngredientGridLayout.component(), actions);
     }
@@ -87,6 +89,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
 
         Probe probe = probeOptional.get();
         probeForm.setEntity(probe);
+        updater.setProbe(probe);
         probeIngredientGridLayout.setProbe(probe);
 
         drySubstancesResearchForm.setResearch(probe.getDrySubstancesResearch());

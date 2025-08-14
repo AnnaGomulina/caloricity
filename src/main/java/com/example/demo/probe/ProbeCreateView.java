@@ -2,6 +2,7 @@ package com.example.demo.probe;
 
 import com.example.demo.common.CancelButton;
 import com.example.demo.common.SaveButton;
+import com.example.demo.common.Updater;
 import com.example.demo.ingredient.IngredientService;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import com.example.demo.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
@@ -60,7 +61,8 @@ public class ProbeCreateView extends VerticalLayout {
         researches.setWrap(true);
         setFlexGrow(1, drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
 
-        probeForm = new ProbeForm(false, e -> {
+        Updater updater = new Updater();
+        probeForm = new ProbeForm(false, updater, e -> {
             switch (e.getValue()) {
                 case FIRST, SECOND -> {
                     researches.removeAll();
@@ -75,9 +77,10 @@ public class ProbeCreateView extends VerticalLayout {
             }
         });
         Probe probe = new Probe();
+        updater.setProbe(probe);
         probeForm.setEntity(probe);
 
-        ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
+        ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll(), updater);
         probeIngredientGridLayout.setProbe(probe);
 
         add(probeForm, researches, probeIngredientGridLayout.component(), actions);

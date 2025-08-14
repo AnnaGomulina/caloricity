@@ -48,51 +48,51 @@ public class ProbeIngredient extends BaseEntity {
     @OnDelete(action = OnDeleteAction.RESTRICT)
     Ingredient ingredient;
 
-    Double drySubstances() {
+    public Double drySubstances() {
         return net - (net * ingredient.getWater()) / 100;
     }
 
-    Double proteins() {
+    public Double proteins() {
         return net * ingredient.getProteins() / 100;
     }
 
-    Double fats() {
+    public Double fats() {
         return net * ingredient.getFats() / 100;
     }
 
-    Double carbohydrates() {
+    public Double carbohydrates() {
         return net * ingredient.getCarbohydrates() / 100;
     }
 
-    Double drySubstancesForProbe() {
+    public Double drySubstancesForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
         return drySubstances() * 0.85 * probe.getMassCoefficient();
     }
 
-    Double proteinsForProbe() {
+    public Double proteinsForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
         return proteins() * 0.94 * probe.getMassCoefficient();
     }
 
-    Double fatsForProbe() {
+    public Double fatsForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
         return fats() * 0.88 * probe.getMassCoefficient();
     }
 
-    Double carbohydratesForProbe() {
+    public Double carbohydratesForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
         return carbohydrates() * 0.91 * probe.getMassCoefficient();
     }
 
-    Double caloricityForProbe() {
+    public Double caloricityForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }

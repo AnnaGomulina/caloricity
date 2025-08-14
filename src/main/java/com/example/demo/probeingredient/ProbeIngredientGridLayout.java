@@ -1,5 +1,6 @@
 package com.example.demo.probeingredient;
 
+import com.example.demo.common.Updater;
 import com.example.demo.ingredient.Ingredient;
 import com.example.demo.probe.Probe;
 import com.vaadin.flow.component.Component;
@@ -15,13 +16,15 @@ public class ProbeIngredientGridLayout {
     private Probe probe;
     private final ProbeIngredientGrid grid = new ProbeIngredientGrid();
     private final List<Ingredient> availableIngredients;
+    private final VerticalLayout verticalLayout = new VerticalLayout();
+    private final Updater updater;
 
-    public ProbeIngredientGridLayout(List<Ingredient> availableIngredients) {
+    public ProbeIngredientGridLayout(List<Ingredient> availableIngredients, Updater updater) {
         this.availableIngredients = availableIngredients;
+        this.updater = updater;
     }
 
     public Component component() {
-        VerticalLayout verticalLayout = new VerticalLayout();
         Button addButton = new Button("Добавить");
         HorizontalLayout header = new HorizontalLayout(new H3("Ингредиенты"), addButton);
         header.setAlignItems(FlexComponent.Alignment.BASELINE);
@@ -30,12 +33,14 @@ public class ProbeIngredientGridLayout {
             probe.getProbeIngredients().remove(probeIngredient);
             probeIngredient.setProbe(null);
             grid.setItems(probe.getProbeIngredients());
+            updater.trigger();
         });
         addButton.addClickListener(e -> {
             new ProbeIngredientDialog(availableIngredients, probeIngredient -> {
                 probe.getProbeIngredients().add(probeIngredient);
                 probeIngredient.setProbe(probe);
                 grid.setItems(probe.getProbeIngredients());
+                updater.trigger();
             }, grid).open();
         });
         verticalLayout.add(header, grid);

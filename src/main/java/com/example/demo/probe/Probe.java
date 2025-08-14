@@ -109,10 +109,16 @@ public class Probe extends BaseEntity {
      * @return Минеральные вещества, г
      */
     public Double getMinerals() {
-        if (getMassFact() == null) {
+        if (getMassFact() == null || type == null) {
             return null;
         }
         return getMassFact() * type.coefficientOfMinerals;
+    }
+
+    public Double getTheoryCaloricity() {
+        return probeIngredients.stream()
+            .map(ProbeIngredient::caloricityForProbe)
+            .reduce(0.0, Double::sum);
     }
 
     @Override
