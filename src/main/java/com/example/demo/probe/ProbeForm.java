@@ -15,8 +15,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class ProbeForm extends FormLayout {
-    private Probe formDataObject;
+    private Probe entity;
     private final Binder<Probe> binder;
+    private final NumberField massFactField;
+    private final NumberField mineralsField;
 
     public ProbeForm(boolean isEdit, Consumer<AbstractField.ComponentValueChangeEvent<Select<ProbeType>, ProbeType>> probeTypeValueChangeListener) {
         binder = new Binder<>(Probe.class);
@@ -73,22 +75,43 @@ public class ProbeForm extends FormLayout {
         filledBankaField.setSuffixComponent(new Span("г"));
         binder.forField(filledBankaField)
             .asRequired("Обязательное поле")
-            .withValidator(new DoubleRangeValidator(
-                "Должно быть больше массы пустой банки", 0.1, Double.MAX_VALUE))
-            .withValidator(value -> value > emptyBankaField.getValue(),
+            .withValidator(filledBanka -> Optional.ofNullable(emptyBankaField.getValue()).map(emptyBanka -> filledBanka > emptyBanka).orElse(false),
                 "Должно быть больше массы пустой банки")
             .bind(Probe::getBankaWithProbeMass, Probe::setBankaWithProbeMass);
         add(filledBankaField);
         add(emptyBankaField);
+
+        massFactField = new NumberField("Масса фактическая");
+        massFactField.setSuffixComponent(new Span("г"));
+        massFactField.setReadOnly(true);
+        binder.forField(massFactField)
+            .bind(Probe::getMassFact, null);
+        add(massFactField);
+
+        mineralsField = new NumberField("Минеральные вещества");
+        mineralsField.setSuffixComponent(new Span("г"));
+        mineralsField.setReadOnly(true);
+        binder.forField(mineralsField)
+            .bind(Probe::getMinerals, null);
+        add(mineralsField);
+
+        emptyBankaField.addValueChangeListener(e -> updateCalculatedFields());
+        filledBankaField.addValueChangeListener(e -> updateCalculatedFields());
     }
 
-    public void setFormDataObject(Probe probe) {
-        this.formDataObject = probe;
+    private void updateCalculatedFields() {
+        binder.writeBeanAsDraft(entity);
+        massFactField.setValue(entity.getMassFact());
+        mineralsField.setValue(entity.getMinerals());
+    }
+
+    public void setEntity(Probe probe) {
+        this.entity = probe;
         binder.readBean(probe);
     }
 
-    public Optional<Probe> getFormDataObject() {
-        return Optional.ofNullable(formDataObject)
+    public Optional<Probe> getEntity() {
+        return Optional.ofNullable(entity)
             .filter(binder::writeBeanIfValid);
     }
 }

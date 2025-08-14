@@ -36,7 +36,7 @@ public class ProbeIngredientGridLayout {
                 probe.getProbeIngredients().add(probeIngredient);
                 probeIngredient.setProbe(probe);
                 grid.setItems(probe.getProbeIngredients());
-            }).open();
+            }, grid).open();
         });
         verticalLayout.add(header, grid);
 

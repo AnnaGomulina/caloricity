@@ -13,9 +13,11 @@ import java.util.List;
 public class ProbeIngredientDialog extends Dialog {
     private final SerializableConsumer<ProbeIngredient> onSaveCallback;
     private final ProbeIngredientForm form;
+    private final ProbeIngredientGrid grid;
 
-    public ProbeIngredientDialog(List<Ingredient> availableIngredients, SerializableConsumer<ProbeIngredient> onSaveCallback) {
+    public ProbeIngredientDialog(List<Ingredient> availableIngredients, SerializableConsumer<ProbeIngredient> onSaveCallback, ProbeIngredientGrid grid) {
         this.onSaveCallback = onSaveCallback;
+        this.grid = grid;
 
         setHeaderTitle("Добавить ингредиент");
         form = new ProbeIngredientForm(availableIngredients);
@@ -32,6 +34,7 @@ public class ProbeIngredientDialog extends Dialog {
         form.get().ifPresent(probeIngredient -> {
             onSaveCallback.accept(probeIngredient);
             close();
+            grid.select(probeIngredient);
         });
     }
 }

@@ -75,7 +75,7 @@ public class ProbeCreateView extends VerticalLayout {
             }
         });
         Probe probe = new Probe();
-        probeForm.setFormDataObject(probe);
+        probeForm.setEntity(probe);
 
         ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll());
         probeIngredientGridLayout.setProbe(probe);
@@ -90,7 +90,7 @@ public class ProbeCreateView extends VerticalLayout {
         fatsResearchForm.getResearch().ifPresent(fatsResearch::set);
         AtomicReference<ProteinsResearch> proteinsResearch = new AtomicReference<>();
         proteinsResearchForm.getResearch().ifPresent(proteinsResearch::set);
-        probeForm.getFormDataObject().ifPresent(probe -> {
+        probeForm.getEntity().ifPresent(probe -> {
             probe.setDrySubstancesResearch(drySubstancesResearch.get());
             probe.setFatsResearch(fatsResearch.get());
             probe.setProteinsResearch(proteinsResearch.get());

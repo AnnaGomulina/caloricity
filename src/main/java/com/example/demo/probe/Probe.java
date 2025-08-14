@@ -89,27 +89,31 @@ public class Probe extends BaseEntity {
      * @return Масса фактическая, г
      */
     public Double getMassFact() {
+        if (bankaWithProbeMass == null || bankaEmptyMass == null) {
+            return null;
+        }
         return bankaWithProbeMass - bankaEmptyMass;
+    }
+
+    /**
+     * @return Коэффициент соотношения массы фактической к теоретической
+     */
+    public Double getMassCoefficient() {
+        if (getMassFact() == null || massTheory == null) {
+            return null;
+        }
+        return getMassFact() / massTheory;
     }
 
     /**
      * @return Минеральные вещества, г
      */
     public Double getMinerals() {
+        if (getMassFact() == null) {
+            return null;
+        }
         return getMassFact() * type.coefficientOfMinerals;
     }
-
-//    public Double getTheoreticalCaloricity() {
-//        return Optional.ofNullable(probeIngredients)
-//                .stream()
-//                .flatMap(Collection::stream)
-//                .map(e -> e.getIngredient().getTheoreticalCaloricity() / 100 * e.getNet())
-//                .mapToDouble(Double::doubleValue)
-//                .sum();
-//    }
-    // калорийность
-    // считается как (белки + углеводы )* 4 + жиры * 9
-    // теоретическая и фактическая считается, и отклонение
 
     @Override
     public final boolean equals(Object o) {

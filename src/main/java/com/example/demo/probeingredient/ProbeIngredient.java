@@ -2,6 +2,7 @@ package com.example.demo.probeingredient;
 
 import com.example.demo.common.BaseEntity;
 import com.example.demo.ingredient.Ingredient;
+import com.example.demo.probe.CaloricityCoefficient;
 import com.example.demo.probe.Probe;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
@@ -61,6 +62,43 @@ public class ProbeIngredient extends BaseEntity {
 
     Double carbohydrates() {
         return net * ingredient.getCarbohydrates() / 100;
+    }
+
+    Double drySubstancesForProbe() {
+        if (probe.getMassCoefficient() == null) {
+            return null;
+        }
+        return drySubstances() * 0.85 * probe.getMassCoefficient();
+    }
+
+    Double proteinsForProbe() {
+        if (probe.getMassCoefficient() == null) {
+            return null;
+        }
+        return proteins() * 0.94 * probe.getMassCoefficient();
+    }
+
+    Double fatsForProbe() {
+        if (probe.getMassCoefficient() == null) {
+            return null;
+        }
+        return fats() * 0.88 * probe.getMassCoefficient();
+    }
+
+    Double carbohydratesForProbe() {
+        if (probe.getMassCoefficient() == null) {
+            return null;
+        }
+        return carbohydrates() * 0.91 * probe.getMassCoefficient();
+    }
+
+    Double caloricityForProbe() {
+        if (probe.getMassCoefficient() == null) {
+            return null;
+        }
+        return proteinsForProbe() * CaloricityCoefficient.PROTEINS
+               + fatsForProbe() * CaloricityCoefficient.FATS
+               + carbohydratesForProbe() + CaloricityCoefficient.CARBOHYDRATES;
     }
 
     @Override
