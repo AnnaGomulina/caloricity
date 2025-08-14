@@ -15,6 +15,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 @Getter
@@ -50,14 +51,16 @@ public class FatsResearch extends BaseEntity {
         if (patronMassBeforeExtractionParallelFirst == null || patronMassAfterExtractionParallelFirst == null) {
             return null;
         }
-        return patronMassBeforeExtractionParallelFirst - patronMassAfterExtractionParallelFirst;
+        Double massParallelFirst = patronMassBeforeExtractionParallelFirst - patronMassAfterExtractionParallelFirst;
+        return Double.valueOf(new DecimalFormat("#.####").format(massParallelFirst));
     }
 
     public Double getMassParallelSecond() {
         if (patronMassBeforeExtractionParallelSecond == null || patronMassAfterExtractionParallelSecond == null) {
             return null;
         }
-        return patronMassBeforeExtractionParallelSecond - patronMassAfterExtractionParallelSecond;
+        Double massParallelSecond = patronMassBeforeExtractionParallelSecond - patronMassAfterExtractionParallelSecond;
+        return Double.valueOf(new DecimalFormat("#.####").format(massParallelSecond));
     }
 
 //    public Double getMassForOneGramParallelFirst() {

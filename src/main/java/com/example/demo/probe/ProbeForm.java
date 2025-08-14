@@ -68,7 +68,6 @@ public class ProbeForm extends FormLayout {
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0.1, Double.MAX_VALUE))
             .bind(Probe::getBankaEmptyMass, Probe::setBankaEmptyMass);
-        add(emptyBankaField);
 
         NumberField filledBankaField = new NumberField("Масса банки с пробой");
         filledBankaField.setSuffixComponent(new Span("г"));
@@ -80,6 +79,7 @@ public class ProbeForm extends FormLayout {
                 "Должно быть больше массы пустой банки")
             .bind(Probe::getBankaWithProbeMass, Probe::setBankaWithProbeMass);
         add(filledBankaField);
+        add(emptyBankaField);
     }
 
     public void setFormDataObject(Probe probe) {
