@@ -51,11 +51,6 @@ public class ProbeCreateView extends VerticalLayout {
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
 
-        HorizontalLayout actions = new HorizontalLayout(
-            new CancelButton(event -> getUI().ifPresent(e -> e.navigate(ProbeView.class))),
-            new SaveButton(this::save)
-        );
-
         HorizontalLayout researches = new HorizontalLayout();
         researches.setSizeFull();
         researches.setWrap(true);
@@ -82,6 +77,11 @@ public class ProbeCreateView extends VerticalLayout {
 
         ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll(), updater);
         probeIngredientGridLayout.setProbe(probe);
+
+        HorizontalLayout actions = new HorizontalLayout(
+            new CancelButton(event -> getUI().ifPresent(e -> e.navigate(ProbeView.class))),
+            new SaveButton(this::save)
+        );
 
         add(probeForm, researches, probeIngredientGridLayout.component(), actions);
     }

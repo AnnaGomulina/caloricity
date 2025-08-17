@@ -20,8 +20,6 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
     }
 
     public FormLayout component() {
-        FormLayout form = emptyResearchForm.component();
-
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
         massNaveskiFirstField.setSuffixComponent(new Span("г"));
         binder.forField(massNaveskiFirstField)
@@ -38,6 +36,7 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(ProteinsResearch::getMassNaveskiParallelSecond, ProteinsResearch::setMassNaveskiParallelSecond);
 
+        FormLayout form = emptyResearchForm.component();
         form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
