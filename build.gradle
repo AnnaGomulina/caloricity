@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+    	mavenCentral()
+	    maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
+			maven { setUrl("https://repo.spring.io/milestone") }
+		}
+}
+plugins {
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'java'
+	id 'com.vaadin'
+}
+
+//vaadin {
+//	productionMode = true
+//}
+
+repositories {
+	mavenCentral()
+	maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
+	maven { setUrl("https://repo.spring.io/milestone") }
+	maven { setUrl("https://maven.vaadin.com/vaadin-addons") }
+}
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+dependencies {
+	implementation('com.vaadin:vaadin-spring-boot-starter') {
+		exclude group: 'com.h2database', module: 'h2'
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.parttio:line-awesome:2.1.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.liquibase:liquibase-core'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.xerial:sqlite-jdbc:3.50.3.0'
+	implementation 'org.hibernate.orm:hibernate-core:6.6.18.Final'
+	implementation 'org.hibernate.orm:hibernate-community-dialects:6.6.18.Final'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.vaadin:vaadin-bom:$vaadinVersion"
+	}
+}
