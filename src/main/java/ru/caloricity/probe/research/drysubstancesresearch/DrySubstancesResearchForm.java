@@ -20,8 +20,6 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
     }
 
     public FormLayout component() {
-        FormLayout form = emptyResearchForm.component();
-
         NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
         massNaveskiFirstField.setSuffixComponent(new Span("г"));
         binder.forField(massNaveskiFirstField)
@@ -38,6 +36,7 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
                 "Должно быть положительным", 0., Double.MAX_VALUE))
             .bind(DrySubstancesResearch::getMassNaveskiParallelSecond, DrySubstancesResearch::setMassNaveskiParallelSecond);
 
+        FormLayout form = emptyResearchForm.component();
         form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField byuksaFirstField = new NumberField("Масса бюксы 1 параллель");

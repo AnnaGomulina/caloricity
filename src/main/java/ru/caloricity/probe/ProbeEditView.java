@@ -54,11 +54,6 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
 
-        HorizontalLayout actions = new HorizontalLayout(
-            new CancelButton(event -> getUI().ifPresent(e -> e.navigate(ProbeView.class))),
-            new SaveButton(this::save)
-        );
-
         HorizontalLayout researches = new HorizontalLayout();
         researches.setSizeFull();
         researches.setWrap(true);
@@ -72,6 +67,11 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         });
 
         probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll(), updater);
+
+        HorizontalLayout actions = new HorizontalLayout(
+            new CancelButton(event -> getUI().ifPresent(e -> e.navigate(ProbeView.class))),
+            new SaveButton(this::save)
+        );
 
         add(probeForm, researches, probeIngredientGridLayout.component(), actions);
     }

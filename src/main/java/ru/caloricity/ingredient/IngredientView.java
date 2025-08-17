@@ -20,7 +20,6 @@ public class IngredientView extends Div {
 
     public IngredientView(IngredientService ingredientService) {
         IngredientGrid grid = new IngredientGrid();
-        IngredientNameFilter filter = new IngredientNameFilter();
         setSizeFull();
 
         Button addButton = new Button("Добавить ингредиент", event -> {
@@ -37,6 +36,7 @@ public class IngredientView extends Div {
         searchBtn.addClickListener(e -> grid.getDataProvider().refreshAll());
         searchBtn.addClickShortcut(Key.ENTER);
 
+        IngredientNameFilter filter = new IngredientNameFilter();
         HorizontalLayout actions = new HorizontalLayout(filter, searchBtn, addButton);
         actions.setAlignItems(FlexComponent.Alignment.BASELINE);
         grid.setItems(query -> ingredientService.list(VaadinSpringDataHelpers.toSpringPageRequest(query), filter).stream());

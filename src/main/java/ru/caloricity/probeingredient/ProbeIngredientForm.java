@@ -17,7 +17,6 @@ public class ProbeIngredientForm extends Composite<FormLayout> {
     private final Binder<ProbeIngredient> binder;
 
     public ProbeIngredientForm(List<Ingredient> availableIngredients) {
-        var formLayout = getContent();
         binder = new Binder<>(ProbeIngredient.class);
 
         ComboBox<Ingredient> ingredientCombo = new ComboBox<>("Ингредиент");
@@ -27,6 +26,7 @@ public class ProbeIngredientForm extends Composite<FormLayout> {
         binder.forField(ingredientCombo)
             .asRequired("Обязательное поле")
             .bind(ProbeIngredient::getIngredient, ProbeIngredient::setIngredient);
+        var formLayout = getContent();
         formLayout.add(ingredientCombo);
 
         NumberField grossField = new NumberField("Масса брутто");

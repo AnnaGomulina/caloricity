@@ -19,8 +19,6 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 public class ProbeView extends Div {
 
     public ProbeView(ProbeService service) {
-        ProbeGrid grid = new ProbeGrid();
-        ProbeCodeFilter filter = new ProbeCodeFilter();
         setSizeFull();
 
         Button addButton = new Button("Добавить пробу");
@@ -29,10 +27,14 @@ public class ProbeView extends Div {
         );
         addButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
+        ProbeGrid grid = new ProbeGrid();
+
         Button searchBtn = new Button("Поиск");
         searchBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         searchBtn.addClickListener(e -> grid.getDataProvider().refreshAll());
         searchBtn.addClickShortcut(Key.ENTER);
+
+        ProbeCodeFilter filter = new ProbeCodeFilter();
 
         HorizontalLayout actions = new HorizontalLayout(filter, searchBtn, addButton);
         actions.setAlignItems(FlexComponent.Alignment.BASELINE);

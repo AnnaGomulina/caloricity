@@ -22,8 +22,6 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
     }
 
     public FormLayout component() {
-        FormLayout form = emptyResearchForm.component();
-
         NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции 1 параллель");
         patronBeforeFirstField.setSuffixComponent(new Span("г"));
         binder.forField(patronBeforeFirstField)
@@ -42,6 +40,7 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
             .bind(FatsResearch::getPatronMassBeforeExtractionParallelSecond,
                 FatsResearch::setPatronMassBeforeExtractionParallelSecond);
 
+        FormLayout form = emptyResearchForm.component();
         form.addFormRow(patronBeforeFirstField, patronBeforeSecondField);
 
         NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции 1 параллель");
