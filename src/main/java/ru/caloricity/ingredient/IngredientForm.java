@@ -3,9 +3,11 @@ package ru.caloricity.ingredient;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 
@@ -60,6 +62,15 @@ public class IngredientForm extends Composite<FormLayout> {
             .asRequired("Обязательное поле")
             .bind(Ingredient::getCarbohydrates, Ingredient::setCarbohydrates);
         formLayout.add(carbsField);
+
+        Select<IngredientType> typeSelect = new Select<>();
+        typeSelect.setLabel("Тип ингредиента");
+        typeSelect.setItems(IngredientType.values());
+        typeSelect.setRenderer(new ComponentRenderer<>(IngredientTypeChip::new));
+        binder.forField(typeSelect)
+            .asRequired("Обязательное поле")
+            .bind(Ingredient::getType, Ingredient::setType);
+        formLayout.add(typeSelect);
     }
 
     public void setFormDataObject(Ingredient ingredient) {
