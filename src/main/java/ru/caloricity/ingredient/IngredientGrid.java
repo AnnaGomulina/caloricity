@@ -3,6 +3,7 @@ package ru.caloricity.ingredient;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class IngredientGrid extends Grid<Ingredient> {
@@ -15,6 +16,7 @@ public class IngredientGrid extends Grid<Ingredient> {
         addColumn(Ingredient::getProteins).setAutoWidth(true).setHeader("Масса белков, г").setTextAlign(ColumnTextAlign.CENTER);
         addColumn(Ingredient::getFats).setAutoWidth(true).setHeader("Масса жиров, г").setTextAlign(ColumnTextAlign.CENTER);
         addColumn(Ingredient::getCarbohydrates).setAutoWidth(true).setHeader("Масса углеводов, г").setTextAlign(ColumnTextAlign.CENTER);
+        addColumn(Ingredient::getType).setAutoWidth(true).setHeader("Тип").setTextAlign(ColumnTextAlign.CENTER).setRenderer(new ComponentRenderer<>(ingredient -> new IngredientTypeChip((ingredient.getType()))));
         addThemeVariants(GridVariant.LUMO_NO_BORDER);
         addClassNames(LumoUtility.Border.TOP, LumoUtility.BorderColor.CONTRAST_10);
     }

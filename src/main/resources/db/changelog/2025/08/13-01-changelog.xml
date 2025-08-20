@@ -105,6 +105,9 @@
             <column name="carbohydrates" remarks="Масса углеводов, г" type="DOUBLE">
                 <constraints nullable="false"/>
             </column>
+            <column name="type" remarks="Тип" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
     <changeSet id="1755107582119-4" author="user (generated)">

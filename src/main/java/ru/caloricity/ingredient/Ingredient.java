@@ -1,5 +1,7 @@
 package ru.caloricity.ingredient;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import ru.caloricity.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -48,6 +50,11 @@ public class Ingredient extends BaseEntity {
     @Comment("Масса углеводов, г")
     @NotNull
     private Double carbohydrates;
+
+    @Comment("Тип")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private IngredientType type;
 
 //    @OneToMany(mappedBy = "ingredient")
 //    @ToString.Exclude
