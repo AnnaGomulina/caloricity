@@ -1,23 +1,21 @@
 package ru.caloricity.probeingredient;
 
-import ru.caloricity.common.CancelButton;
-import ru.caloricity.common.SaveButton;
-import ru.caloricity.ingredient.Ingredient;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.function.SerializableConsumer;
+import ru.caloricity.common.CancelButton;
+import ru.caloricity.common.SaveButton;
+import ru.caloricity.ingredient.Ingredient;
 
 import java.util.List;
 
 public class ProbeIngredientDialog extends Dialog {
     private final SerializableConsumer<ProbeIngredient> onSaveCallback;
     private final ProbeIngredientForm form;
-    private final ProbeIngredientGrid grid;
 
-    public ProbeIngredientDialog(List<Ingredient> availableIngredients, SerializableConsumer<ProbeIngredient> onSaveCallback, ProbeIngredientGrid grid) {
+    public ProbeIngredientDialog(List<Ingredient> availableIngredients, SerializableConsumer<ProbeIngredient> onSaveCallback) {
         this.onSaveCallback = onSaveCallback;
-        this.grid = grid;
 
         setHeaderTitle("Добавить ингредиент");
         form = new ProbeIngredientForm(availableIngredients);
@@ -34,7 +32,6 @@ public class ProbeIngredientDialog extends Dialog {
         form.get().ifPresent(probeIngredient -> {
             onSaveCallback.accept(probeIngredient);
             close();
-            grid.select(probeIngredient);
         });
     }
 }

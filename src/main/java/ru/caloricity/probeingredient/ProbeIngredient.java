@@ -1,9 +1,5 @@
 package ru.caloricity.probeingredient;
 
-import ru.caloricity.common.BaseEntity;
-import ru.caloricity.ingredient.Ingredient;
-import ru.caloricity.probe.CaloricityCoefficient;
-import ru.caloricity.probe.Probe;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
@@ -20,6 +16,10 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.common.BaseEntity;
+import ru.caloricity.ingredient.Ingredient;
+import ru.caloricity.probe.CaloricityCoefficient;
+import ru.caloricity.probe.Probe;
 
 import java.util.Objects;
 
@@ -68,28 +68,28 @@ public class ProbeIngredient extends BaseEntity {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return drySubstances() * probe.getType().coefficientOfLossesForDrySubstances * probe.getMassCoefficient();
+        return drySubstances() * (1 - probe.getType().coefficientOfLossesForDrySubstances) * probe.getMassCoefficient();
     }
 
     public Double proteinsForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return proteins() * ingredient.getType().coefficientOfLossesForProtein * probe.getMassCoefficient();
+        return proteins() * (1 - ingredient.getType().coefficientOfLossesForProtein) * probe.getMassCoefficient();
     }
 
     public Double fatsForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return fats() * ingredient.getType().coefficientOfLossesForFat * probe.getMassCoefficient();
+        return fats() * (1 - ingredient.getType().coefficientOfLossesForFat) * probe.getMassCoefficient();
     }
 
     public Double carbohydratesForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return carbohydrates() * ingredient.getType().coefficientOfLossesForCarbohydrates * probe.getMassCoefficient();
+        return carbohydrates() * (1 - ingredient.getType().coefficientOfLossesForCarbohydrates) * probe.getMassCoefficient();
     }
 
     public Double caloricityForProbe() {
@@ -98,7 +98,7 @@ public class ProbeIngredient extends BaseEntity {
         }
         return proteinsForProbe() * CaloricityCoefficient.PROTEINS
                + fatsForProbe() * CaloricityCoefficient.FATS
-               + carbohydratesForProbe() + CaloricityCoefficient.CARBOHYDRATES;
+               + carbohydratesForProbe() * CaloricityCoefficient.CARBOHYDRATES;
     }
 
     @Override

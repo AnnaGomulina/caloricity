@@ -1,12 +1,13 @@
 package ru.caloricity.probe.research.proteinsresearch;
 
-import ru.caloricity.probe.research.EmptyResearchForm;
-import ru.caloricity.probe.research.ResearchForm;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
+import ru.caloricity.common.Updater;
+import ru.caloricity.probe.research.EmptyResearchForm;
+import ru.caloricity.probe.research.ResearchForm;
 
 import java.util.Optional;
 
@@ -14,9 +15,9 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
     private final EmptyResearchForm<ProteinsResearch> emptyResearchForm;
     private final Binder<ProteinsResearch> binder;
 
-    public ProteinsResearchForm() {
+    public ProteinsResearchForm(Updater updater) {
         binder = new Binder<>(ProteinsResearch.class);
-        emptyResearchForm = new EmptyResearchForm<>(binder);
+        emptyResearchForm = new EmptyResearchForm<>(binder, updater);
     }
 
     public FormLayout component() {
@@ -74,14 +75,28 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
 
         form.addFormRow(controlVolumeField, coefficientField);
 
+        massNaveskiFirstField.addValueChangeListener(e -> updateCalculatedFields());
+        massNaveskiSecondField.addValueChangeListener(e -> updateCalculatedFields());
+        titrantVolumeFirstField.addValueChangeListener(e -> updateCalculatedFields());
+        titrantVolumeSecondField.addValueChangeListener(e -> updateCalculatedFields());
+        controlVolumeField.addValueChangeListener(e -> updateCalculatedFields());
+        coefficientField.addValueChangeListener(e -> updateCalculatedFields());
+
         return form;
     }
 
+    @Override
     public void setResearch(ProteinsResearch research) {
         emptyResearchForm.setResearch(research);
     }
 
+    @Override
     public Optional<ProteinsResearch> getResearch() {
         return emptyResearchForm.getResearch();
+    }
+
+    @Override
+    public void updateCalculatedFields() {
+        emptyResearchForm.updateCalculatedFields();
     }
 }

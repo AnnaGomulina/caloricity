@@ -1,7 +1,5 @@
 package ru.caloricity.probe.research.fatsresearch;
 
-import ru.caloricity.common.BaseEntity;
-import ru.caloricity.probe.Probe;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -14,6 +12,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.common.AnyNull;
+import ru.caloricity.common.BaseEntity;
+import ru.caloricity.common.FourDigitsFormat;
+import ru.caloricity.probe.Probe;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
@@ -28,13 +30,21 @@ import java.util.Objects;
 @Table(name = "fats_research")
 @Builder
 public class FatsResearch extends BaseEntity {
-    @Comment("Масса патрона до экстракции первая параллель, г")
+    @Comment("Масса навески первая параллель, г")
     @NotNull
-    private Double patronMassBeforeExtractionParallelFirst;
+    private Double massNaveskiParallelFirst;
 
-    @Comment("Масса патрона до экстракции вторая параллель, г")
+    @Comment("Масса навески вторая параллель, г")
     @NotNull
-    private Double patronMassBeforeExtractionParallelSecond;
+    private Double massNaveskiParallelSecond;
+
+    @Comment("Масса пустого патрона первая параллель, г")
+    @NotNull
+    private Double patronMassEmptyParallelFirst;
+
+    @Comment("Масса пустого патрона вторая параллель, г")
+    @NotNull
+    private Double patronMassEmptyParallelSecond;
 
     @Comment("Масса патрона после экстракции первая параллель, г")
     @NotNull
@@ -47,40 +57,29 @@ public class FatsResearch extends BaseEntity {
     @OneToOne(mappedBy = "fatsResearch")
     private Probe probe;
 
-    public Double getMassParallelFirst() {
-        if (patronMassBeforeExtractionParallelFirst == null || patronMassAfterExtractionParallelFirst == null) {
+    public Double getFatsParallelFirst() {
+        if (new AnyNull(patronMassEmptyParallelFirst, patronMassAfterExtractionParallelFirst).is()) {
             return null;
         }
-        Double massParallelFirst = patronMassBeforeExtractionParallelFirst - patronMassAfterExtractionParallelFirst;
+        Double massParallelFirst = (patronMassEmptyParallelFirst + massNaveskiParallelFirst - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
         return Double.valueOf(new DecimalFormat("#.####").format(massParallelFirst));
     }
 
-    public Double getMassParallelSecond() {
-        if (patronMassBeforeExtractionParallelSecond == null || patronMassAfterExtractionParallelSecond == null) {
+    public Double getFatsParallelSecond() {
+        if (new AnyNull(patronMassEmptyParallelSecond, patronMassAfterExtractionParallelSecond).is()) {
             return null;
         }
-        Double massParallelSecond = patronMassBeforeExtractionParallelSecond - patronMassAfterExtractionParallelSecond;
+        Double massParallelSecond = (patronMassEmptyParallelSecond + massNaveskiParallelSecond - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
         return Double.valueOf(new DecimalFormat("#.####").format(massParallelSecond));
     }
 
-//    public Double getMassForOneGramParallelFirst() {
-//        return getMassParallelFirst() / massNaveskiParallelFirst;
-//    }
-//
-//    public Double getMassForOneGramParallelSecond() {
-//        return getMassParallelSecond() / massNaveskiParallelSecond;
-//    }
-//
-//    /**
-//     * @return Количество жира в одном грамме пробы
-//     */
-//    public Double getMassForOneGramAverage() {
-//        return new Average(getMassForOneGramParallelFirst(), getMassForOneGramParallelSecond()).calc();
-//    }
-
-//    public Double getFactCaloricityForOneGram() {
-//        return getMassForOneGramAverage() * CaloricityCoefficient.FATS;
-//    }
+    public Double getFatsAverage() {
+        if (new AnyNull(getFatsParallelFirst(), getFatsParallelSecond()).is()) {
+            return null;
+        }
+        double c = (getFatsParallelFirst() + getFatsParallelSecond()) / 2.0;
+        return new FourDigitsFormat(c).it();
+    }
 
     @Override
     public final boolean equals(Object o) {

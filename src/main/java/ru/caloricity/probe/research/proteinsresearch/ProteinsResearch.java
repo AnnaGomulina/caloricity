@@ -1,7 +1,5 @@
 package ru.caloricity.probe.research.proteinsresearch;
 
-import ru.caloricity.common.BaseEntity;
-import ru.caloricity.probe.Probe;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -14,6 +12,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.common.AnyNull;
+import ru.caloricity.common.BaseEntity;
+import ru.caloricity.common.FourDigitsFormat;
+import ru.caloricity.probe.Probe;
 
 import java.util.Objects;
 
@@ -27,14 +29,6 @@ import java.util.Objects;
 @Table(name = "proteins_researches")
 @Builder
 public class ProteinsResearch extends BaseEntity {
-    @Comment("Объём титранта первая параллель, г/см^3")
-    @NotNull
-    private Double titrantVolumeParallelFirst;
-
-    @Comment("Объём титранта вторая параллель, г/см^3")
-    @NotNull
-    private Double titrantVolumeParallelSecond;
-
     @Comment("Масса навески первая параллель, г")
     @NotNull
     private Double massNaveskiParallelFirst;
@@ -43,11 +37,35 @@ public class ProteinsResearch extends BaseEntity {
     @NotNull
     private Double massNaveskiParallelSecond;
 
-//    @Comment("Масса белков, г")
-//
-//    private Double getMass() { первая, вторая параллель и среднее
-//      return 0.0014 * coefficient * (titrantVolumeParallelFirst - controlVolume) * 6.25 * масса фактическая пробы / масса навески первая параллель
-//    };
+    @Comment("Объём титранта первая параллель, г/см^3")
+    @NotNull
+    private Double titrantVolumeParallelFirst;
+
+    @Comment("Объём титранта вторая параллель, г/см^3")
+    @NotNull
+    private Double titrantVolumeParallelSecond;
+
+    private Double getProteinsParallelFirst() {
+        if (new AnyNull(coefficient, titrantVolumeParallelFirst, controlVolume, massNaveskiParallelFirst, probe.getMassFact()).is()) {
+            return null;
+        }
+        return 0.0014 * coefficient * (titrantVolumeParallelFirst - controlVolume) * 6.25 / massNaveskiParallelFirst * probe.getMassFact();
+    }
+
+    private Double getProteinsParallelSecond() {
+        if (new AnyNull(coefficient, titrantVolumeParallelSecond, controlVolume, massNaveskiParallelSecond, probe.getMassFact()).is()) {
+            return null;
+        }
+        return 0.0014 * coefficient * (titrantVolumeParallelSecond - controlVolume) * 6.25 / massNaveskiParallelSecond * probe.getMassFact();
+    }
+
+    public Double getProteinsAverage() {
+        if (new AnyNull(getProteinsParallelFirst(), getProteinsParallelSecond()).is()) {
+            return null;
+        }
+        double c = (getProteinsParallelFirst() + getProteinsParallelSecond()) / 2.0;
+        return new FourDigitsFormat(c).it();
+    }
 
     @Comment("Объём контроля, г/см^3")
     @NotNull

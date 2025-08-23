@@ -1,6 +1,5 @@
 package ru.caloricity.probe;
 
-import ru.caloricity.common.Updater;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
@@ -11,6 +10,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.validator.StringLengthValidator;
+import ru.caloricity.common.Updater;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -26,7 +26,6 @@ public class ProbeForm extends FormLayout {
         this.updater = updater;
         binder = new Binder<>(Probe.class);
 
-        // Поле наименования
         TextField nameField = new TextField("Наименование пробы");
         binder.forField(nameField)
             .asRequired("Обязательное поле")
@@ -35,7 +34,6 @@ public class ProbeForm extends FormLayout {
             .bind(Probe::getName, Probe::setName);
         add(nameField);
 
-        // Поле кода
         TextField codeField = new TextField("Код пробы");
         binder.forField(codeField)
             .asRequired("Обязательное поле")
@@ -44,7 +42,6 @@ public class ProbeForm extends FormLayout {
             .bind(Probe::getCode, Probe::setCode);
         add(codeField);
 
-        // Выбор типа пробы
         Select<ProbeType> typeSelect = new Select<>();
         typeSelect.setLabel("Тип пробы");
         typeSelect.setReadOnly(isEdit);
@@ -56,7 +53,6 @@ public class ProbeForm extends FormLayout {
             .bind(Probe::getType, Probe::setType);
         add(typeSelect);
 
-        // Поля массы
         NumberField massTheoryField = new NumberField("Теоретическая масса");
         massTheoryField.setSuffixComponent(new Span("г"));
         binder.forField(massTheoryField)
@@ -78,8 +74,8 @@ public class ProbeForm extends FormLayout {
         filledBankaField.setSuffixComponent(new Span("г"));
         binder.forField(filledBankaField)
             .asRequired("Обязательное поле")
-            .withValidator(filledBanka -> Optional.ofNullable(emptyBankaField.getValue()).map(emptyBanka -> filledBanka > emptyBanka).orElse(false),
-                "Должно быть больше массы пустой банки")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0.1, Double.MAX_VALUE))
             .bind(Probe::getBankaWithProbeMass, Probe::setBankaWithProbeMass);
         add(filledBankaField);
         add(emptyBankaField);
@@ -98,13 +94,8 @@ public class ProbeForm extends FormLayout {
             .bind(Probe::getMinerals, null);
         add(mineralsField);
 
-        NumberField theoryCaloricityField = new NumberField("Теоретическая калорийность");
-        theoryCaloricityField.setReadOnly(true);
-        binder.forField(theoryCaloricityField)
-            .bind(Probe::getTheoryCaloricity, null);
-        add(theoryCaloricityField);
-        updater.setTheoryCaloricityField(theoryCaloricityField);
-
+        typeSelect.addValueChangeListener(e -> updateCalculatedFields());
+        massTheoryField.addValueChangeListener(e -> updateCalculatedFields());
         emptyBankaField.addValueChangeListener(e -> updateCalculatedFields());
         filledBankaField.addValueChangeListener(e -> updateCalculatedFields());
     }

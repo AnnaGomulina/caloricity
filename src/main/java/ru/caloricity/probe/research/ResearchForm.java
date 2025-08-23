@@ -6,4 +6,6 @@ public interface ResearchForm<T> {
     void setResearch(T research);
 
     Optional<T> getResearch();
+
+    void updateCalculatedFields();
 }

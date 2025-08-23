@@ -1,11 +1,11 @@
 package ru.caloricity.ingredient;
 
-import ru.caloricity.common.CancelButton;
-import ru.caloricity.common.SaveButton;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.function.SerializableConsumer;
+import ru.caloricity.common.CancelButton;
+import ru.caloricity.common.SaveButton;
 
 public class IngredientDialog extends Dialog {
     private final SerializableConsumer<Ingredient> onSaveCallback;

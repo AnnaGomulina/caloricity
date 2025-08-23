@@ -1,14 +1,14 @@
 package ru.caloricity.probeingredient;
 
-import ru.caloricity.common.Updater;
-import ru.caloricity.ingredient.Ingredient;
-import ru.caloricity.probe.Probe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import ru.caloricity.common.Updater;
+import ru.caloricity.ingredient.Ingredient;
+import ru.caloricity.probe.Probe;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class ProbeIngredientGridLayout {
                 probeIngredient.setProbe(probe);
                 grid.setItems(probe.getProbeIngredients());
                 updater.trigger();
-            }, grid).open();
+            }).open();
         });
         verticalLayout.add(header, grid);
 

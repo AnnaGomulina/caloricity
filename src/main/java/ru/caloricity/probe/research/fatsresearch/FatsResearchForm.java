@@ -1,47 +1,64 @@
 package ru.caloricity.probe.research.fatsresearch;
 
-import ru.caloricity.probe.research.EmptyResearchForm;
-import ru.caloricity.probe.research.ResearchForm;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
+import ru.caloricity.common.Updater;
+import ru.caloricity.probe.research.EmptyResearchForm;
+import ru.caloricity.probe.research.ResearchForm;
 
 import java.util.Optional;
 
 public class FatsResearchForm implements ResearchForm<FatsResearch> {
     private final EmptyResearchForm<FatsResearch> emptyResearchForm;
     private final Binder<FatsResearch> binder;
-    private NumberField massFirstParallelField;
-    private NumberField massSecondParallelField;
 
-    public FatsResearchForm() {
+    public FatsResearchForm(Updater updater) {
         binder = new Binder<>(FatsResearch.class);
-        emptyResearchForm = new EmptyResearchForm<>(binder);
+        emptyResearchForm = new EmptyResearchForm<>(binder, updater);
     }
 
     public FormLayout component() {
-        NumberField patronBeforeFirstField = new NumberField("Масса патрона до экстракции 1 параллель");
+        NumberField patronBeforeFirstField = new NumberField("Масса пустого патрона 1 параллель");
         patronBeforeFirstField.setSuffixComponent(new Span("г"));
         binder.forField(patronBeforeFirstField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(FatsResearch::getPatronMassBeforeExtractionParallelFirst,
-                FatsResearch::setPatronMassBeforeExtractionParallelFirst);
+            .bind(FatsResearch::getPatronMassEmptyParallelFirst,
+                FatsResearch::setPatronMassEmptyParallelFirst);
 
-        NumberField patronBeforeSecondField = new NumberField("Масса патрона до экстракции 2 параллель");
+        NumberField patronBeforeSecondField = new NumberField("Масса пустого патрона 2 параллель");
         patronBeforeSecondField.setSuffixComponent(new Span("г"));
         binder.forField(patronBeforeSecondField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
-            .bind(FatsResearch::getPatronMassBeforeExtractionParallelSecond,
-                FatsResearch::setPatronMassBeforeExtractionParallelSecond);
+            .bind(FatsResearch::getPatronMassEmptyParallelSecond,
+                FatsResearch::setPatronMassEmptyParallelSecond);
 
         FormLayout form = emptyResearchForm.component();
         form.addFormRow(patronBeforeFirstField, patronBeforeSecondField);
+
+        NumberField massNaveskiFirstField = new NumberField("Масса навески 1 параллель");
+        massNaveskiFirstField.setSuffixComponent(new Span("г"));
+        binder.forField(massNaveskiFirstField)
+            .asRequired("Обязательное поле")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0., Double.MAX_VALUE))
+            .bind(FatsResearch::getMassNaveskiParallelFirst, FatsResearch::setMassNaveskiParallelFirst);
+
+        NumberField massNaveskiSecondField = new NumberField("Масса навески 2 параллель");
+        massNaveskiSecondField.setSuffixComponent(new Span("г"));
+        binder.forField(massNaveskiSecondField)
+            .asRequired("Обязательное поле")
+            .withValidator(new DoubleRangeValidator(
+                "Должно быть положительным", 0., Double.MAX_VALUE))
+            .bind(FatsResearch::getMassNaveskiParallelSecond, FatsResearch::setMassNaveskiParallelSecond);
+
+        form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции 1 параллель");
         patronAfterFirstField.setSuffixComponent(new Span("г"));
@@ -49,8 +66,6 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
-            .withValidator(value -> value < patronBeforeFirstField.getValue(),
-                "Должно быть меньше массы до экстракции")
             .bind(FatsResearch::getPatronMassAfterExtractionParallelFirst,
                 FatsResearch::setPatronMassAfterExtractionParallelFirst);
 
@@ -60,35 +75,20 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
                 "Должно быть положительным", 0., Double.MAX_VALUE))
-            .withValidator(value -> value < patronBeforeSecondField.getValue(),
-                "Должно быть меньше массы до экстракции")
             .bind(FatsResearch::getPatronMassAfterExtractionParallelSecond,
                 FatsResearch::setPatronMassAfterExtractionParallelSecond);
 
         form.addFormRow(patronAfterFirstField, patronAfterSecondField);
 
-        massFirstParallelField = new NumberField("Масса жира 1 параллель");
-        massFirstParallelField.setSuffixComponent(new Span("г"));
-        massFirstParallelField.setReadOnly(true);
-        binder.forField(massFirstParallelField)
-            .bind(FatsResearch::getMassParallelFirst, null);
-
-        massSecondParallelField = new NumberField("Масса жира 2 параллель");
-        massSecondParallelField.setSuffixComponent(new Span("г"));
-        massSecondParallelField.setReadOnly(true);
-        binder.forField(massSecondParallelField)
-            .bind(FatsResearch::getMassParallelSecond, null);
-
-        form.addFormRow(massFirstParallelField, massSecondParallelField);
-
         patronBeforeFirstField.addValueChangeListener(e -> updateCalculatedFields());
         patronBeforeSecondField.addValueChangeListener(e -> updateCalculatedFields());
+        massNaveskiFirstField.addValueChangeListener(e -> updateCalculatedFields());
+        massNaveskiSecondField.addValueChangeListener(e -> updateCalculatedFields());
         patronAfterFirstField.addValueChangeListener(e -> updateCalculatedFields());
         patronAfterSecondField.addValueChangeListener(e -> updateCalculatedFields());
 
         return form;
     }
-
 
     @Override
     public void setResearch(FatsResearch research) {
@@ -100,10 +100,8 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
         return emptyResearchForm.getResearch();
     }
 
-    private void updateCalculatedFields() {
-        getResearch().ifPresent(r -> {
-            massFirstParallelField.setValue(r.getMassParallelFirst());
-            massSecondParallelField.setValue(r.getMassParallelSecond());
-        });
+    @Override
+    public void updateCalculatedFields() {
+        emptyResearchForm.updateCalculatedFields();
     }
 }

@@ -1,10 +1,5 @@
 package ru.caloricity.probe;
 
-import ru.caloricity.common.BaseEntity;
-import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
-import ru.caloricity.probe.research.fatsresearch.FatsResearch;
-import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
-import ru.caloricity.probeingredient.ProbeIngredient;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,6 +18,13 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.common.AnyNull;
+import ru.caloricity.common.BaseEntity;
+import ru.caloricity.common.FourDigitsFormat;
+import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
+import ru.caloricity.probe.research.fatsresearch.FatsResearch;
+import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
+import ru.caloricity.probeingredient.ProbeIngredient;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -89,17 +91,18 @@ public class Probe extends BaseEntity {
      * @return Масса фактическая, г
      */
     public Double getMassFact() {
-        if (bankaWithProbeMass == null || bankaEmptyMass == null) {
+        if (new AnyNull(bankaWithProbeMass, bankaEmptyMass).is()) {
             return null;
         }
-        return bankaWithProbeMass - bankaEmptyMass;
+        double c = bankaWithProbeMass - bankaEmptyMass;
+        return new FourDigitsFormat(c).it();
     }
 
     /**
      * @return Коэффициент соотношения массы фактической к теоретической
      */
     public Double getMassCoefficient() {
-        if (getMassFact() == null || massTheory == null) {
+        if (new AnyNull(getMassFact(), massTheory).is()) {
             return null;
         }
         return getMassFact() / massTheory;
@@ -109,16 +112,76 @@ public class Probe extends BaseEntity {
      * @return Минеральные вещества, г
      */
     public Double getMinerals() {
-        if (getMassFact() == null || type == null) {
+        if (new AnyNull(getMassFact(), type).is()) {
             return null;
         }
-        return getMassFact() * type.coefficientOfMinerals;
+        double c = getMassFact() * type.coefficientOfMinerals;
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double getFactCarbohydrates() {
+        if (type == ProbeType.THIRD) {
+            if (new AnyNull(drySubstancesResearch).is() || new AnyNull(drySubstancesResearch.getDrySubstancesAverage(), getMinerals()).is()) {
+                return null;
+            }
+            double c = drySubstancesResearch.getDrySubstancesAverage() - getMinerals();
+            return new FourDigitsFormat(c).it();
+        }
+        if (new AnyNull(drySubstancesResearch, proteinsResearch).is() || new AnyNull(drySubstancesResearch.getDrySubstancesAverage(), proteinsResearch.getProteinsAverage(), fatsResearch.getFatsAverage(), getMinerals()).is()) {
+            return null;
+        }
+        double c = drySubstancesResearch.getDrySubstancesAverage() - (proteinsResearch.getProteinsAverage() + fatsResearch.getFatsAverage() + getMinerals());
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double getTheoryDrySubstances() {
+        double c = probeIngredients.stream()
+            .map(ProbeIngredient::drySubstancesForProbe)
+            .filter(Objects::nonNull)
+            .reduce(0.0, Double::sum);
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double getTheoryFats() {
+        double c = probeIngredients.stream()
+            .map(ProbeIngredient::fatsForProbe)
+            .filter(Objects::nonNull)
+            .reduce(0.0, Double::sum);
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double getTheoryProteins() {
+        double c = probeIngredients.stream()
+            .map(ProbeIngredient::proteinsForProbe)
+            .filter(Objects::nonNull)
+            .reduce(0.0, Double::sum);
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double getTheoryCarbohydrates() {
+        double c = probeIngredients.stream()
+            .map(ProbeIngredient::carbohydratesForProbe)
+            .filter(Objects::nonNull)
+            .reduce(0.0, Double::sum);
+        return new FourDigitsFormat(c).it();
     }
 
     public Double getTheoryCaloricity() {
-        return probeIngredients.stream()
+        double c = probeIngredients.stream()
             .map(ProbeIngredient::caloricityForProbe)
+            .filter(Objects::nonNull)
             .reduce(0.0, Double::sum);
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double getFactCaloricity() {
+        if (new AnyNull(proteinsResearch, fatsResearch).is() || new AnyNull(proteinsResearch.getProteinsAverage(), fatsResearch.getFatsAverage(), getFactCarbohydrates()).is()) {
+            return null;
+        }
+        double c = proteinsResearch.getProteinsAverage() * CaloricityCoefficient.PROTEINS
+                   + fatsResearch.getFatsAverage() * CaloricityCoefficient.FATS
+                   + getFactCarbohydrates() * CaloricityCoefficient.CARBOHYDRATES;
+        return new FourDigitsFormat(c).it();
     }
 
     @Override

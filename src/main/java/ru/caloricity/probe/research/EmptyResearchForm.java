@@ -2,15 +2,18 @@ package ru.caloricity.probe.research;
 
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.data.binder.Binder;
+import ru.caloricity.common.Updater;
 
 import java.util.Optional;
 
 public class EmptyResearchForm<T> implements ResearchForm<T> {
     private T formDataObject;
     private final Binder<T> binder;
+    private final Updater updater;
 
-    public EmptyResearchForm(Binder<T> binder) {
+    public EmptyResearchForm(Binder<T> binder, Updater updater) {
         this.binder = binder;
+        this.updater = updater;
     }
 
     public FormLayout component() {
@@ -19,6 +22,11 @@ public class EmptyResearchForm<T> implements ResearchForm<T> {
         formLayout.setExpandFields(true);
         formLayout.setExpandColumns(true);
         return formLayout;
+    }
+
+    public void updateCalculatedFields() {
+        binder.writeBeanAsDraft(formDataObject);
+        updater.trigger();
     }
 
     @Override

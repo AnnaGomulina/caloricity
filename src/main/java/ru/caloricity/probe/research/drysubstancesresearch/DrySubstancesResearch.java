@@ -1,7 +1,5 @@
 package ru.caloricity.probe.research.drysubstancesresearch;
 
-import ru.caloricity.common.BaseEntity;
-import ru.caloricity.probe.Probe;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -14,6 +12,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.common.AnyNull;
+import ru.caloricity.common.BaseEntity;
+import ru.caloricity.common.FourDigitsFormat;
+import ru.caloricity.probe.Probe;
 
 import java.util.Objects;
 
@@ -54,21 +56,29 @@ public class DrySubstancesResearch extends BaseEntity {
     @OneToOne(mappedBy = "drySubstancesResearch")
     private Probe probe;
 
-    public Double getDryResidueWeightParallelFirst() {
-        // это для первого и второго
-        return byuksaParallelFirst + massNaveskiParallelFirst - byuksaAfterDryingParallelFirst;
-
-        // а для третьего блюда
-        // масса пробы == масса навески ???
-        // (byuksaAfterDryingParallelFirst - byuksaParallelFirst) * масса фактичиская пробы / Масса пробы первая параллель;
+    public Double getDrySubstancesParallelFirst() {
+        if (new AnyNull(byuksaAfterDryingParallelFirst, byuksaParallelFirst, massNaveskiParallelFirst, probe.getMassFact()).is()) {
+            return null;
+        }
+        return (byuksaAfterDryingParallelFirst - byuksaParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
     }
 
-    public Double getDryResidueWeightParallelSecond() {
-        return byuksaParallelSecond + massNaveskiParallelSecond - byuksaAfterDryingParallelSecond;
+    public Double getDrySubstancesParallelSecond() {
+        if (new AnyNull(byuksaAfterDryingParallelSecond, byuksaParallelSecond, massNaveskiParallelSecond, probe.getMassFact()).is()) {
+            return null;
+        }
+        return (byuksaAfterDryingParallelSecond - byuksaParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
     }
 
-    public Double getDryResidueWeightAverage() {
-        return (getDryResidueWeightParallelFirst() + getDryResidueWeightParallelSecond()) / 2.0;
+    /**
+     * Сухие вещества фактические на пробу
+     */
+    public Double getDrySubstancesAverage() {
+        if (new AnyNull(getDrySubstancesParallelFirst(), getDrySubstancesParallelSecond()).is()) {
+            return null;
+        }
+        double c = (getDrySubstancesParallelFirst() + getDrySubstancesParallelSecond()) / 2.0;
+        return new FourDigitsFormat(c).it();
     }
 
     @Override
