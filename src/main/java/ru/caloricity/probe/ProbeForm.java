@@ -26,14 +26,6 @@ public class ProbeForm extends FormLayout {
         this.updater = updater;
         binder = new Binder<>(Probe.class);
 
-        TextField nameField = new TextField("Наименование пробы");
-        binder.forField(nameField)
-            .asRequired("Обязательное поле")
-            .withValidator(new StringLengthValidator(
-                "Должно быть от 2 до 30 символов", 2, 30))
-            .bind(Probe::getName, Probe::setName);
-        add(nameField);
-
         TextField codeField = new TextField("Код пробы");
         binder.forField(codeField)
             .asRequired("Обязательное поле")
@@ -41,6 +33,14 @@ public class ProbeForm extends FormLayout {
                 "Должно быть от 2 до 30 символов", 2, 30))
             .bind(Probe::getCode, Probe::setCode);
         add(codeField);
+
+        TextField nameField = new TextField("Наименование пробы");
+        binder.forField(nameField)
+            .asRequired("Обязательное поле")
+            .withValidator(new StringLengthValidator(
+                "Должно быть от 2 до 30 символов", 2, 30))
+            .bind(Probe::getName, Probe::setName);
+        add(nameField);
 
         Select<ProbeType> typeSelect = new Select<>();
         typeSelect.setLabel("Тип пробы");

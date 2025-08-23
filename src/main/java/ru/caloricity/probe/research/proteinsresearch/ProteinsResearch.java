@@ -37,11 +37,11 @@ public class ProteinsResearch extends BaseEntity {
     @NotNull
     private Double massNaveskiParallelSecond;
 
-    @Comment("Объём титранта первая параллель, г/см^3")
+    @Comment("Объём титранта первая параллель, см^3")
     @NotNull
     private Double titrantVolumeParallelFirst;
 
-    @Comment("Объём титранта вторая параллель, г/см^3")
+    @Comment("Объём титранта вторая параллель, см^3")
     @NotNull
     private Double titrantVolumeParallelSecond;
 

@@ -28,8 +28,9 @@ public class ResultCard {
         drySubstancesTheory.setReadOnly(true);
         NumberField drySubstancesDifference = new NumberField("Сухие вещества отклонение");
         drySubstancesDifference.setSuffixComponent(new Span("%"));
+        drySubstancesDifference.setMax(30);
+        drySubstancesDifference.setMin(-30);
         drySubstancesDifference.setReadOnly(true);
-        form.addFormRow(drySubstancesFact, drySubstancesTheory, drySubstancesDifference);
 
         NumberField fatsFact = new NumberField("Жиры фактические");
         fatsFact.setSuffixComponent(new Span("г"));
@@ -39,8 +40,9 @@ public class ResultCard {
         fatsTheory.setReadOnly(true);
         NumberField fatsDifference = new NumberField("Жиры отклонение");
         fatsDifference.setSuffixComponent(new Span("%"));
+        fatsDifference.setMax(5);
+        fatsDifference.setMin(-5);
         fatsDifference.setReadOnly(true);
-        form.addFormRow(fatsFact, fatsTheory, fatsDifference);
 
         NumberField proteinsFact = new NumberField("Белки фактические");
         proteinsFact.setSuffixComponent(new Span("г"));
@@ -50,8 +52,9 @@ public class ResultCard {
         proteinsTheory.setReadOnly(true);
         NumberField proteinsDifference = new NumberField("Белки отклонение");
         proteinsDifference.setSuffixComponent(new Span("%"));
+        proteinsDifference.setMax(5);
+        proteinsDifference.setMin(-5);
         proteinsDifference.setReadOnly(true);
-        form.addFormRow(proteinsFact, proteinsTheory, proteinsDifference);
 
         NumberField carbonatesFact = new NumberField("Углеводы фактические");
         carbonatesFact.setSuffixComponent(new Span("г"));
@@ -61,19 +64,25 @@ public class ResultCard {
         carbonatesTheory.setReadOnly(true);
         NumberField carbonatesDifference = new NumberField("Углеводы отклонение");
         carbonatesDifference.setSuffixComponent(new Span("%"));
+        carbonatesDifference.setMax(5);
+        carbonatesDifference.setMin(-5);
         carbonatesDifference.setReadOnly(true);
-        form.addFormRow(carbonatesFact, carbonatesTheory, carbonatesDifference);
 
         NumberField caloricityFact = new NumberField("Калорийность фактическая");
-        caloricityFact.setSuffixComponent(new Span("г"));
+        caloricityFact.setSuffixComponent(new Span("ккал"));
         caloricityFact.setReadOnly(true);
         NumberField caloricityTheory = new NumberField("Калорийность теоретическая");
-        caloricityTheory.setSuffixComponent(new Span("г"));
+        caloricityTheory.setSuffixComponent(new Span("ккал"));
         caloricityTheory.setReadOnly(true);
         NumberField caloricityDifference = new NumberField("Калорийность отклонение");
         caloricityDifference.setSuffixComponent(new Span("%"));
+        caloricityDifference.setMax(5);
+        caloricityDifference.setMin(-5);
         caloricityDifference.setReadOnly(true);
-        form.addFormRow(caloricityFact, caloricityTheory, caloricityDifference);
+
+        form.addFormRow(drySubstancesFact, fatsFact, proteinsFact, carbonatesFact, caloricityFact);
+        form.addFormRow(drySubstancesTheory, fatsTheory, proteinsTheory, carbonatesTheory, caloricityTheory);
+        form.addFormRow(drySubstancesDifference, fatsDifference, proteinsDifference, carbonatesDifference, caloricityDifference);
 
         updater.setDrySubstancesFact(drySubstancesFact);
         updater.setDrySubstancesTheory(drySubstancesTheory);

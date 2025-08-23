@@ -37,21 +37,16 @@ public class ProbeCreateView extends VerticalLayout {
 
         Card drySubstancesResearchCard = new Card();
         drySubstancesResearchForm = new DrySubstancesResearchForm(updater);
-        DrySubstancesResearch drySubstancesResearch = new DrySubstancesResearch();
-        drySubstancesResearchForm.setResearch(drySubstancesResearch);
         drySubstancesResearchCard.setTitle("Исследование на сухие остатки");
         drySubstancesResearchCard.add(drySubstancesResearchForm.component());
 
         Card fatsResearchCard = new Card();
         fatsResearchForm = new FatsResearchForm(updater);
-        FatsResearch fatsResearch = new FatsResearch();
-        fatsResearchForm.setResearch(fatsResearch);
         fatsResearchCard.setTitle("Исследование на жиры");
         fatsResearchCard.add(fatsResearchForm.component());
 
         Card proteinsResearchCard = new Card();
         proteinsResearchForm = new ProteinsResearchForm(updater);
-        proteinsResearchForm.setResearch(new ProteinsResearch());
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
 
@@ -65,25 +60,43 @@ public class ProbeCreateView extends VerticalLayout {
             switch (e.getValue()) {
                 case FIRST, SECOND -> {
                     researches.removeAll();
+
+                    DrySubstancesResearch drySubstancesResearch = new DrySubstancesResearch();
+                    probe.setDrySubstancesResearch(drySubstancesResearch);
+                    drySubstancesResearch.setProbe(probe);
+                    drySubstancesResearchForm.setResearch(drySubstancesResearch);
+
+                    FatsResearch fatsResearch = new FatsResearch();
+                    probe.setFatsResearch(fatsResearch);
+                    fatsResearch.setProbe(probe);
+                    fatsResearchForm.setResearch(fatsResearch);
+
                     ProteinsResearch proteinsResearch = new ProteinsResearch();
                     proteinsResearch.setProbe(probe);
                     probe.setProteinsResearch(proteinsResearch);
                     proteinsResearchForm.setResearch(proteinsResearch);
+
                     researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
                 }
                 case THIRD -> {
                     researches.removeAll();
+
+                    DrySubstancesResearch drySubstancesResearch = new DrySubstancesResearch();
+                    probe.setDrySubstancesResearch(drySubstancesResearch);
+                    drySubstancesResearch.setProbe(probe);
+                    drySubstancesResearchForm.setResearch(drySubstancesResearch);
+
                     proteinsResearchForm.setResearch(null);
                     probe.setProteinsResearch(null);
-                    researches.add(drySubstancesResearchCard, fatsResearchCard);
+
+                    fatsResearchForm.setResearch(null);
+                    probe.setFatsResearch(null);
+
+                    researches.add(drySubstancesResearchCard);
                 }
             }
         });
 
-        probe.setDrySubstancesResearch(drySubstancesResearch);
-        drySubstancesResearch.setProbe(probe);
-        probe.setFatsResearch(fatsResearch);
-        fatsResearch.setProbe(probe);
         updater.setProbe(probe);
         probeForm.setEntity(probe);
 
