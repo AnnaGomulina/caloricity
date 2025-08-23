@@ -1,16 +1,5 @@
 package ru.caloricity.probe;
 
-import ru.caloricity.common.CancelButton;
-import ru.caloricity.common.SaveButton;
-import ru.caloricity.common.Updater;
-import ru.caloricity.ingredient.IngredientService;
-import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
-import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
-import ru.caloricity.probe.research.fatsresearch.FatsResearch;
-import ru.caloricity.probe.research.fatsresearch.FatsResearchForm;
-import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
-import ru.caloricity.probe.research.proteinsresearch.ProteinsResearchForm;
-import ru.caloricity.probeingredient.ProbeIngredientGridLayout;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.card.Card;
@@ -18,6 +7,18 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import ru.caloricity.common.CancelButton;
+import ru.caloricity.common.SaveButton;
+import ru.caloricity.common.Updater;
+import ru.caloricity.ingredient.IngredientService;
+import ru.caloricity.probe.research.ResultCard;
+import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
+import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
+import ru.caloricity.probe.research.fatsresearch.FatsResearch;
+import ru.caloricity.probe.research.fatsresearch.FatsResearchForm;
+import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
+import ru.caloricity.probe.research.proteinsresearch.ProteinsResearchForm;
+import ru.caloricity.probeingredient.ProbeIngredientGridLayout;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,21 +33,24 @@ public class ProbeCreateView extends VerticalLayout {
 
     public ProbeCreateView(ProbeService service, IngredientService ingredientService) {
         this.service = service;
+        Updater updater = new Updater();
 
         Card drySubstancesResearchCard = new Card();
-        drySubstancesResearchForm = new DrySubstancesResearchForm();
-        drySubstancesResearchForm.setResearch(new DrySubstancesResearch());
+        drySubstancesResearchForm = new DrySubstancesResearchForm(updater);
+        DrySubstancesResearch drySubstancesResearch = new DrySubstancesResearch();
+        drySubstancesResearchForm.setResearch(drySubstancesResearch);
         drySubstancesResearchCard.setTitle("Исследование на сухие остатки");
         drySubstancesResearchCard.add(drySubstancesResearchForm.component());
 
         Card fatsResearchCard = new Card();
-        fatsResearchForm = new FatsResearchForm();
-        fatsResearchForm.setResearch(new FatsResearch());
+        fatsResearchForm = new FatsResearchForm(updater);
+        FatsResearch fatsResearch = new FatsResearch();
+        fatsResearchForm.setResearch(fatsResearch);
         fatsResearchCard.setTitle("Исследование на жиры");
         fatsResearchCard.add(fatsResearchForm.component());
 
         Card proteinsResearchCard = new Card();
-        proteinsResearchForm = new ProteinsResearchForm();
+        proteinsResearchForm = new ProteinsResearchForm(updater);
         proteinsResearchForm.setResearch(new ProteinsResearch());
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
@@ -56,22 +60,30 @@ public class ProbeCreateView extends VerticalLayout {
         researches.setWrap(true);
         setFlexGrow(1, drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
 
-        Updater updater = new Updater();
+        Probe probe = new Probe();
         probeForm = new ProbeForm(false, updater, e -> {
             switch (e.getValue()) {
                 case FIRST, SECOND -> {
                     researches.removeAll();
-                    proteinsResearchForm.setResearch(new ProteinsResearch());
+                    ProteinsResearch proteinsResearch = new ProteinsResearch();
+                    proteinsResearch.setProbe(probe);
+                    probe.setProteinsResearch(proteinsResearch);
+                    proteinsResearchForm.setResearch(proteinsResearch);
                     researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
                 }
                 case THIRD -> {
                     researches.removeAll();
                     proteinsResearchForm.setResearch(null);
+                    probe.setProteinsResearch(null);
                     researches.add(drySubstancesResearchCard, fatsResearchCard);
                 }
             }
         });
-        Probe probe = new Probe();
+
+        probe.setDrySubstancesResearch(drySubstancesResearch);
+        drySubstancesResearch.setProbe(probe);
+        probe.setFatsResearch(fatsResearch);
+        fatsResearch.setProbe(probe);
         updater.setProbe(probe);
         probeForm.setEntity(probe);
 
@@ -83,7 +95,7 @@ public class ProbeCreateView extends VerticalLayout {
             new SaveButton(this::save)
         );
 
-        add(probeForm, researches, probeIngredientGridLayout.component(), actions);
+        add(probeForm, researches, new ResultCard(updater).component(), probeIngredientGridLayout.component(), actions);
     }
 
     private void save(ClickEvent<Button> event) {

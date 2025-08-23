@@ -55,12 +55,18 @@
             <column name="version" remarks="Номер версии сущности" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="patron_mass_before_extraction_parallel_first"
-                    remarks="Масса патрона до экстракции первая параллель, г" type="DOUBLE">
+            <column name="mass_naveski_parallel_first" remarks="Масса навески первая параллель, г" type="DOUBLE">
                 <constraints nullable="false"/>
             </column>
-            <column name="patron_mass_before_extraction_parallel_second"
-                    remarks="Масса патрона до экстракции вторая параллель, г" type="DOUBLE">
+            <column name="mass_naveski_parallel_second" remarks="Масса навески вторая параллель, г" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patron_mass_empty_parallel_first"
+                    remarks="Масса пустого патрона первая параллель, г" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patron_mass_empty_parallel_second"
+                    remarks="Масса пустого патрона вторая параллель, г" type="DOUBLE">
                 <constraints nullable="false"/>
             </column>
             <column name="patron_mass_after_extraction_parallel_first"

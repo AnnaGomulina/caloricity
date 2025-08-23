@@ -1,6 +1,5 @@
 package ru.caloricity.probeingredient;
 
-import ru.caloricity.ingredient.Ingredient;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -8,6 +7,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
+import ru.caloricity.ingredient.Ingredient;
 
 import java.util.List;
 import java.util.Optional;

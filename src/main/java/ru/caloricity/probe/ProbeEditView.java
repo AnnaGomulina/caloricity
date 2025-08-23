@@ -1,16 +1,5 @@
 package ru.caloricity.probe;
 
-import ru.caloricity.common.CancelButton;
-import ru.caloricity.common.SaveButton;
-import ru.caloricity.common.Updater;
-import ru.caloricity.ingredient.IngredientService;
-import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
-import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
-import ru.caloricity.probe.research.fatsresearch.FatsResearch;
-import ru.caloricity.probe.research.fatsresearch.FatsResearchForm;
-import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
-import ru.caloricity.probe.research.proteinsresearch.ProteinsResearchForm;
-import ru.caloricity.probeingredient.ProbeIngredientGridLayout;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.card.Card;
@@ -21,6 +10,18 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteParameters;
+import ru.caloricity.common.CancelButton;
+import ru.caloricity.common.SaveButton;
+import ru.caloricity.common.Updater;
+import ru.caloricity.ingredient.IngredientService;
+import ru.caloricity.probe.research.ResultCard;
+import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
+import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearchForm;
+import ru.caloricity.probe.research.fatsresearch.FatsResearch;
+import ru.caloricity.probe.research.fatsresearch.FatsResearchForm;
+import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
+import ru.caloricity.probe.research.proteinsresearch.ProteinsResearchForm;
+import ru.caloricity.probeingredient.ProbeIngredientGridLayout;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -40,17 +41,17 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         this.service = service;
 
         Card drySubstancesResearchCard = new Card();
-        drySubstancesResearchForm = new DrySubstancesResearchForm();
+        drySubstancesResearchForm = new DrySubstancesResearchForm(updater);
         drySubstancesResearchCard.setTitle("Исследование на сухие остатки");
         drySubstancesResearchCard.add(drySubstancesResearchForm.component());
 
         Card fatsResearchCard = new Card();
-        fatsResearchForm = new FatsResearchForm();
+        fatsResearchForm = new FatsResearchForm(updater);
         fatsResearchCard.setTitle("Исследование на жиры");
         fatsResearchCard.add(fatsResearchForm.component());
 
         Card proteinsResearchCard = new Card();
-        proteinsResearchForm = new ProteinsResearchForm();
+        proteinsResearchForm = new ProteinsResearchForm(updater);
         proteinsResearchCard.setTitle("Исследование на белки");
         proteinsResearchCard.add(proteinsResearchForm.component());
 
@@ -73,7 +74,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
             new SaveButton(this::save)
         );
 
-        add(probeForm, researches, probeIngredientGridLayout.component(), actions);
+        add(probeForm, researches, new ResultCard(updater).component(), probeIngredientGridLayout.component(), actions);
     }
 
     @Override
