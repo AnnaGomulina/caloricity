@@ -31,14 +31,14 @@ public class ProbeGrid extends Grid<Probe> {
     }
 
     private void initColumns() {
-        addColumn(Probe::getName)
-            .setAutoWidth(true)
-            .setHeader("Наименование пробы")
-            .setTextAlign(ColumnTextAlign.CENTER);
-
         addColumn(Probe::getCode)
             .setAutoWidth(true)
             .setHeader("Код пробы")
+            .setTextAlign(ColumnTextAlign.CENTER);
+
+        addColumn(Probe::getName)
+            .setAutoWidth(true)
+            .setHeader("Наименование пробы")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(Probe::getType)

@@ -41,7 +41,7 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
         form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
-        titrantVolumeFirstField.setSuffixComponent(new Span("г/см³"));
+        titrantVolumeFirstField.setSuffixComponent(new Span("см³"));
         binder.forField(titrantVolumeFirstField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
@@ -49,7 +49,7 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
             .bind(ProteinsResearch::getTitrantVolumeParallelFirst, ProteinsResearch::setTitrantVolumeParallelFirst);
 
         NumberField titrantVolumeSecondField = new NumberField("Объём титранта 2 параллель");
-        titrantVolumeSecondField.setSuffixComponent(new Span("г/см³"));
+        titrantVolumeSecondField.setSuffixComponent(new Span("см³"));
         binder.forField(titrantVolumeSecondField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
@@ -59,7 +59,7 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
         form.addFormRow(titrantVolumeFirstField, titrantVolumeSecondField);
 
         NumberField controlVolumeField = new NumberField("Объём контроля");
-        controlVolumeField.setSuffixComponent(new Span("г/см³"));
+        controlVolumeField.setSuffixComponent(new Span("см³"));
         binder.forField(controlVolumeField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(

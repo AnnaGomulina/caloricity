@@ -28,6 +28,7 @@ import ru.caloricity.probeingredient.ProbeIngredient;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -175,12 +176,12 @@ public class Probe extends BaseEntity {
     }
 
     public Double getFactCaloricity() {
-        if (new AnyNull(proteinsResearch, fatsResearch).is() || new AnyNull(proteinsResearch.getProteinsAverage(), fatsResearch.getFatsAverage(), getFactCarbohydrates()).is()) {
-            return null;
-        }
-        double c = proteinsResearch.getProteinsAverage() * CaloricityCoefficient.PROTEINS
-                   + fatsResearch.getFatsAverage() * CaloricityCoefficient.FATS
-                   + getFactCarbohydrates() * CaloricityCoefficient.CARBOHYDRATES;
+        Double proteins = Optional.ofNullable(proteinsResearch).map(ProteinsResearch::getProteinsAverage).orElse(0.);
+        Double fats = Optional.ofNullable(fatsResearch).map(FatsResearch::getFatsAverage).orElse(0.);
+        Double carbohydrates = Optional.ofNullable(getFactCarbohydrates()).orElse(0.);
+        double c = proteins * CaloricityCoefficient.PROTEINS
+                   + fats * CaloricityCoefficient.FATS
+                   + carbohydrates * CaloricityCoefficient.CARBOHYDRATES;
         return new FourDigitsFormat(c).it();
     }
 
