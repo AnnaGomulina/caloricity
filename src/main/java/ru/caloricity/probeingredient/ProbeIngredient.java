@@ -68,28 +68,28 @@ public class ProbeIngredient extends BaseEntity {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return drySubstances() * (1 - probe.getType().coefficientOfLossesForDrySubstances) * probe.getMassCoefficient();
+        return drySubstances() * probe.getType().coefficientOfLossesForDrySubstances * probe.getMassCoefficient();
     }
 
     public Double proteinsForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return proteins() * (1 - ingredient.getType().coefficientOfLossesForProtein) * probe.getMassCoefficient();
+        return proteins() * ingredient.getType().coefficientOfLossesForProtein * probe.getMassCoefficient();
     }
 
     public Double fatsForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return fats() * (1 - ingredient.getType().coefficientOfLossesForFat) * probe.getMassCoefficient();
+        return fats() * ingredient.getType().coefficientOfLossesForFat * probe.getMassCoefficient();
     }
 
     public Double carbohydratesForProbe() {
         if (probe.getMassCoefficient() == null) {
             return null;
         }
-        return carbohydrates() * (1 - ingredient.getType().coefficientOfLossesForCarbohydrates) * probe.getMassCoefficient();
+        return carbohydrates() * ingredient.getType().coefficientOfLossesForCarbohydrates * probe.getMassCoefficient();
     }
 
     public Double caloricityForProbe() {
