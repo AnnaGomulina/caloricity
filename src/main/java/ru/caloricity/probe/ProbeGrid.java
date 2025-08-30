@@ -8,19 +8,26 @@ import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.RouteParameters;
+import com.vaadin.flow.server.streams.DownloadHandler;
+import com.vaadin.flow.server.streams.DownloadResponse;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.springframework.http.MediaType;
+import org.thymeleaf.TemplateEngine;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.function.Consumer;
 
 public class ProbeGrid extends Grid<Probe> {
     private Consumer<Probe> deleteHandler;
+    private final TemplateEngine templateEngine;
 
-    public ProbeGrid() {
+    public ProbeGrid(TemplateEngine templateEngine) {
         super(Probe.class, false);
+        this.templateEngine = templateEngine;
         initColumns();
         addThemeVariants(GridVariant.LUMO_NO_BORDER);
         addClassNames(LumoUtility.Border.TOP, LumoUtility.BorderColor.CONTRAST_10);
@@ -73,6 +80,15 @@ public class ProbeGrid extends Grid<Probe> {
                 ui.navigate(ProbeEditView.class, new RouteParameters("probeId", probe.getId().toString()))
             )
         );
+        Anchor downloadLink = new Anchor(
+            DownloadHandler.fromInputStream((event) -> {
+                Protocol protocol = new Protocol(probe, templateEngine);
+                return new DownloadResponse(protocol.create(), protocol.filename(), MediaType.APPLICATION_PDF_VALUE, -1);
+            }), "");
+
+        Button downloadProtocolButton = new Button(LineAwesomeIcon.FILE_INVOICE_SOLID.create());
+        downloadProtocolButton.setTooltipText("Скачать протокол");
+        downloadProtocolButton.addClickListener(e -> downloadLink.getElement().callJsFunction("click"));
 
         Button deleteButton = new Button(LineAwesomeIcon.TRASH_ALT.create());
         deleteButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_ERROR);
@@ -83,7 +99,7 @@ public class ProbeGrid extends Grid<Probe> {
             }
         });
 
-        return new HorizontalLayout(editButton, deleteButton);
+        return new HorizontalLayout(editButton, downloadProtocolButton, downloadLink, deleteButton);
     }
 
     private void showDeleteConfirmation(Probe probe) {
