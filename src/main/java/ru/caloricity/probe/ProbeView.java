@@ -11,6 +11,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
+import org.thymeleaf.TemplateEngine;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Пробы")
@@ -18,7 +19,7 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Menu(order = 2, icon = LineAwesomeIconUrl.FLASK_SOLID)
 public class ProbeView extends Div {
 
-    public ProbeView(ProbeService service) {
+    public ProbeView(ProbeService service, TemplateEngine templateEngine) {
         setSizeFull();
 
         Button addButton = new Button("Добавить пробу");
@@ -27,7 +28,7 @@ public class ProbeView extends Div {
         );
         addButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
-        ProbeGrid grid = new ProbeGrid();
+        ProbeGrid grid = new ProbeGrid(templateEngine);
 
         Button searchBtn = new Button("Поиск");
         searchBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
