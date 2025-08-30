@@ -97,22 +97,22 @@ public class Updater {
         }
         drySubstancesFact.setValue(Optional.ofNullable(probe.getDrySubstancesResearch()).map(DrySubstancesResearch::getDrySubstancesAverage).orElse(null));
         drySubstancesTheory.setValue(probe.getTheoryDrySubstances());
-        drySubstancesDifference.setValue(new Difference(drySubstancesFact.getValue(), drySubstancesTheory.getValue()).get());
+        drySubstancesDifference.setValue(probe.getDrySubstancesDifference());
 
         fatsFact.setValue(Optional.ofNullable(probe.getFatsResearch()).map(FatsResearch::getFatsAverage).orElse(null));
         fatsTheory.setValue(probe.getTheoryFats());
-        fatsDifference.setValue(new Difference(fatsFact.getValue(), fatsTheory.getValue()).get());
+        fatsDifference.setValue(probe.getFatsDifference());
 
         proteinsFact.setValue(Optional.ofNullable(probe.getProteinsResearch()).map(ProteinsResearch::getProteinsAverage).orElse(null));
         proteinsTheory.setValue(probe.getTheoryProteins());
-        proteinsDifference.setValue(new Difference(proteinsFact.getValue(), proteinsTheory.getValue()).get());
+        proteinsDifference.setValue(probe.getProteinsDifference());
 
         carbonatesFact.setValue(probe.getFactCarbohydrates());
         carbonatesTheory.setValue(probe.getTheoryCarbohydrates());
-        carbonatesDifference.setValue(new Difference(carbonatesFact.getValue(), carbonatesTheory.getValue()).get());
+        carbonatesDifference.setValue(probe.getCarbohydratesDifference());
 
         caloricityFact.setValue(probe.getFactCaloricity());
         caloricityTheory.setValue(probe.getTheoryCaloricity());
-        caloricityDifference.setValue(new Difference(caloricityFact.getValue(), caloricityTheory.getValue()).get());
+        caloricityDifference.setValue(probe.getCaloricityDifference());
     }
 }

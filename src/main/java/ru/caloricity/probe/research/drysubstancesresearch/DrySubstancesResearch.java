@@ -60,14 +60,16 @@ public class DrySubstancesResearch extends BaseEntity {
         if (new AnyNull(byuksaAfterDryingParallelFirst, byuksaParallelFirst, massNaveskiParallelFirst, probe.getMassFact()).is()) {
             return null;
         }
-        return (byuksaAfterDryingParallelFirst - byuksaParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
+        double c = (byuksaAfterDryingParallelFirst - byuksaParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
+        return new FourDigitsFormat(c).it();
     }
 
     public Double getDrySubstancesParallelSecond() {
         if (new AnyNull(byuksaAfterDryingParallelSecond, byuksaParallelSecond, massNaveskiParallelSecond, probe.getMassFact()).is()) {
             return null;
         }
-        return (byuksaAfterDryingParallelSecond - byuksaParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
+        double c =  (byuksaAfterDryingParallelSecond - byuksaParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
+        return new FourDigitsFormat(c).it();
     }
 
     /**

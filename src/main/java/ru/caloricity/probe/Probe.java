@@ -20,6 +20,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
 import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
+import ru.caloricity.common.Difference;
 import ru.caloricity.common.FourDigitsFormat;
 import ru.caloricity.probe.research.drysubstancesresearch.DrySubstancesResearch;
 import ru.caloricity.probe.research.fatsresearch.FatsResearch;
@@ -183,6 +184,41 @@ public class Probe extends BaseEntity {
                    + fats * CaloricityCoefficient.FATS
                    + carbohydrates * CaloricityCoefficient.CARBOHYDRATES;
         return new FourDigitsFormat(c).it();
+    }
+
+    public Double getDrySubstancesDifference() {
+        if (new AnyNull(drySubstancesResearch, getTheoryDrySubstances()).is()) {
+            return null;
+        }
+        return new Difference(drySubstancesResearch.getDrySubstancesAverage(), getTheoryDrySubstances()).get();
+    }
+
+    public Double getFatsDifference() {
+        if (new AnyNull(fatsResearch, getTheoryFats()).is()) {
+            return null;
+        }
+        return new Difference(fatsResearch.getFatsAverage(), getTheoryFats()).get();
+    }
+
+    public Double getProteinsDifference() {
+        if (new AnyNull(proteinsResearch, getTheoryProteins()).is()) {
+            return null;
+        }
+        return new Difference(proteinsResearch.getProteinsAverage(), getTheoryProteins()).get();
+    }
+
+    public Double getCarbohydratesDifference() {
+        if (new AnyNull(getFactCarbohydrates(), getTheoryCarbohydrates()).is()) {
+            return null;
+        }
+        return new Difference(getFactCarbohydrates(), getTheoryCarbohydrates()).get();
+    }
+
+    public Double getCaloricityDifference() {
+        if (new AnyNull(getFactCaloricity(), getTheoryCaloricity()).is()) {
+            return null;
+        }
+        return new Difference(getFactCaloricity(), getTheoryCaloricity()).get();
     }
 
     @Override

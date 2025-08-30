@@ -45,18 +45,20 @@ public class ProteinsResearch extends BaseEntity {
     @NotNull
     private Double titrantVolumeParallelSecond;
 
-    private Double getProteinsParallelFirst() {
+    public Double getProteinsParallelFirst() {
         if (new AnyNull(coefficient, titrantVolumeParallelFirst, controlVolume, massNaveskiParallelFirst, probe.getMassFact()).is()) {
             return null;
         }
-        return 0.0014 * coefficient * (titrantVolumeParallelFirst - controlVolume) * 6.25 / massNaveskiParallelFirst * probe.getMassFact();
+        double c = 0.0014 * coefficient * (titrantVolumeParallelFirst - controlVolume) * 6.25 / massNaveskiParallelFirst * probe.getMassFact();
+        return new FourDigitsFormat(c).it();
     }
 
-    private Double getProteinsParallelSecond() {
+    public Double getProteinsParallelSecond() {
         if (new AnyNull(coefficient, titrantVolumeParallelSecond, controlVolume, massNaveskiParallelSecond, probe.getMassFact()).is()) {
             return null;
         }
-        return 0.0014 * coefficient * (titrantVolumeParallelSecond - controlVolume) * 6.25 / massNaveskiParallelSecond * probe.getMassFact();
+        double c = 0.0014 * coefficient * (titrantVolumeParallelSecond - controlVolume) * 6.25 / massNaveskiParallelSecond * probe.getMassFact();
+        return new FourDigitsFormat(c).it();
     }
 
     public Double getProteinsAverage() {
