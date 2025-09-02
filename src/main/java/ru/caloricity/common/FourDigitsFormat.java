@@ -1,6 +1,8 @@
 package ru.caloricity.common;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class FourDigitsFormat {
     private final Double value;
@@ -10,6 +12,8 @@ public class FourDigitsFormat {
     }
 
     public Double it() {
-        return Double.valueOf(new DecimalFormat("#.####").format(value));
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        return Double.valueOf(df.format(value));
     }
 }

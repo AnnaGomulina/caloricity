@@ -18,6 +18,8 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -37,37 +39,39 @@ public class ProbeIngredientGrid extends Grid<ProbeIngredient> {
     }
 
     private void initColumns() {
+        var df = new DecimalFormat("#.####");
+        df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         addColumn(probeIngredient -> probeIngredient.getIngredient().getName())
             .setHeader("Ингредиент")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(ProbeIngredient::getGross)
-            .setRenderer(new NumberRenderer<>(ProbeIngredient::getGross, new DecimalFormat("#.####")))
+            .setRenderer(new NumberRenderer<>(ProbeIngredient::getGross, df))
             .setHeader("Масса брутто (г)")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(ProbeIngredient::getNet)
-            .setRenderer(new NumberRenderer<>(ProbeIngredient::getNet, new DecimalFormat("#.####")))
+            .setRenderer(new NumberRenderer<>(ProbeIngredient::getNet, df))
             .setHeader("Масса нетто (г)")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(ProbeIngredient::drySubstances)
-            .setRenderer(new NumberRenderer<>(ProbeIngredient::drySubstances, new DecimalFormat("#.####")))
+            .setRenderer(new NumberRenderer<>(ProbeIngredient::drySubstances, df))
             .setHeader("Сухие вещества (г)")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(ProbeIngredient::proteins)
-            .setRenderer(new NumberRenderer<>(ProbeIngredient::proteins, new DecimalFormat("#.####")))
+            .setRenderer(new NumberRenderer<>(ProbeIngredient::proteins, df))
             .setHeader("Белки (г)")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(ProbeIngredient::fats)
-            .setRenderer(new NumberRenderer<>(ProbeIngredient::fats, new DecimalFormat("#.####")))
+            .setRenderer(new NumberRenderer<>(ProbeIngredient::fats, df))
             .setHeader("Жиры (г)")
             .setTextAlign(ColumnTextAlign.CENTER);
 
         addColumn(ProbeIngredient::carbohydrates)
-            .setRenderer(new NumberRenderer<>(ProbeIngredient::carbohydrates, new DecimalFormat("#.####")))
+            .setRenderer(new NumberRenderer<>(ProbeIngredient::carbohydrates, df))
             .setHeader("Углеводы (г)")
             .setTextAlign(ColumnTextAlign.CENTER);
 
