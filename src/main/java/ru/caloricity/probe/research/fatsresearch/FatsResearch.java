@@ -62,7 +62,7 @@ public class FatsResearch extends BaseEntity {
             return null;
         }
         Double massParallelFirst = (patronMassEmptyParallelFirst + massNaveskiParallelFirst - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
-        return Double.valueOf(new DecimalFormat("#.####").format(massParallelFirst));
+        return new FourDigitsFormat(massParallelFirst).it();
     }
 
     public Double getFatsParallelSecond() {
@@ -70,7 +70,7 @@ public class FatsResearch extends BaseEntity {
             return null;
         }
         Double massParallelSecond = (patronMassEmptyParallelSecond + massNaveskiParallelSecond - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
-        return Double.valueOf(new DecimalFormat("#.####").format(massParallelSecond));
+        return new FourDigitsFormat(massParallelSecond).it();
     }
 
     public Double getFatsAverage() {
