@@ -17,7 +17,6 @@ import ru.caloricity.common.BaseEntity;
 import ru.caloricity.common.FourDigitsFormat;
 import ru.caloricity.probe.Probe;
 
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 @Getter
