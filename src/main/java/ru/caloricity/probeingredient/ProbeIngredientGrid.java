@@ -18,8 +18,6 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -39,8 +37,7 @@ public class ProbeIngredientGrid extends Grid<ProbeIngredient> {
     }
 
     private void initColumns() {
-        var df = new DecimalFormat("#.####");
-        df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        var df = new DecimalFormat("#.##");
         addColumn(probeIngredient -> probeIngredient.getIngredient().getName())
             .setHeader("Ингредиент")
             .setTextAlign(ColumnTextAlign.CENTER);

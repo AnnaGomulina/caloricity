@@ -2,15 +2,15 @@ package ru.caloricity.common;
 
 import java.text.DecimalFormat;
 
-public class FourDigitsFormat {
+public class TwoDigitsFormat {
     private final Double value;
 
-    public FourDigitsFormat(Double value) {
+    public TwoDigitsFormat(Double value) {
         this.value = value;
     }
 
     public Double it() {
-        DecimalFormat df = new DecimalFormat("#,####");
+        DecimalFormat df = new DecimalFormat("#,##");
         return Double.valueOf(df.format(value));
     }
 }
