@@ -50,6 +50,10 @@
             border: 2px solid #ddd;
         }
 
+        .noBorder {
+            border: 0 solid #ddd;
+        }
+
         .frac {
             display: inline-block;
             position: relative;
@@ -74,10 +78,15 @@
     <h1>ПРОТОКОЛ</h1>
     <p class="center" th:utext="'от ' + ${#temporals.format(probe.createdAt, 'dd-MM-yyyy')}">09-02-2022</p>
     <p th:utext="'Код пробы: ' + ${probe.getCode()}">Код пробы: 312-321</p>
-    <p th:utext="'Тип пробы: ' + ${probe.getType().russianName}">Код пробы: 312-321</p>
     <p th:utext="'Наименование пробы: ' + ${probe.getName()}">Код пробы: 312-321</p>
-    <p th:utext="'Масса пробы теоретическая: ' + ${probe.getMassTheory()}">Код пробы: 312-321</p>
-    <p th:utext="'Масса пробы фактическая: ' + ${probe.getMassFact()}">Код пробы: 312-321</p>
+    <table class="table">
+        <tbody>
+        <tr>
+            <td th:utext="'Масса пробы теоретическая: ' + ${probe.getMassTheory()}"></td>
+            <td th:utext="'Масса пробы фактическая: ' + ${probe.getMassFact()}">/</td>
+        </tr>
+        </tbody>
+    </table>
     <h2>Исследования</h2>
     <div th:if="${probe.getDrySubstancesResearch()} != null">
         <h3>Сухие вещества, МУ 4237</h3>
@@ -136,9 +145,14 @@
     </div>
     <div th:if="${probe.getProteinsResearch()} != null">
         <h3>Белки, МУ 4237</h3>
-        <p th:utext="'Объём контроля: ' + ${probe.getProteinsResearch().getControlVolume()}">Код пробы:
-            312-321</p>
-        <p th:utext="'Коэффициент: ' + ${probe.getProteinsResearch().getCoefficient()}">Код пробы: 312-321</p>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td th:utext="'Объём контроля: ' + ${probe.getProteinsResearch().getControlVolume()}"></td>
+                <td th:utext="'Коэффициент: ' + ${probe.getProteinsResearch().getCoefficient()}">/</td>
+            </tr>
+            </tbody>
+        </table>
         <table class="table table-bordered">
             <tbody>
             <tr>
@@ -301,7 +315,20 @@
         </tr>
         </tbody>
     </table>
-    <p>Исполнитель: __________ ________________________</p>
+    <table class="table">
+        <tbody>
+        <tr class="noBorder">
+            <td class="noBorder">Исполнитель:</td>
+            <td class="noBorder">_________________</td>
+            <td class="noBorder">_________________________________________________________________</td>
+        </tr>
+        <tr class="noBorder">
+            <td class="noBorder"></td>
+            <td class="noBorder">(подпись)</td>
+            <td class="noBorder">(Ф.И.О.)</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
