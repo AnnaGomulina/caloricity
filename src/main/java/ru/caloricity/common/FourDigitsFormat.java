@@ -1,6 +1,6 @@
 package ru.caloricity.common;
 
-import java.text.DecimalFormat;
+import org.decimal4j.util.DoubleRounder;
 
 public class FourDigitsFormat {
     private final Double value;
@@ -10,7 +10,6 @@ public class FourDigitsFormat {
     }
 
     public Double it() {
-        DecimalFormat df = new DecimalFormat("#,####");
-        return Double.valueOf(df.format(value));
+        return DoubleRounder.round(value, 4);
     }
 }

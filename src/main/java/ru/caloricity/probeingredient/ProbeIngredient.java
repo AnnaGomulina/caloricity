@@ -16,6 +16,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
 import ru.caloricity.ingredient.Ingredient;
 import ru.caloricity.probe.CaloricityCoefficient;
@@ -65,14 +66,14 @@ public class ProbeIngredient extends BaseEntity {
     }
 
     public Double drySubstancesForProbe() {
-        if (probe.getMassCoefficient() == null) {
+        if (new AnyNull(probe.getMassCoefficient(), probe.getType()).is()) {
             return null;
         }
         return drySubstances() * probe.getType().coefficientOfLossesForDrySubstances * probe.getMassCoefficient();
     }
 
     public Double proteinsForProbe() {
-        if (probe.getMassCoefficient() == null) {
+        if (new AnyNull(probe.getMassCoefficient()).is()) {
             return null;
         }
         return proteins() * ingredient.getType().coefficientOfLossesForProtein * probe.getMassCoefficient();
