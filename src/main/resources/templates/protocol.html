@@ -255,7 +255,10 @@
             <tbody>
             <tr>
                 <td>Углеводы, г/порц.</td>
-                <td th:text="${probe.getDrySubstancesResearch().getDrySubstancesAverage()} + ' - (' + ${probe.getProteinsResearch().getProteinsAverage()} + ' + ' + ${probe.getFatsResearch().getFatsAverage()} + ' + ' + ${probe.getMinerals()} + ')' + ' = ' + ${probe.getFactCarbohydrates()}">
+                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().getDrySubstancesAverage()} + ' - (' + ${probe.getProteinsResearch().getProteinsAverage()} + ' + ' + ${probe.getFatsResearch().getFatsAverage()} + ' + ' + ${probe.getMinerals()} + ')' + ' = ' + ${probe.getFactCarbohydrates()}">
+                    100
+                </td>
+                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().getDrySubstancesAverage()} + ' - ' + ${probe.getMinerals()} + ' = ' + ${probe.getFactCarbohydrates()}">
                     100
                 </td>
             </tr>
@@ -268,7 +271,10 @@
             <tbody>
             <tr>
                 <td>Энергетическая ценность, ккал/порц.</td>
-                <td th:text="'4 * ' + ${probe.getProteinsResearch().getProteinsAverage()} + ' + 9 * ' + ${probe.getFatsResearch().getFatsAverage()} + ' + 4 * ' + ${probe.getFactCarbohydrates()} + ' = ' + ${probe.getFactCaloricity()}">
+                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="'4 * ' + ${probe.getProteinsResearch().getProteinsAverage()} + ' + 9 * ' + ${probe.getFatsResearch().getFatsAverage()} + ' + 4 * ' + ${probe.getFactCarbohydrates()} + ' = ' + ${probe.getFactCaloricity()}">
+                    100
+                </td>
+                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="'4 * ' + ${probe.getFactCarbohydrates()} + ' = ' + ${probe.getFactCaloricity()}">
                     100
                 </td>
             </tr>
