@@ -63,7 +63,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
         probeForm = new ProbeForm(true, updater, e -> {
             switch (e.getValue()) {
                 case FIRST, SECOND -> researches.add(drySubstancesResearchCard, fatsResearchCard, proteinsResearchCard);
-                case THIRD -> researches.add(drySubstancesResearchCard, fatsResearchCard);
+                case THIRD -> researches.add(drySubstancesResearchCard);
             }
         });
 
