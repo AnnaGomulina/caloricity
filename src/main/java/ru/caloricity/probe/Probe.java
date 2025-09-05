@@ -1,6 +1,8 @@
 package ru.caloricity.probe;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,6 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
+import ru.caloricity.LocalDateConverter;
 import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
 import ru.caloricity.common.Difference;
@@ -27,6 +30,7 @@ import ru.caloricity.probe.research.fatsresearch.FatsResearch;
 import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
 import ru.caloricity.probeingredient.ProbeIngredient;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,6 +75,16 @@ public class Probe extends BaseEntity {
     @Builder.Default
     @NotNull
     private Boolean isReady = false;
+
+    @Comment("Дата начала исследования")
+    @Convert(converter = LocalDateConverter.class)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    protected LocalDate startDate;
+
+    @Comment("Дата окончания исследования")
+    @Convert(converter = LocalDateConverter.class)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    protected LocalDate endDate;
 
     @OneToMany(mappedBy = "probe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Builder.Default
