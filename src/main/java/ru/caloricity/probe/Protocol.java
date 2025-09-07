@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.format.DateTimeFormatter;
 
 public class Protocol {
     private final Probe probe;
@@ -29,6 +30,6 @@ public class Protocol {
     }
 
     public String filename() {
-        return "protocol_" + probe.getCode() + ".pdf";
+        return "protocol_" + probe.getCode() + "_" + probe.getCreatedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".pdf";
     }
 }
