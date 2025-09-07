@@ -1,6 +1,7 @@
 package ru.caloricity.probe;
 
 import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.select.Select;
@@ -25,6 +26,19 @@ public class ProbeForm extends FormLayout {
     public ProbeForm(boolean isEdit, Updater updater, Consumer<AbstractField.ComponentValueChangeEvent<Select<ProbeType>, ProbeType>> probeTypeValueChangeListener) {
         this.updater = updater;
         binder = new Binder<>(Probe.class);
+
+        DatePicker startDatePicker = new DatePicker("Дата начала исследования");
+        binder.forField(startDatePicker)
+                .asRequired("Обязательное поле")
+                .bind(Probe::getStartDate, Probe::setStartDate);
+        add(startDatePicker);
+
+        DatePicker endDatePicker = new DatePicker("Дата окончания исследования");
+        binder.forField(endDatePicker)
+                .bind(Probe::getEndDate, Probe::setEndDate);
+        add(endDatePicker);
+
+        startDatePicker.addValueChangeListener(e -> endDatePicker.setMin(e.getValue()));
 
         TextField codeField = new TextField("Код пробы");
         binder.forField(codeField)
