@@ -11,6 +11,7 @@ plugins {
 	id 'java'
 	id 'com.vaadin'
 	id 'checkstyle'
+	id 'edu.sc.seis.launch4j' version '4.0.0'
 }
 
 checkstyle {
@@ -23,6 +24,27 @@ checkstyle {
 //vaadin {
 //	productionMode = true
 //}
+
+launch4j {
+	mainClassName = 'ru.caloricity.Application'
+	outfile = "caloricity_0.0.1.exe"
+	icon = "${projectDir}/src/main/resources/images/ponchik.ico"
+	bundledJrePath = 'jre/'
+	jreMinVersion = '21'
+
+	headerType = 'console'
+	stayAlive = true
+	dontWrapJar = false
+	chdir = '.'
+
+	jvmOptions = [
+			'-Xmx512m',
+			'-Xms256m',
+			'-Dfile.encoding=UTF-8',
+			'-Dspring.profiles.active=prod',
+			'-Dvaadin.productionMode=true'
+	]
+}
 
 repositories {
 	mavenCentral()
