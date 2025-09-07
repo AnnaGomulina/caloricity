@@ -25,8 +25,10 @@ public class EmptyResearchForm<T> implements ResearchForm<T> {
     }
 
     public void updateCalculatedFields() {
-        binder.writeBeanAsDraft(formDataObject);
-        updater.trigger();
+        if (formDataObject != null) {
+            binder.writeBeanAsDraft(formDataObject);
+            updater.trigger();
+        }
     }
 
     @Override

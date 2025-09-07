@@ -88,6 +88,7 @@ public class ProbeGrid extends Grid<Probe> {
 
         Button downloadProtocolButton = new Button(LineAwesomeIcon.FILE_INVOICE_SOLID.create());
         downloadProtocolButton.setTooltipText("Скачать протокол");
+        downloadProtocolButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         downloadProtocolButton.addClickListener(e -> downloadLink.getElement().callJsFunction("click"));
 
         Button deleteButton = new Button(LineAwesomeIcon.TRASH_ALT.create());
