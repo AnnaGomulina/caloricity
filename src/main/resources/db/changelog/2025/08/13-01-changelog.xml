@@ -150,6 +150,12 @@
             <column name="created_at" remarks="Дата и время создания" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
+            <column name="start_date" remarks="Дата начала исследования" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" remarks="Дата окончания исследования" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
             <column name="updated_at" remarks="Дата и время редактирования" type="DATETIME">
                 <constraints nullable="false"/>
             </column>

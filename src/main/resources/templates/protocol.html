@@ -76,7 +76,16 @@
 
 <div>
     <h1>ПРОТОКОЛ</h1>
-    <p class="center" th:utext="'от ' + ${#temporals.format(probe.createdAt, 'dd-MM-yyyy')}">09-02-2022</p>
+    <table class="table">
+        <tbody>
+        <tr class="noBorder">
+            <td class="noBorder" style="text-align: left;"
+                th:text="'Дата начала исследования: ' + ${#temporals.format(probe.getStartDate(), 'dd.MM.yyyy')}"></td>
+            <td class="noBorder" style="text-align: right;"
+                th:text="'Дата окончания исследования: ' + ${#temporals.format(probe.getEndDate(), 'dd.MM.yyyy')}"></td>
+        </tr>
+        </tbody>
+    </table>
     <p th:utext="'Код пробы: ' + ${probe.getCode()}">Код пробы: 312-321</p>
     <p th:utext="'Наименование пробы: ' + ${probe.getName()}">Код пробы: 312-321</p>
     <table class="table">
