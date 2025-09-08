@@ -21,9 +21,9 @@ checkstyle {
 	showViolations = true
 }
 
-//vaadin {
-//	productionMode = true
-//}
+vaadin {
+	productionMode = true
+}
 
 launch4j {
 	mainClassName = 'ru.caloricity.Application'
