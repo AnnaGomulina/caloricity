@@ -20,7 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.proxy.HibernateProxy;
-import ru.caloricity.LocalDateConverter;
+import ru.caloricity.common.LocalDateConverter;
 import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
 import ru.caloricity.common.Difference;

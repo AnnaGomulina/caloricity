@@ -4,9 +4,8 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -30,7 +29,7 @@ import java.util.List;
 @AnonymousAllowed
 public class MainLayout extends AppLayout {
 
-    private H1 viewTitle;
+    private H2 viewTitle;
 
     public MainLayout() {
         setPrimarySection(Section.DRAWER);
@@ -42,16 +41,16 @@ public class MainLayout extends AppLayout {
         DrawerToggle toggle = new DrawerToggle();
         toggle.setAriaLabel("Menu toggle");
 
-        viewTitle = new H1();
+        viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
         addToNavbar(true, toggle, viewTitle);
     }
 
     private void addDrawerContent() {
-        Span appName = new Span("Caloricity");
-        appName.addClassNames(LumoUtility.FontWeight.SEMIBOLD, LumoUtility.FontSize.XLARGE, LumoUtility.Margin.MEDIUM);
+        H2 appName = new H2("Caloricity");
         HorizontalLayout horizontalLayout = new HorizontalLayout(appName, createLogo());
+        horizontalLayout.setPadding(true);
         horizontalLayout.setAlignItems(FlexComponent.Alignment.CENTER);
 
         Header header = new Header(horizontalLayout);
@@ -65,7 +64,7 @@ public class MainLayout extends AppLayout {
     private Avatar createLogo() {
         Avatar ponchik = new Avatar();
         DownloadHandler imageHandler = DownloadHandler.forClassResource(
-            getClass(), "/images/ponchikbig.png", "ponchikbig123.png"
+                getClass(), "/images/ponchikbig.png", "ponchikbig123.png"
         );
         ponchik.setImageHandler(imageHandler);
         return ponchik;

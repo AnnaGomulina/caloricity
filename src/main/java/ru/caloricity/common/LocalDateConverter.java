@@ -1,4 +1,4 @@
-package ru.caloricity;
+package ru.caloricity.common;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
