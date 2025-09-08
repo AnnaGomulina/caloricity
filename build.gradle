@@ -27,9 +27,8 @@ checkstyle {
 
 launch4j {
 	mainClassName = 'ru.caloricity.Application'
-	outfile = "caloricity_0.0.1.exe"
+	outfile = "caloricity_0.0.2.exe"
 	icon = "${projectDir}/src/main/resources/images/ponchik.ico"
-	bundledJrePath = 'jre/'
 	jreMinVersion = '21'
 
 	headerType = 'console'
@@ -42,7 +41,8 @@ launch4j {
 			'-Xms256m',
 			'-Dfile.encoding=UTF-8',
 			'-Dspring.profiles.active=prod',
-			'-Dvaadin.productionMode=true'
+			'-Dvaadin.productionMode=true',
+			'-Dspring.devtools.add-properties=false'
 	]
 }
 
