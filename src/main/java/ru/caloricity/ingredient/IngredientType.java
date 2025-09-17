@@ -9,7 +9,7 @@ public enum IngredientType {
     /** Животный */
     ANIMAL(1 - 0.08, 1 - 0.25, 1 - 0),
     /** Растительный */
-    VEGETABLE(1 - 0.05, 1 - 0.09, 1 - 0.09);
+    VEGETABLE(1 - 0.05, 1 - 0.06, 1 - 0.09);
 
     public final double coefficientOfLossesForProtein;
     public final double coefficientOfLossesForFat;
