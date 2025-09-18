@@ -56,19 +56,33 @@ public class FatsResearch extends BaseEntity {
     @OneToOne(mappedBy = "fatsResearch")
     private Probe probe;
 
-    public Double getFatsParallelFirst() {
-        if (new AnyNull(patronMassEmptyParallelFirst, patronMassAfterExtractionParallelFirst).is()) {
+    public Double patronMassBeforeExtractionParallelFirst() {
+        if (new AnyNull(patronMassEmptyParallelFirst, massNaveskiParallelFirst).is()) {
             return null;
         }
-        Double massParallelFirst = (patronMassEmptyParallelFirst + massNaveskiParallelFirst - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
+        return new FourDigitsFormat(patronMassEmptyParallelFirst + massNaveskiParallelFirst).it();
+    }
+
+    public Double patronMassBeforeExtractionParallelSecond() {
+        if (new AnyNull(patronMassEmptyParallelSecond, massNaveskiParallelSecond).is()) {
+            return null;
+        }
+        return new FourDigitsFormat(patronMassEmptyParallelSecond + massNaveskiParallelSecond).it();
+    }
+
+    public Double getFatsParallelFirst() {
+        if (new AnyNull(patronMassBeforeExtractionParallelFirst(), patronMassAfterExtractionParallelFirst, massNaveskiParallelFirst).is()) {
+            return null;
+        }
+        Double massParallelFirst = (patronMassBeforeExtractionParallelFirst() - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
         return new FourDigitsFormat(massParallelFirst).it();
     }
 
     public Double getFatsParallelSecond() {
-        if (new AnyNull(patronMassEmptyParallelSecond, patronMassAfterExtractionParallelSecond).is()) {
+        if (new AnyNull(patronMassBeforeExtractionParallelSecond(), patronMassAfterExtractionParallelSecond, massNaveskiParallelSecond).is()) {
             return null;
         }
-        Double massParallelSecond = (patronMassEmptyParallelSecond + massNaveskiParallelSecond - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
+        Double massParallelSecond = (patronMassBeforeExtractionParallelSecond() - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
         return new FourDigitsFormat(massParallelSecond).it();
     }
 
