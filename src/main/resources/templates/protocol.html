@@ -47,11 +47,11 @@
 
         th, td {
             padding: 1px 1px;
-            border: 2px solid #ddd;
+            border: 1px solid #111;
         }
 
         .noBorder {
-            border: 0 solid #ddd;
+            border: 0;
         }
 
         .frac {
@@ -86,10 +86,12 @@
         </tr>
         </tbody>
     </table>
-    <p th:utext="'Код пробы: ' + ${probe.getCode()}">Код пробы: 312-321</p>
-    <p th:utext="'Наименование пробы: ' + ${probe.getName()}">Код пробы: 312-321</p>
     <table class="table">
         <tbody>
+        <tr>
+            <td th:utext="'Код пробы: ' + ${probe.getCode()}">Код пробы: 312-321</td>
+            <td th:utext="'Наименование пробы: ' + ${probe.getName()}">Наименование пробы</td>
+        </tr>
         <tr>
             <td th:utext="'Масса пробы теоретическая: ' + ${probe.getMassTheory()}"></td>
             <td th:utext="'Масса пробы фактическая: ' + ${probe.getMassFact()}">/</td>
