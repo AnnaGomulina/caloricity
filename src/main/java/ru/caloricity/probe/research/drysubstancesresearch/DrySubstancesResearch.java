@@ -56,6 +56,20 @@ public class DrySubstancesResearch extends BaseEntity {
     @OneToOne(mappedBy = "drySubstancesResearch")
     private Probe probe;
 
+    public Double byuksaBeforeDryingParallelFirst() {
+        if (new AnyNull(byuksaParallelFirst, massNaveskiParallelFirst).is()) {
+            return null;
+        }
+        return new FourDigitsFormat(byuksaParallelFirst + massNaveskiParallelFirst).it();
+    }
+
+    public Double byuksaBeforeDryingParallelSecond() {
+        if (new AnyNull(byuksaParallelSecond, massNaveskiParallelSecond).is()) {
+            return null;
+        }
+        return new FourDigitsFormat(byuksaParallelSecond + massNaveskiParallelSecond).it();
+    }
+
     public Double getDrySubstancesParallelFirst() {
         if (new AnyNull(byuksaAfterDryingParallelFirst, byuksaParallelFirst, massNaveskiParallelFirst, probe.getMassFact()).is()) {
             return null;

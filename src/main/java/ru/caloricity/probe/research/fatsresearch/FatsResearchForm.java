@@ -14,8 +14,10 @@ import java.util.Optional;
 public class FatsResearchForm implements ResearchForm<FatsResearch> {
     private final EmptyResearchForm<FatsResearch> emptyResearchForm;
     private final Binder<FatsResearch> binder;
+    private final Updater updater;
 
     public FatsResearchForm(Updater updater) {
+        this.updater = updater;
         binder = new Binder<>(FatsResearch.class);
         emptyResearchForm = new EmptyResearchForm<>(binder, updater);
     }
@@ -59,6 +61,18 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
             .bind(FatsResearch::getMassNaveskiParallelSecond, FatsResearch::setMassNaveskiParallelSecond);
 
         form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
+
+        NumberField patronMassBeforeExtractionParallelFirst = new NumberField("Масса патрона с пробой до экстракции 1 параллель");
+        patronMassBeforeExtractionParallelFirst.setSuffixComponent(new Span("г"));
+        patronMassBeforeExtractionParallelFirst.setReadOnly(true);
+        updater.setPatronMassBeforeExtractionParallelFirst(patronMassBeforeExtractionParallelFirst);
+
+        NumberField patronMassBeforeExtractionParallelSecond = new NumberField("Масса патрона с пробой до экстракции 2 параллель");
+        patronMassBeforeExtractionParallelSecond.setSuffixComponent(new Span("г"));
+        patronMassBeforeExtractionParallelSecond.setReadOnly(true);
+        updater.setPatronMassBeforeExtractionParallelSecond(patronMassBeforeExtractionParallelSecond);
+
+        form.addFormRow(patronMassBeforeExtractionParallelFirst, patronMassBeforeExtractionParallelSecond);
 
         NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции 1 параллель");
         patronAfterFirstField.setSuffixComponent(new Span("г"));

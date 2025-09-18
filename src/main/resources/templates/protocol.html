@@ -197,7 +197,7 @@
                             th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelSecond()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
                       <span class="denominator" th:text="${probe.getProteinsResearch().getMassNaveskiParallelSecond()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getProteinsResearch().getProteinsParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getProteinsResearch().getProteinsParallelSecond()}">= 12</span>
                 </td>
             </tr>
             <tr>

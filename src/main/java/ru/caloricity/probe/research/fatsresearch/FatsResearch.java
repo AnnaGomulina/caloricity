@@ -71,7 +71,7 @@ public class FatsResearch extends BaseEntity {
     }
 
     public Double getFatsParallelFirst() {
-        if (new AnyNull(patronMassBeforeExtractionParallelFirst(), patronMassAfterExtractionParallelFirst, massNaveskiParallelFirst).is()) {
+        if (new AnyNull(patronMassBeforeExtractionParallelFirst(), patronMassAfterExtractionParallelFirst, massNaveskiParallelFirst, probe.getMassFact()).is()) {
             return null;
         }
         Double massParallelFirst = (patronMassBeforeExtractionParallelFirst() - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
@@ -79,7 +79,7 @@ public class FatsResearch extends BaseEntity {
     }
 
     public Double getFatsParallelSecond() {
-        if (new AnyNull(patronMassBeforeExtractionParallelSecond(), patronMassAfterExtractionParallelSecond, massNaveskiParallelSecond).is()) {
+        if (new AnyNull(patronMassBeforeExtractionParallelSecond(), patronMassAfterExtractionParallelSecond, massNaveskiParallelSecond, probe.getMassFact()).is()) {
             return null;
         }
         Double massParallelSecond = (patronMassBeforeExtractionParallelSecond() - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
