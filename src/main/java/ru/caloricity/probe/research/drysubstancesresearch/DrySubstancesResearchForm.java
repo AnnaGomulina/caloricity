@@ -14,8 +14,10 @@ import java.util.Optional;
 public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesResearch> {
     private final EmptyResearchForm<DrySubstancesResearch> emptyResearchForm;
     private final Binder<DrySubstancesResearch> binder;
+    private final Updater updater;
 
     public DrySubstancesResearchForm(Updater updater) {
+        this.updater = updater;
         binder = new Binder<>(DrySubstancesResearch.class);
         emptyResearchForm = new EmptyResearchForm<>(binder, updater);
     }
@@ -57,6 +59,18 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
             .bind(DrySubstancesResearch::getMassNaveskiParallelSecond, DrySubstancesResearch::setMassNaveskiParallelSecond);
 
         form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
+
+        NumberField byuksaBeforeDryingParallelFirst = new NumberField("Масса бюксы с пробой до высушивания 1 параллель");
+        byuksaBeforeDryingParallelFirst.setSuffixComponent(new Span("г"));
+        byuksaBeforeDryingParallelFirst.setReadOnly(true);
+        updater.setByuksaBeforeDryingParallelFirst(byuksaBeforeDryingParallelFirst);
+
+        NumberField byuksaBeforeDryingParallelSecond = new NumberField("Масса бюксы с пробой до высушивания 2 параллель");
+        byuksaBeforeDryingParallelSecond.setSuffixComponent(new Span("г"));
+        byuksaBeforeDryingParallelSecond.setReadOnly(true);
+        updater.setByuksaBeforeDryingParallelSecond(byuksaBeforeDryingParallelSecond);
+
+        form.addFormRow(byuksaBeforeDryingParallelFirst, byuksaBeforeDryingParallelSecond);
 
         NumberField afterDryingFirstField = new NumberField("Масса после высушивания 1 параллель");
         afterDryingFirstField.setSuffixComponent(new Span("г"));

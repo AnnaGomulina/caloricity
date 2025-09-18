@@ -75,6 +75,22 @@ public class Updater {
         this.caloricityDifference = caloricityDifference;
     }
 
+    public void setByuksaBeforeDryingParallelFirst(NumberField byuksaBeforeDryingParallelFirst) {
+        this.byuksaBeforeDryingParallelFirst = byuksaBeforeDryingParallelFirst;
+    }
+
+    public void setByuksaBeforeDryingParallelSecond(NumberField byuksaBeforeDryingParallelSecond) {
+        this.byuksaBeforeDryingParallelSecond = byuksaBeforeDryingParallelSecond;
+    }
+
+    public void setPatronMassBeforeExtractionParallelFirst(NumberField patronMassBeforeExtractionParallelFirst) {
+        this.patronMassBeforeExtractionParallelFirst = patronMassBeforeExtractionParallelFirst;
+    }
+
+    public void setPatronMassBeforeExtractionParallelSecond(NumberField patronMassBeforeExtractionParallelSecond) {
+        this.patronMassBeforeExtractionParallelSecond = patronMassBeforeExtractionParallelSecond;
+    }
+
     private NumberField drySubstancesFact;
     private NumberField drySubstancesTheory;
     private NumberField drySubstancesDifference;
@@ -90,6 +106,10 @@ public class Updater {
     private NumberField caloricityFact;
     private NumberField caloricityTheory;
     private NumberField caloricityDifference;
+    private NumberField byuksaBeforeDryingParallelFirst;
+    private NumberField byuksaBeforeDryingParallelSecond;
+    private NumberField patronMassBeforeExtractionParallelFirst;
+    private NumberField patronMassBeforeExtractionParallelSecond;
 
     public void trigger() {
         if (probe == null) {
@@ -114,5 +134,15 @@ public class Updater {
         caloricityFact.setValue(probe.getFactCaloricity());
         caloricityTheory.setValue(probe.getTheoryCaloricity());
         caloricityDifference.setValue(probe.getCaloricityDifference());
+
+        if (probe.getDrySubstancesResearch() != null) {
+            byuksaBeforeDryingParallelFirst.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelFirst());
+            byuksaBeforeDryingParallelSecond.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelSecond());
+        }
+
+        if (probe.getFatsResearch() != null) {
+            patronMassBeforeExtractionParallelFirst.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelFirst());
+            patronMassBeforeExtractionParallelSecond.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelSecond());
+        }
     }
 }
