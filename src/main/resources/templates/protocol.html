@@ -235,7 +235,7 @@
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getFatsResearch().getPatronMassEmptyParallelFirst() + probe.getFatsResearch().getMassNaveskiParallelFirst()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelFirst()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
                       <span class="denominator"
                             th:text="${probe.getFatsResearch().getMassNaveskiParallelFirst()}">20</span>
                     </span>
@@ -244,7 +244,7 @@
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getFatsResearch().getPatronMassEmptyParallelSecond() + probe.getFatsResearch().getMassNaveskiParallelSecond()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelSecond()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
                       <span class="denominator"
                             th:text="${probe.getFatsResearch().getMassNaveskiParallelSecond()}">20</span>
                     </span>
