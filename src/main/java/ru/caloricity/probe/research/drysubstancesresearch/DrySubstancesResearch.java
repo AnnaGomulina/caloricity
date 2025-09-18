@@ -25,7 +25,7 @@ import java.util.Objects;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Comment("Исследования на сухие остатки")
+@Comment("Исследования на сухие вещества")
 @Table(name = "dry_substances_researches")
 @Builder
 public class DrySubstancesResearch extends BaseEntity {
