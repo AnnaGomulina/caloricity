@@ -42,7 +42,7 @@ public class ProbeEditView extends VerticalLayout implements BeforeEnterObserver
 
         Card drySubstancesResearchCard = new Card();
         drySubstancesResearchForm = new DrySubstancesResearchForm(updater);
-        drySubstancesResearchCard.setTitle("Исследование на сухие остатки");
+        drySubstancesResearchCard.setTitle("Исследование на сухие вещества");
         drySubstancesResearchCard.add(drySubstancesResearchForm.component());
 
         Card fatsResearchCard = new Card();
