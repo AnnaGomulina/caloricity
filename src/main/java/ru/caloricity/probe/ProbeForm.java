@@ -98,14 +98,14 @@ public class ProbeForm extends FormLayout {
         massFactField.setSuffixComponent(new Span("г"));
         massFactField.setReadOnly(true);
         binder.forField(massFactField)
-            .bind(Probe::getMassFact, null);
+            .bind(Probe::massFact, null);
         add(massFactField);
 
         mineralsField = new NumberField("Минеральные вещества");
         mineralsField.setSuffixComponent(new Span("г"));
         mineralsField.setReadOnly(true);
         binder.forField(mineralsField)
-            .bind(Probe::getMinerals, null);
+            .bind(Probe::minerals, null);
         add(mineralsField);
 
         typeSelect.addValueChangeListener(e -> updateCalculatedFields());
@@ -116,8 +116,8 @@ public class ProbeForm extends FormLayout {
 
     private void updateCalculatedFields() {
         binder.writeBeanAsDraft(entity);
-        massFactField.setValue(entity.getMassFact());
-        mineralsField.setValue(entity.getMinerals());
+        massFactField.setValue(entity.massFact());
+        mineralsField.setValue(entity.minerals());
         updater.trigger();
     }
 

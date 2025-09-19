@@ -94,7 +94,7 @@
         </tr>
         <tr>
             <td th:utext="'Масса пробы теоретическая: ' + ${probe.getMassTheory()}"></td>
-            <td th:utext="'Масса пробы фактическая: ' + ${probe.getMassFact()}">/</td>
+            <td th:utext="'Масса пробы фактическая: ' + ${probe.massFact()}">/</td>
         </tr>
         </tbody>
     </table>
@@ -129,25 +129,25 @@
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelFirst()} + ' - ' + ${probe.getDrySubstancesResearch().getByuksaParallelFirst()} + ')' + ' × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelFirst()} + ' - ' + ${probe.getDrySubstancesResearch().getByuksaParallelFirst()} + ')' + ' × ' + ${probe.massFact()}">(10 - 1) × 123</span>
                       <span class="denominator"
                             th:text="${probe.getDrySubstancesResearch().getMassNaveskiParallelFirst()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getDrySubstancesResearch().getDrySubstancesParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getDrySubstancesResearch().drySubstancesParallelFirst()}">= 12</span>
                 </td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelSecond()} + ' - ' + ${probe.getDrySubstancesResearch().getByuksaParallelSecond()} + ')' + ' × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelSecond()} + ' - ' + ${probe.getDrySubstancesResearch().getByuksaParallelSecond()} + ')' + ' × ' + ${probe.massFact()}">(10 - 1) × 123</span>
                       <span class="denominator"
                             th:text="${probe.getDrySubstancesResearch().getMassNaveskiParallelSecond()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getDrySubstancesResearch().getDrySubstancesParallelSecond()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getDrySubstancesResearch().drySubstancesParallelSecond()}">= 12</span>
                 </td>
             </tr>
             <tr>
                 <td>Сухие вещества средние, г/порц.</td>
-                <td colspan="2" th:text="${probe.getDrySubstancesResearch().getDrySubstancesAverage()}">
+                <td colspan="2" th:text="${probe.getDrySubstancesResearch().drySubstancesAverage()}">
                     100+100=200
                 </td>
             </tr>
@@ -186,23 +186,23 @@
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelFirst()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelFirst()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
                       <span class="denominator" th:text="${probe.getProteinsResearch().getMassNaveskiParallelFirst()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getProteinsResearch().getProteinsParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getProteinsResearch().proteinsParallelFirst()}">= 12</span>
                 </td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelSecond()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelSecond()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
                       <span class="denominator" th:text="${probe.getProteinsResearch().getMassNaveskiParallelSecond()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getProteinsResearch().getProteinsParallelSecond()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getProteinsResearch().proteinsParallelSecond()}">= 12</span>
                 </td>
             </tr>
             <tr>
                 <td>Белки средние, г/порц.</td>
-                <td colspan="2" th:text="${probe.getProteinsResearch().getProteinsAverage()}">100+100=200</td>
+                <td colspan="2" th:text="${probe.getProteinsResearch().proteinsAverage()}">100+100=200</td>
             </tr>
             </tbody>
         </table>
@@ -237,55 +237,55 @@
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelFirst()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelFirst()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
                       <span class="denominator"
                             th:text="${probe.getFatsResearch().getMassNaveskiParallelFirst()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getFatsResearch().getFatsParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getFatsResearch().fatsParallelFirst()}">= 12</span>
                 </td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelSecond()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond()} + ') × ' + ${probe.getMassFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelSecond()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
                       <span class="denominator"
                             th:text="${probe.getFatsResearch().getMassNaveskiParallelSecond()}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getFatsResearch().getFatsParallelSecond()}">= 12</span>
+                    <span th:text="' = ' + ${probe.getFatsResearch().fatsParallelSecond()}">= 12</span>
                 </td>
             </tr>
             <tr>
                 <td>Жиры средние, г/порц.</td>
-                <td colspan="2" th:text="${probe.getFatsResearch().getFatsAverage()}">100+100=200</td>
+                <td colspan="2" th:text="${probe.getFatsResearch().fatsAverage()}">100+100=200</td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div th:if="${probe.getFactCarbohydrates()} != null">
+    <div th:if="${probe.factCarbohydrates()} != null">
         <h3>Углеводы, МУ 4237</h3>
         <table class="table table-bordered">
             <tbody>
             <tr>
                 <td>Углеводы, г/порц.</td>
-                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().getDrySubstancesAverage()} + ' - (' + ${probe.getProteinsResearch().getProteinsAverage()} + ' + ' + ${probe.getFatsResearch().getFatsAverage()} + ' + ' + ${probe.getMinerals()} + ')' + ' = ' + ${probe.getFactCarbohydrates()}">
+                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().drySubstancesAverage()} + ' - (' + ${probe.getProteinsResearch().proteinsAverage()} + ' + ' + ${probe.getFatsResearch().fatsAverage()} + ' + ' + ${probe.minerals()} + ')' + ' = ' + ${probe.factCarbohydrates()}">
                     100
                 </td>
-                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().getDrySubstancesAverage()} + ' - ' + ${probe.getMinerals()} + ' = ' + ${probe.getFactCarbohydrates()}">
+                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().drySubstancesAverage()} + ' - ' + ${probe.minerals()} + ' = ' + ${probe.factCarbohydrates()}">
                     100
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div th:if="${probe.getFactCaloricity()} != null">
+    <div th:if="${probe.factCaloricity()} != null">
         <h3>Энергетическая ценность, МУ 4237</h3>
         <table class="table table-bordered">
             <tbody>
             <tr>
                 <td>Энергетическая ценность, ккал/порц.</td>
-                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="'4 × ' + ${probe.getProteinsResearch().getProteinsAverage()} + ' + 9 × ' + ${probe.getFatsResearch().getFatsAverage()} + ' + 4 × ' + ${probe.getFactCarbohydrates()} + ' = ' + ${probe.getFactCaloricity()}">
+                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="'4 × ' + ${probe.getProteinsResearch().proteinsAverage()} + ' + 9 × ' + ${probe.getFatsResearch().fatsAverage()} + ' + 4 × ' + ${probe.factCarbohydrates()} + ' = ' + ${probe.factCaloricity()}">
                     100
                 </td>
-                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="'4 × ' + ${probe.getFactCarbohydrates()} + ' = ' + ${probe.getFactCaloricity()}">
+                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="'4 × ' + ${probe.factCarbohydrates()} + ' = ' + ${probe.factCaloricity()}">
                     100
                 </td>
             </tr>
@@ -305,30 +305,30 @@
         </tr>
         <tr>
             <td>Теоретические</td>
-            <td th:utext="${probe.getTheoryDrySubstances()}">Сухие вещества</td>
-            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${probe.getTheoryProteins()}">Белки</td>
-            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.getTheoryFats()}">Жиры</td>
-            <td th:utext="${probe.getTheoryCarbohydrates()}">Углеводы</td>
-            <td th:utext="${probe.getTheoryCaloricity()}">Энергетическая ценность</td>
+            <td th:utext="${probe.theoryDrySubstances()}">Сухие вещества</td>
+            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${probe.theoryProteins()}">Белки</td>
+            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.theoryFats()}">Жиры</td>
+            <td th:utext="${probe.theoryCarbohydrates()}">Углеводы</td>
+            <td th:utext="${probe.theoryCaloricity()}">Энергетическая ценность</td>
         </tr>
         <tr>
             <td>Фактические</td>
-            <td th:utext="${probe.getDrySubstancesResearch().getDrySubstancesAverage()}">Сухие вещества</td>
+            <td th:utext="${probe.getDrySubstancesResearch().drySubstancesAverage()}">Сухие вещества</td>
             <td th:if="${probe.getProteinsResearch()} != null"
-                th:utext="${probe.getProteinsResearch().getProteinsAverage()}">Белки
+                th:utext="${probe.getProteinsResearch().proteinsAverage()}">Белки
             </td>
-            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.getFatsResearch().getFatsAverage()}">Жиры
+            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.getFatsResearch().fatsAverage()}">Жиры
             </td>
-            <td th:utext="${probe.getFactCarbohydrates()}">Углеводы</td>
-            <td th:utext="${probe.getFactCaloricity()}">Энергетическая ценность</td>
+            <td th:utext="${probe.factCarbohydrates()}">Углеводы</td>
+            <td th:utext="${probe.factCaloricity()}">Энергетическая ценность</td>
         </tr>
         <tr>
             <td>% отклонения</td>
-            <td th:utext="${probe.getDrySubstancesDifference()}">Сухие вещества</td>
-            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${probe.getProteinsDifference()}">Белки</td>
-            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.getFatsDifference()}">Жиры</td>
-            <td th:utext="${probe.getCarbohydratesDifference()}">Углеводы</td>
-            <td th:utext="${probe.getCaloricityDifference()}">Энергетическая ценность</td>
+            <td th:utext="${probe.drySubstancesDifference()}">Сухие вещества</td>
+            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${probe.proteinsDifference()}">Белки</td>
+            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.fatsDifference()}">Жиры</td>
+            <td th:utext="${probe.carbohydratesDifference()}">Углеводы</td>
+            <td th:utext="${probe.caloricityDifference()}">Энергетическая ценность</td>
         </tr>
         </tbody>
     </table>

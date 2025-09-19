@@ -70,27 +70,27 @@ public class FatsResearch extends BaseEntity {
         return new FourDigitsFormat(patronMassEmptyParallelSecond + massNaveskiParallelSecond).it();
     }
 
-    public Double getFatsParallelFirst() {
-        if (new AnyNull(patronMassBeforeExtractionParallelFirst(), patronMassAfterExtractionParallelFirst, massNaveskiParallelFirst, probe.getMassFact()).is()) {
+    public Double fatsParallelFirst() {
+        if (new AnyNull(patronMassBeforeExtractionParallelFirst(), patronMassAfterExtractionParallelFirst, massNaveskiParallelFirst, probe.massFact()).is()) {
             return null;
         }
-        Double massParallelFirst = (patronMassBeforeExtractionParallelFirst() - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
+        Double massParallelFirst = (patronMassBeforeExtractionParallelFirst() - patronMassAfterExtractionParallelFirst) / massNaveskiParallelFirst * probe.massFact();
         return new FourDigitsFormat(massParallelFirst).it();
     }
 
-    public Double getFatsParallelSecond() {
-        if (new AnyNull(patronMassBeforeExtractionParallelSecond(), patronMassAfterExtractionParallelSecond, massNaveskiParallelSecond, probe.getMassFact()).is()) {
+    public Double fatsParallelSecond() {
+        if (new AnyNull(patronMassBeforeExtractionParallelSecond(), patronMassAfterExtractionParallelSecond, massNaveskiParallelSecond, probe.massFact()).is()) {
             return null;
         }
-        Double massParallelSecond = (patronMassBeforeExtractionParallelSecond() - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
+        Double massParallelSecond = (patronMassBeforeExtractionParallelSecond() - patronMassAfterExtractionParallelSecond) / massNaveskiParallelSecond * probe.massFact();
         return new FourDigitsFormat(massParallelSecond).it();
     }
 
-    public Double getFatsAverage() {
-        if (new AnyNull(getFatsParallelFirst(), getFatsParallelSecond()).is()) {
+    public Double fatsAverage() {
+        if (new AnyNull(fatsParallelFirst(), fatsParallelSecond()).is()) {
             return null;
         }
-        double c = (getFatsParallelFirst() + getFatsParallelSecond()) / 2.0;
+        double c = (fatsParallelFirst() + fatsParallelSecond()) / 2.0;
         return new FourDigitsFormat(c).it();
     }
 

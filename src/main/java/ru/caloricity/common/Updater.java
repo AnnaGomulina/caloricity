@@ -115,25 +115,25 @@ public class Updater {
         if (probe == null) {
             return;
         }
-        drySubstancesFact.setValue(Optional.ofNullable(probe.getDrySubstancesResearch()).map(DrySubstancesResearch::getDrySubstancesAverage).orElse(null));
-        drySubstancesTheory.setValue(probe.getTheoryDrySubstances());
-        drySubstancesDifference.setValue(probe.getDrySubstancesDifference());
+        drySubstancesFact.setValue(Optional.ofNullable(probe.getDrySubstancesResearch()).map(DrySubstancesResearch::drySubstancesAverage).orElse(null));
+        drySubstancesTheory.setValue(probe.theoryDrySubstances());
+        drySubstancesDifference.setValue(probe.drySubstancesDifference());
 
-        fatsFact.setValue(Optional.ofNullable(probe.getFatsResearch()).map(FatsResearch::getFatsAverage).orElse(null));
-        fatsTheory.setValue(probe.getTheoryFats());
-        fatsDifference.setValue(probe.getFatsDifference());
+        fatsFact.setValue(Optional.ofNullable(probe.getFatsResearch()).map(FatsResearch::fatsAverage).orElse(null));
+        fatsTheory.setValue(probe.theoryFats());
+        fatsDifference.setValue(probe.fatsDifference());
 
-        proteinsFact.setValue(Optional.ofNullable(probe.getProteinsResearch()).map(ProteinsResearch::getProteinsAverage).orElse(null));
-        proteinsTheory.setValue(probe.getTheoryProteins());
-        proteinsDifference.setValue(probe.getProteinsDifference());
+        proteinsFact.setValue(Optional.ofNullable(probe.getProteinsResearch()).map(ProteinsResearch::proteinsAverage).orElse(null));
+        proteinsTheory.setValue(probe.theoryProteins());
+        proteinsDifference.setValue(probe.proteinsDifference());
 
-        carbonatesFact.setValue(probe.getFactCarbohydrates());
-        carbonatesTheory.setValue(probe.getTheoryCarbohydrates());
-        carbonatesDifference.setValue(probe.getCarbohydratesDifference());
+        carbonatesFact.setValue(probe.factCarbohydrates());
+        carbonatesTheory.setValue(probe.theoryCarbohydrates());
+        carbonatesDifference.setValue(probe.carbohydratesDifference());
 
-        caloricityFact.setValue(probe.getFactCaloricity());
-        caloricityTheory.setValue(probe.getTheoryCaloricity());
-        caloricityDifference.setValue(probe.getCaloricityDifference());
+        caloricityFact.setValue(probe.factCaloricity());
+        caloricityTheory.setValue(probe.theoryCaloricity());
+        caloricityDifference.setValue(probe.caloricityDifference());
 
         if (probe.getDrySubstancesResearch() != null) {
             byuksaBeforeDryingParallelFirst.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelFirst());

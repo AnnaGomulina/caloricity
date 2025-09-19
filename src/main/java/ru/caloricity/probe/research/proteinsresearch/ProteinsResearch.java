@@ -45,30 +45,6 @@ public class ProteinsResearch extends BaseEntity {
     @NotNull
     private Double titrantVolumeParallelSecond;
 
-    public Double getProteinsParallelFirst() {
-        if (new AnyNull(coefficient, titrantVolumeParallelFirst, controlVolume, massNaveskiParallelFirst, probe.getMassFact()).is()) {
-            return null;
-        }
-        double c = 0.0014 * coefficient * (titrantVolumeParallelFirst - controlVolume) * 6.25 / massNaveskiParallelFirst * probe.getMassFact();
-        return new FourDigitsFormat(c).it();
-    }
-
-    public Double getProteinsParallelSecond() {
-        if (new AnyNull(coefficient, titrantVolumeParallelSecond, controlVolume, massNaveskiParallelSecond, probe.getMassFact()).is()) {
-            return null;
-        }
-        double c = 0.0014 * coefficient * (titrantVolumeParallelSecond - controlVolume) * 6.25 / massNaveskiParallelSecond * probe.getMassFact();
-        return new FourDigitsFormat(c).it();
-    }
-
-    public Double getProteinsAverage() {
-        if (new AnyNull(getProteinsParallelFirst(), getProteinsParallelSecond()).is()) {
-            return null;
-        }
-        double c = (getProteinsParallelFirst() + getProteinsParallelSecond()) / 2.0;
-        return new FourDigitsFormat(c).it();
-    }
-
     @Comment("Объём контроля, г/см^3")
     @NotNull
     private Double controlVolume;
@@ -79,6 +55,30 @@ public class ProteinsResearch extends BaseEntity {
 
     @OneToOne(mappedBy = "proteinsResearch")
     private Probe probe;
+
+    public Double proteinsParallelFirst() {
+        if (new AnyNull(coefficient, titrantVolumeParallelFirst, controlVolume, massNaveskiParallelFirst, probe.massFact()).is()) {
+            return null;
+        }
+        double c = 0.0014 * coefficient * (titrantVolumeParallelFirst - controlVolume) * 6.25 / massNaveskiParallelFirst * probe.massFact();
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double proteinsParallelSecond() {
+        if (new AnyNull(coefficient, titrantVolumeParallelSecond, controlVolume, massNaveskiParallelSecond, probe.massFact()).is()) {
+            return null;
+        }
+        double c = 0.0014 * coefficient * (titrantVolumeParallelSecond - controlVolume) * 6.25 / massNaveskiParallelSecond * probe.massFact();
+        return new FourDigitsFormat(c).it();
+    }
+
+    public Double proteinsAverage() {
+        if (new AnyNull(proteinsParallelFirst(), proteinsParallelSecond()).is()) {
+            return null;
+        }
+        double c = (proteinsParallelFirst() + proteinsParallelSecond()) / 2.0;
+        return new FourDigitsFormat(c).it();
+    }
 
     @Override
     public final boolean equals(Object o) {

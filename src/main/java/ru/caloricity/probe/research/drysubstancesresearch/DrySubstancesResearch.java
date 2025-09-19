@@ -70,30 +70,30 @@ public class DrySubstancesResearch extends BaseEntity {
         return new FourDigitsFormat(byuksaParallelSecond + massNaveskiParallelSecond).it();
     }
 
-    public Double getDrySubstancesParallelFirst() {
-        if (new AnyNull(byuksaAfterDryingParallelFirst, byuksaParallelFirst, massNaveskiParallelFirst, probe.getMassFact()).is()) {
+    public Double drySubstancesParallelFirst() {
+        if (new AnyNull(byuksaAfterDryingParallelFirst, byuksaParallelFirst, massNaveskiParallelFirst, probe.massFact()).is()) {
             return null;
         }
-        double c = (byuksaAfterDryingParallelFirst - byuksaParallelFirst) / massNaveskiParallelFirst * probe.getMassFact();
+        double c = (byuksaAfterDryingParallelFirst - byuksaParallelFirst) / massNaveskiParallelFirst * probe.massFact();
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getDrySubstancesParallelSecond() {
-        if (new AnyNull(byuksaAfterDryingParallelSecond, byuksaParallelSecond, massNaveskiParallelSecond, probe.getMassFact()).is()) {
+    public Double drySubstancesParallelSecond() {
+        if (new AnyNull(byuksaAfterDryingParallelSecond, byuksaParallelSecond, massNaveskiParallelSecond, probe.massFact()).is()) {
             return null;
         }
-        double c =  (byuksaAfterDryingParallelSecond - byuksaParallelSecond) / massNaveskiParallelSecond * probe.getMassFact();
+        double c =  (byuksaAfterDryingParallelSecond - byuksaParallelSecond) / massNaveskiParallelSecond * probe.massFact();
         return new FourDigitsFormat(c).it();
     }
 
     /**
      * Сухие вещества фактические на пробу
      */
-    public Double getDrySubstancesAverage() {
-        if (new AnyNull(getDrySubstancesParallelFirst(), getDrySubstancesParallelSecond()).is()) {
+    public Double drySubstancesAverage() {
+        if (new AnyNull(drySubstancesParallelFirst(), drySubstancesParallelSecond()).is()) {
             return null;
         }
-        double c = (getDrySubstancesParallelFirst() + getDrySubstancesParallelSecond()) / 2.0;
+        double c = (drySubstancesParallelFirst() + drySubstancesParallelSecond()) / 2.0;
         return new FourDigitsFormat(c).it();
     }
 
