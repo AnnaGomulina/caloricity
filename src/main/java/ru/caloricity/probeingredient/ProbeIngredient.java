@@ -47,7 +47,7 @@ public class ProbeIngredient extends BaseEntity {
 
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    Ingredient ingredient;
+    private Ingredient ingredient;
 
     public Double drySubstances() {
         return net - (net * ingredient.getWater()) / 100;
@@ -66,35 +66,35 @@ public class ProbeIngredient extends BaseEntity {
     }
 
     public Double drySubstancesForProbe() {
-        if (new AnyNull(probe.getMassCoefficient(), probe.getType()).is()) {
+        if (new AnyNull(probe.massCoefficient(), probe.getType()).is()) {
             return null;
         }
-        return drySubstances() * probe.getType().coefficientOfLossesForDrySubstances * probe.getMassCoefficient();
+        return drySubstances() * probe.getType().coefficientOfLossesForDrySubstances * probe.massCoefficient();
     }
 
     public Double proteinsForProbe() {
-        if (new AnyNull(probe.getMassCoefficient()).is()) {
+        if (new AnyNull(probe.massCoefficient()).is()) {
             return null;
         }
-        return proteins() * ingredient.getType().coefficientOfLossesForProtein * probe.getMassCoefficient();
+        return proteins() * ingredient.getType().coefficientOfLossesForProtein * probe.massCoefficient();
     }
 
     public Double fatsForProbe() {
-        if (probe.getMassCoefficient() == null) {
+        if (probe.massCoefficient() == null) {
             return null;
         }
-        return fats() * ingredient.getType().coefficientOfLossesForFat * probe.getMassCoefficient();
+        return fats() * ingredient.getType().coefficientOfLossesForFat * probe.massCoefficient();
     }
 
     public Double carbohydratesForProbe() {
-        if (probe.getMassCoefficient() == null) {
+        if (probe.massCoefficient() == null) {
             return null;
         }
-        return carbohydrates() * ingredient.getType().coefficientOfLossesForCarbohydrates * probe.getMassCoefficient();
+        return carbohydrates() * ingredient.getType().coefficientOfLossesForCarbohydrates * probe.massCoefficient();
     }
 
     public Double caloricityForProbe() {
-        if (probe.getMassCoefficient() == null) {
+        if (probe.massCoefficient() == null) {
             return null;
         }
         return proteinsForProbe() * CaloricityCoefficient.PROTEINS

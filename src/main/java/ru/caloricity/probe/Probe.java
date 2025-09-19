@@ -106,7 +106,7 @@ public class Probe extends BaseEntity {
     /**
      * @return Масса фактическая, г
      */
-    public Double getMassFact() {
+    public Double massFact() {
         if (new AnyNull(bankaWithProbeMass, bankaEmptyMass).is()) {
             return null;
         }
@@ -117,40 +117,40 @@ public class Probe extends BaseEntity {
     /**
      * @return Коэффициент соотношения массы фактической к теоретической
      */
-    public Double getMassCoefficient() {
-        if (new AnyNull(getMassFact(), massTheory).is()) {
+    public Double massCoefficient() {
+        if (new AnyNull(massFact(), massTheory).is()) {
             return null;
         }
-        return getMassFact() / massTheory;
+        return massFact() / massTheory;
     }
 
     /**
      * @return Минеральные вещества, г
      */
-    public Double getMinerals() {
-        if (new AnyNull(getMassFact(), type).is()) {
+    public Double minerals() {
+        if (new AnyNull(massFact(), type).is()) {
             return null;
         }
-        double c = getMassFact() * type.coefficientOfMinerals;
+        double c = massFact() * type.coefficientOfMinerals;
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getFactCarbohydrates() {
+    public Double factCarbohydrates() {
         if (type == ProbeType.THIRD) {
-            if (new AnyNull(drySubstancesResearch).is() || new AnyNull(drySubstancesResearch.getDrySubstancesAverage(), getMinerals()).is()) {
+            if (new AnyNull(drySubstancesResearch).is() || new AnyNull(drySubstancesResearch.drySubstancesAverage(), minerals()).is()) {
                 return null;
             }
-            double c = drySubstancesResearch.getDrySubstancesAverage() - getMinerals();
+            double c = drySubstancesResearch.drySubstancesAverage() - minerals();
             return new FourDigitsFormat(c).it();
         }
-        if (new AnyNull(drySubstancesResearch, proteinsResearch).is() || new AnyNull(drySubstancesResearch.getDrySubstancesAverage(), proteinsResearch.getProteinsAverage(), fatsResearch.getFatsAverage(), getMinerals()).is()) {
+        if (new AnyNull(drySubstancesResearch, proteinsResearch).is() || new AnyNull(drySubstancesResearch.drySubstancesAverage(), proteinsResearch.proteinsAverage(), fatsResearch.fatsAverage(), minerals()).is()) {
             return null;
         }
-        double c = drySubstancesResearch.getDrySubstancesAverage() - (proteinsResearch.getProteinsAverage() + fatsResearch.getFatsAverage() + getMinerals());
+        double c = drySubstancesResearch.drySubstancesAverage() - (proteinsResearch.proteinsAverage() + fatsResearch.fatsAverage() + minerals());
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getTheoryDrySubstances() {
+    public Double theoryDrySubstances() {
         double c = probeIngredients.stream()
             .map(ProbeIngredient::drySubstancesForProbe)
             .filter(Objects::nonNull)
@@ -158,7 +158,7 @@ public class Probe extends BaseEntity {
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getTheoryFats() {
+    public Double theoryFats() {
         double c = probeIngredients.stream()
             .map(ProbeIngredient::fatsForProbe)
             .filter(Objects::nonNull)
@@ -166,7 +166,7 @@ public class Probe extends BaseEntity {
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getTheoryProteins() {
+    public Double theoryProteins() {
         double c = probeIngredients.stream()
             .map(ProbeIngredient::proteinsForProbe)
             .filter(Objects::nonNull)
@@ -174,7 +174,7 @@ public class Probe extends BaseEntity {
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getTheoryCarbohydrates() {
+    public Double theoryCarbohydrates() {
         double c = probeIngredients.stream()
             .map(ProbeIngredient::carbohydratesForProbe)
             .filter(Objects::nonNull)
@@ -182,7 +182,7 @@ public class Probe extends BaseEntity {
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getTheoryCaloricity() {
+    public Double theoryCaloricity() {
         double c = probeIngredients.stream()
             .map(ProbeIngredient::caloricityForProbe)
             .filter(Objects::nonNull)
@@ -190,49 +190,49 @@ public class Probe extends BaseEntity {
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getFactCaloricity() {
-        Double proteins = Optional.ofNullable(proteinsResearch).map(ProteinsResearch::getProteinsAverage).orElse(0.);
-        Double fats = Optional.ofNullable(fatsResearch).map(FatsResearch::getFatsAverage).orElse(0.);
-        Double carbohydrates = Optional.ofNullable(getFactCarbohydrates()).orElse(0.);
+    public Double factCaloricity() {
+        Double proteins = Optional.ofNullable(proteinsResearch).map(ProteinsResearch::proteinsAverage).orElse(0.);
+        Double fats = Optional.ofNullable(fatsResearch).map(FatsResearch::fatsAverage).orElse(0.);
+        Double carbohydrates = Optional.ofNullable(factCarbohydrates()).orElse(0.);
         double c = proteins * CaloricityCoefficient.PROTEINS
                    + fats * CaloricityCoefficient.FATS
                    + carbohydrates * CaloricityCoefficient.CARBOHYDRATES;
         return new FourDigitsFormat(c).it();
     }
 
-    public Double getDrySubstancesDifference() {
-        if (new AnyNull(drySubstancesResearch, getTheoryDrySubstances()).is()) {
+    public Double drySubstancesDifference() {
+        if (new AnyNull(drySubstancesResearch, theoryDrySubstances()).is()) {
             return null;
         }
-        return new Difference(drySubstancesResearch.getDrySubstancesAverage(), getTheoryDrySubstances()).get();
+        return new Difference(drySubstancesResearch.drySubstancesAverage(), theoryDrySubstances()).get();
     }
 
-    public Double getFatsDifference() {
-        if (new AnyNull(fatsResearch, getTheoryFats()).is()) {
+    public Double fatsDifference() {
+        if (new AnyNull(fatsResearch, theoryFats()).is()) {
             return null;
         }
-        return new Difference(fatsResearch.getFatsAverage(), getTheoryFats()).get();
+        return new Difference(fatsResearch.fatsAverage(), theoryFats()).get();
     }
 
-    public Double getProteinsDifference() {
-        if (new AnyNull(proteinsResearch, getTheoryProteins()).is()) {
+    public Double proteinsDifference() {
+        if (new AnyNull(proteinsResearch, theoryProteins()).is()) {
             return null;
         }
-        return new Difference(proteinsResearch.getProteinsAverage(), getTheoryProteins()).get();
+        return new Difference(proteinsResearch.proteinsAverage(), theoryProteins()).get();
     }
 
-    public Double getCarbohydratesDifference() {
-        if (new AnyNull(getFactCarbohydrates(), getTheoryCarbohydrates()).is()) {
+    public Double carbohydratesDifference() {
+        if (new AnyNull(factCarbohydrates(), theoryCarbohydrates()).is()) {
             return null;
         }
-        return new Difference(getFactCarbohydrates(), getTheoryCarbohydrates()).get();
+        return new Difference(factCarbohydrates(), theoryCarbohydrates()).get();
     }
 
-    public Double getCaloricityDifference() {
-        if (new AnyNull(getFactCaloricity(), getTheoryCaloricity()).is()) {
+    public Double caloricityDifference() {
+        if (new AnyNull(factCaloricity(), theoryCaloricity()).is()) {
             return null;
         }
-        return new Difference(getFactCaloricity(), getTheoryCaloricity()).get();
+        return new Difference(factCaloricity(), theoryCaloricity()).get();
     }
 
     @Override
