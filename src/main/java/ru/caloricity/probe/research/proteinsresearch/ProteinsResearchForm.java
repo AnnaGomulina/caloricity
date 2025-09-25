@@ -14,8 +14,10 @@ import java.util.Optional;
 public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
     private final EmptyResearchForm<ProteinsResearch> emptyResearchForm;
     private final Binder<ProteinsResearch> binder;
+    private final Updater updater;
 
     public ProteinsResearchForm(Updater updater) {
+        this.updater = updater;
         binder = new Binder<>(ProteinsResearch.class);
         emptyResearchForm = new EmptyResearchForm<>(binder, updater);
     }
@@ -74,6 +76,18 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
             .bind(ProteinsResearch::getCoefficient, ProteinsResearch::setCoefficient);
 
         form.addFormRow(controlVolumeField, coefficientField);
+
+        NumberField proteinsParallelFirst = new NumberField("Белки 1 параллель");
+        proteinsParallelFirst.setSuffixComponent(new Span("г"));
+        proteinsParallelFirst.setReadOnly(true);
+        updater.setProteinsParallelFirst(proteinsParallelFirst);
+
+        NumberField proteinsParallelSecond = new NumberField("Белки 2 параллель");
+        proteinsParallelSecond.setSuffixComponent(new Span("г"));
+        proteinsParallelSecond.setReadOnly(true);
+        updater.setProteinsParallelSecond(proteinsParallelSecond);
+
+        form.addFormRow(proteinsParallelFirst, proteinsParallelSecond);
 
         massNaveskiFirstField.addValueChangeListener(e -> updateCalculatedFields());
         massNaveskiSecondField.addValueChangeListener(e -> updateCalculatedFields());

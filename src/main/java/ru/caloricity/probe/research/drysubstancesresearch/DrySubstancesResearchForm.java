@@ -90,6 +90,18 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
 
         form.addFormRow(afterDryingFirstField, afterDryingSecondField);
 
+        NumberField drySubstancesParallelFirst = new NumberField("Сухие вещества 1 параллель");
+        drySubstancesParallelFirst.setSuffixComponent(new Span("г"));
+        drySubstancesParallelFirst.setReadOnly(true);
+        updater.setDrySubstancesParallelFirst(drySubstancesParallelFirst);
+
+        NumberField drySubstancesParallelSecond = new NumberField("Сухие вещества 2 параллель");
+        drySubstancesParallelSecond.setSuffixComponent(new Span("г"));
+        drySubstancesParallelSecond.setReadOnly(true);
+        updater.setDrySubstancesParallelSecond(drySubstancesParallelSecond);
+
+        form.addFormRow(drySubstancesParallelFirst, drySubstancesParallelSecond);
+
         byuksaFirstField.addValueChangeListener(e -> updateCalculatedFields());
         byuksaSecondField.addValueChangeListener(e -> updateCalculatedFields());
         massNaveskiFirstField.addValueChangeListener(e -> updateCalculatedFields());
