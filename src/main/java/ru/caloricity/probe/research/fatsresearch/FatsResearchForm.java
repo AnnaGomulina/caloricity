@@ -94,6 +94,18 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
 
         form.addFormRow(patronAfterFirstField, patronAfterSecondField);
 
+        NumberField fatsParallelFirst = new NumberField("Жиры 1 параллель");
+        fatsParallelFirst.setSuffixComponent(new Span("г"));
+        fatsParallelFirst.setReadOnly(true);
+        updater.setFatsParallelFirst(fatsParallelFirst);
+
+        NumberField fatsParallelSecond = new NumberField("Жиры 2 параллель");
+        fatsParallelSecond.setSuffixComponent(new Span("г"));
+        fatsParallelSecond.setReadOnly(true);
+        updater.setFatsParallelSecond(fatsParallelSecond);
+
+        form.addFormRow(fatsParallelFirst, fatsParallelSecond);
+
         patronBeforeFirstField.addValueChangeListener(e -> updateCalculatedFields());
         patronBeforeSecondField.addValueChangeListener(e -> updateCalculatedFields());
         massNaveskiFirstField.addValueChangeListener(e -> updateCalculatedFields());

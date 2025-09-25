@@ -110,6 +110,12 @@ public class Updater {
     private NumberField byuksaBeforeDryingParallelSecond;
     private NumberField patronMassBeforeExtractionParallelFirst;
     private NumberField patronMassBeforeExtractionParallelSecond;
+    private NumberField drySubstancesParallelFirst;
+    private NumberField drySubstancesParallelSecond;
+    private NumberField fatsParallelFirst;
+    private NumberField fatsParallelSecond;
+    private NumberField proteinsParallelFirst;
+    private NumberField proteinsParallelSecond;
 
     public void trigger() {
         if (probe == null) {
@@ -138,11 +144,46 @@ public class Updater {
         if (probe.getDrySubstancesResearch() != null) {
             byuksaBeforeDryingParallelFirst.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelFirst());
             byuksaBeforeDryingParallelSecond.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelSecond());
+
+            drySubstancesParallelFirst.setValue(probe.getDrySubstancesResearch().drySubstancesParallelFirst());
+            drySubstancesParallelSecond.setValue(probe.getDrySubstancesResearch().drySubstancesParallelSecond());
         }
 
         if (probe.getFatsResearch() != null) {
             patronMassBeforeExtractionParallelFirst.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelFirst());
             patronMassBeforeExtractionParallelSecond.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelSecond());
+
+            fatsParallelFirst.setValue(probe.getFatsResearch().fatsParallelFirst());
+            fatsParallelSecond.setValue(probe.getFatsResearch().fatsParallelSecond());
         }
+
+        if (probe.getProteinsResearch() != null) {
+            proteinsParallelFirst.setValue(probe.getProteinsResearch().proteinsParallelFirst());
+            proteinsParallelSecond.setValue(probe.getProteinsResearch().proteinsParallelSecond());
+        }
+    }
+
+    public void setDrySubstancesParallelFirst(NumberField drySubstancesParallelFirst) {
+        this.drySubstancesParallelFirst = drySubstancesParallelFirst;
+    }
+
+    public void setDrySubstancesParallelSecond(NumberField drySubstancesParallelSecond) {
+        this.drySubstancesParallelSecond = drySubstancesParallelSecond;
+    }
+
+    public void setFatsParallelFirst(NumberField fatsParallelFirst) {
+        this.fatsParallelFirst = fatsParallelFirst;
+    }
+
+    public void setFatsParallelSecond(NumberField fatsParallelSecond) {
+        this.fatsParallelSecond = fatsParallelSecond;
+    }
+
+    public void setProteinsParallelFirst(NumberField proteinsParallelFirst) {
+        this.proteinsParallelFirst = proteinsParallelFirst;
+    }
+
+    public void setProteinsParallelSecond(NumberField proteinsParallelSecond) {
+        this.proteinsParallelSecond = proteinsParallelSecond;
     }
 }
