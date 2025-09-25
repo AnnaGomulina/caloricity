@@ -15,6 +15,7 @@ import org.hibernate.proxy.HibernateProxy;
 import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
 import ru.caloricity.common.FourDigitsFormat;
+import ru.caloricity.common.TwoDigitsFormat;
 import ru.caloricity.probe.Probe;
 
 import java.util.Objects;
@@ -55,6 +56,22 @@ public class ProteinsResearch extends BaseEntity {
 
     @OneToOne(mappedBy = "proteinsResearch")
     private Probe probe;
+
+    public Double titrantVolumeParallelFirst(Double proteinsParallelFirst) {
+        if (new AnyNull(coefficient, proteinsParallelFirst, controlVolume, massNaveskiParallelFirst, probe.massFact()).is()) {
+            return null;
+        }
+        Double c = proteinsParallelFirst / 0.0014 / coefficient / 6.25 * massNaveskiParallelFirst / probe.massFact() + controlVolume;
+        return new TwoDigitsFormat(c).it();
+    }
+
+    public Double titrantVolumeParallelSecond(Double proteinsParallelSecond) {
+        if (new AnyNull(coefficient, proteinsParallelSecond, controlVolume, massNaveskiParallelSecond, probe.massFact()).is()) {
+            return null;
+        }
+        Double c = proteinsParallelSecond / 0.0014 / coefficient / 6.25 * massNaveskiParallelSecond / probe.massFact() + controlVolume;
+        return new TwoDigitsFormat(c).it();
+    }
 
     public Double proteinsParallelFirst() {
         if (new AnyNull(coefficient, titrantVolumeParallelFirst, controlVolume, massNaveskiParallelFirst, probe.massFact()).is()) {

@@ -34,6 +34,12 @@ public class Updater {
     private NumberField fatsParallelSecond;
     private NumberField proteinsParallelFirst;
     private NumberField proteinsParallelSecond;
+    private NumberField afterDryingFirstField;
+    private NumberField afterDryingSecondField;
+    private NumberField byuksaAfterDryingParallelFirst;
+    private NumberField byuksaAfterDryingParallelSecond;
+    private NumberField titrantVolumeParallelFirst;
+    private NumberField titrantVolumeParallelSecond;
 
     public void trigger() {
         if (probe == null) {
@@ -65,6 +71,9 @@ public class Updater {
 
             drySubstancesParallelFirst.setValue(probe.getDrySubstancesResearch().drySubstancesParallelFirst());
             drySubstancesParallelSecond.setValue(probe.getDrySubstancesResearch().drySubstancesParallelSecond());
+
+            afterDryingFirstField.setTooltipText(String.valueOf(probe.getDrySubstancesResearch().byuksaAfterDryingParallelFirst(probe.theoryDrySubstances())));
+            afterDryingSecondField.setTooltipText(String.valueOf(probe.getDrySubstancesResearch().byuksaAfterDryingParallelSecond(probe.theoryDrySubstances())));
         }
 
         if (probe.getFatsResearch() != null) {
@@ -73,11 +82,17 @@ public class Updater {
 
             fatsParallelFirst.setValue(probe.getFatsResearch().fatsParallelFirst());
             fatsParallelSecond.setValue(probe.getFatsResearch().fatsParallelSecond());
+
+            byuksaAfterDryingParallelFirst.setTooltipText(String.valueOf(probe.getFatsResearch().patronMassAfterExtractionParallelFirst(probe.theoryFats())));
+            byuksaAfterDryingParallelSecond.setTooltipText(String.valueOf(probe.getFatsResearch().patronMassAfterExtractionParallelSecond(probe.theoryFats())));
         }
 
         if (probe.getProteinsResearch() != null) {
             proteinsParallelFirst.setValue(probe.getProteinsResearch().proteinsParallelFirst());
             proteinsParallelSecond.setValue(probe.getProteinsResearch().proteinsParallelSecond());
+
+            titrantVolumeParallelFirst.setTooltipText(String.valueOf(probe.getProteinsResearch().titrantVolumeParallelFirst(probe.theoryProteins())));
+            titrantVolumeParallelSecond.setTooltipText(String.valueOf(probe.getProteinsResearch().titrantVolumeParallelSecond(probe.theoryProteins())));
         }
     }
 
@@ -185,5 +200,29 @@ public class Updater {
 
     public void setProteinsParallelSecond(NumberField proteinsParallelSecond) {
         this.proteinsParallelSecond = proteinsParallelSecond;
+    }
+
+    public void setAfterDryingFirstField(NumberField afterDryingFirstField) {
+        this.afterDryingFirstField = afterDryingFirstField;
+    }
+
+    public void setAfterDryingSecondField(NumberField afterDryingSecondField) {
+        this.afterDryingSecondField = afterDryingSecondField;
+    }
+
+    public void setByuksaAfterDryingParallelFirst(NumberField byuksaAfterDryingParallelFirst) {
+        this.byuksaAfterDryingParallelFirst = byuksaAfterDryingParallelFirst;
+    }
+
+    public void setByuksaAfterDryingParallelSecond(NumberField byuksaAfterDryingParallelSecond) {
+        this.byuksaAfterDryingParallelSecond = byuksaAfterDryingParallelSecond;
+    }
+
+    public void setTitrantVolumeParallelFirst(NumberField titrantVolumeParallelFirst) {
+        this.titrantVolumeParallelFirst = titrantVolumeParallelFirst;
+    }
+
+    public void setTitrantVolumeParallelSecond(NumberField titrantVolumeParallelSecond) {
+        this.titrantVolumeParallelSecond = titrantVolumeParallelSecond;
     }
 }

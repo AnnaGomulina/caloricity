@@ -15,6 +15,7 @@ import org.hibernate.proxy.HibernateProxy;
 import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
 import ru.caloricity.common.FourDigitsFormat;
+import ru.caloricity.common.TwoDigitsFormat;
 import ru.caloricity.probe.Probe;
 
 import java.util.Objects;
@@ -76,6 +77,22 @@ public class DrySubstancesResearch extends BaseEntity {
         }
         double c = (byuksaAfterDryingParallelFirst - byuksaParallelFirst) / massNaveskiParallelFirst * probe.massFact();
         return new FourDigitsFormat(c).it();
+    }
+
+    public Double byuksaAfterDryingParallelFirst(Double drySubstancesParallelFirst) {
+        if (new AnyNull(drySubstancesParallelFirst, massNaveskiParallelFirst, byuksaParallelFirst, probe.massFact()).is()) {
+            return null;
+        }
+        double c = drySubstancesParallelFirst * massNaveskiParallelFirst / probe.massFact() + byuksaParallelFirst;
+        return new TwoDigitsFormat(c).it();
+    }
+
+    public Double byuksaAfterDryingParallelSecond(Double drySubstancesParallelSecond) {
+        if (new AnyNull(drySubstancesParallelSecond, massNaveskiParallelSecond, byuksaParallelSecond, probe.massFact()).is()) {
+            return null;
+        }
+        double c = drySubstancesParallelSecond * massNaveskiParallelSecond / probe.massFact() + byuksaParallelSecond;
+        return new TwoDigitsFormat(c).it();
     }
 
     public Double drySubstancesParallelSecond() {
