@@ -9,6 +9,78 @@ import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
 import java.util.Optional;
 
 public class Updater {
+    private NumberField drySubstancesFact;
+    private NumberField drySubstancesTheory;
+    private NumberField drySubstancesDifference;
+    private NumberField fatsFact;
+    private NumberField fatsTheory;
+    private NumberField fatsDifference;
+    private NumberField proteinsFact;
+    private NumberField proteinsTheory;
+    private NumberField proteinsDifference;
+    private NumberField carbonatesFact;
+    private NumberField carbonatesTheory;
+    private NumberField carbonatesDifference;
+    private NumberField caloricityFact;
+    private NumberField caloricityTheory;
+    private NumberField caloricityDifference;
+    private NumberField byuksaBeforeDryingParallelFirst;
+    private NumberField byuksaBeforeDryingParallelSecond;
+    private NumberField patronMassBeforeExtractionParallelFirst;
+    private NumberField patronMassBeforeExtractionParallelSecond;
+    private NumberField drySubstancesParallelFirst;
+    private NumberField drySubstancesParallelSecond;
+    private NumberField fatsParallelFirst;
+    private NumberField fatsParallelSecond;
+    private NumberField proteinsParallelFirst;
+    private NumberField proteinsParallelSecond;
+
+    public void trigger() {
+        if (probe == null) {
+            return;
+        }
+        drySubstancesFact.setValue(Optional.ofNullable(probe.getDrySubstancesResearch()).map(DrySubstancesResearch::drySubstancesAverage).orElse(null));
+        drySubstancesTheory.setValue(probe.theoryDrySubstances());
+        drySubstancesDifference.setValue(probe.drySubstancesDifference());
+
+        fatsFact.setValue(Optional.ofNullable(probe.getFatsResearch()).map(FatsResearch::fatsAverage).orElse(null));
+        fatsTheory.setValue(probe.theoryFats());
+        fatsDifference.setValue(probe.fatsDifference());
+
+        proteinsFact.setValue(Optional.ofNullable(probe.getProteinsResearch()).map(ProteinsResearch::proteinsAverage).orElse(null));
+        proteinsTheory.setValue(probe.theoryProteins());
+        proteinsDifference.setValue(probe.proteinsDifference());
+
+        carbonatesFact.setValue(probe.factCarbohydrates());
+        carbonatesTheory.setValue(probe.theoryCarbohydrates());
+        carbonatesDifference.setValue(probe.carbohydratesDifference());
+
+        caloricityFact.setValue(probe.factCaloricity());
+        caloricityTheory.setValue(probe.theoryCaloricity());
+        caloricityDifference.setValue(probe.caloricityDifference());
+
+        if (probe.getDrySubstancesResearch() != null) {
+            byuksaBeforeDryingParallelFirst.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelFirst());
+            byuksaBeforeDryingParallelSecond.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelSecond());
+
+            drySubstancesParallelFirst.setValue(probe.getDrySubstancesResearch().drySubstancesParallelFirst());
+            drySubstancesParallelSecond.setValue(probe.getDrySubstancesResearch().drySubstancesParallelSecond());
+        }
+
+        if (probe.getFatsResearch() != null) {
+            patronMassBeforeExtractionParallelFirst.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelFirst());
+            patronMassBeforeExtractionParallelSecond.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelSecond());
+
+            fatsParallelFirst.setValue(probe.getFatsResearch().fatsParallelFirst());
+            fatsParallelSecond.setValue(probe.getFatsResearch().fatsParallelSecond());
+        }
+
+        if (probe.getProteinsResearch() != null) {
+            proteinsParallelFirst.setValue(probe.getProteinsResearch().proteinsParallelFirst());
+            proteinsParallelSecond.setValue(probe.getProteinsResearch().proteinsParallelSecond());
+        }
+    }
+
     public void setProbe(Probe probe) {
         this.probe = probe;
     }
@@ -89,78 +161,6 @@ public class Updater {
 
     public void setPatronMassBeforeExtractionParallelSecond(NumberField patronMassBeforeExtractionParallelSecond) {
         this.patronMassBeforeExtractionParallelSecond = patronMassBeforeExtractionParallelSecond;
-    }
-
-    private NumberField drySubstancesFact;
-    private NumberField drySubstancesTheory;
-    private NumberField drySubstancesDifference;
-    private NumberField fatsFact;
-    private NumberField fatsTheory;
-    private NumberField fatsDifference;
-    private NumberField proteinsFact;
-    private NumberField proteinsTheory;
-    private NumberField proteinsDifference;
-    private NumberField carbonatesFact;
-    private NumberField carbonatesTheory;
-    private NumberField carbonatesDifference;
-    private NumberField caloricityFact;
-    private NumberField caloricityTheory;
-    private NumberField caloricityDifference;
-    private NumberField byuksaBeforeDryingParallelFirst;
-    private NumberField byuksaBeforeDryingParallelSecond;
-    private NumberField patronMassBeforeExtractionParallelFirst;
-    private NumberField patronMassBeforeExtractionParallelSecond;
-    private NumberField drySubstancesParallelFirst;
-    private NumberField drySubstancesParallelSecond;
-    private NumberField fatsParallelFirst;
-    private NumberField fatsParallelSecond;
-    private NumberField proteinsParallelFirst;
-    private NumberField proteinsParallelSecond;
-
-    public void trigger() {
-        if (probe == null) {
-            return;
-        }
-        drySubstancesFact.setValue(Optional.ofNullable(probe.getDrySubstancesResearch()).map(DrySubstancesResearch::drySubstancesAverage).orElse(null));
-        drySubstancesTheory.setValue(probe.theoryDrySubstances());
-        drySubstancesDifference.setValue(probe.drySubstancesDifference());
-
-        fatsFact.setValue(Optional.ofNullable(probe.getFatsResearch()).map(FatsResearch::fatsAverage).orElse(null));
-        fatsTheory.setValue(probe.theoryFats());
-        fatsDifference.setValue(probe.fatsDifference());
-
-        proteinsFact.setValue(Optional.ofNullable(probe.getProteinsResearch()).map(ProteinsResearch::proteinsAverage).orElse(null));
-        proteinsTheory.setValue(probe.theoryProteins());
-        proteinsDifference.setValue(probe.proteinsDifference());
-
-        carbonatesFact.setValue(probe.factCarbohydrates());
-        carbonatesTheory.setValue(probe.theoryCarbohydrates());
-        carbonatesDifference.setValue(probe.carbohydratesDifference());
-
-        caloricityFact.setValue(probe.factCaloricity());
-        caloricityTheory.setValue(probe.theoryCaloricity());
-        caloricityDifference.setValue(probe.caloricityDifference());
-
-        if (probe.getDrySubstancesResearch() != null) {
-            byuksaBeforeDryingParallelFirst.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelFirst());
-            byuksaBeforeDryingParallelSecond.setValue(probe.getDrySubstancesResearch().byuksaBeforeDryingParallelSecond());
-
-            drySubstancesParallelFirst.setValue(probe.getDrySubstancesResearch().drySubstancesParallelFirst());
-            drySubstancesParallelSecond.setValue(probe.getDrySubstancesResearch().drySubstancesParallelSecond());
-        }
-
-        if (probe.getFatsResearch() != null) {
-            patronMassBeforeExtractionParallelFirst.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelFirst());
-            patronMassBeforeExtractionParallelSecond.setValue(probe.getFatsResearch().patronMassBeforeExtractionParallelSecond());
-
-            fatsParallelFirst.setValue(probe.getFatsResearch().fatsParallelFirst());
-            fatsParallelSecond.setValue(probe.getFatsResearch().fatsParallelSecond());
-        }
-
-        if (probe.getProteinsResearch() != null) {
-            proteinsParallelFirst.setValue(probe.getProteinsResearch().proteinsParallelFirst());
-            proteinsParallelSecond.setValue(probe.getProteinsResearch().proteinsParallelSecond());
-        }
     }
 
     public void setDrySubstancesParallelFirst(NumberField drySubstancesParallelFirst) {
