@@ -43,6 +43,7 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
         form.addFormRow(massNaveskiFirstField, massNaveskiSecondField);
 
         NumberField titrantVolumeFirstField = new NumberField("Объём титранта 1 параллель");
+        updater.setTitrantVolumeParallelFirst(titrantVolumeFirstField);
         titrantVolumeFirstField.setSuffixComponent(new Span("см³"));
         binder.forField(titrantVolumeFirstField)
             .asRequired("Обязательное поле")
@@ -51,6 +52,7 @@ public class ProteinsResearchForm implements ResearchForm<ProteinsResearch> {
             .bind(ProteinsResearch::getTitrantVolumeParallelFirst, ProteinsResearch::setTitrantVolumeParallelFirst);
 
         NumberField titrantVolumeSecondField = new NumberField("Объём титранта 2 параллель");
+        updater.setTitrantVolumeParallelSecond(titrantVolumeSecondField);
         titrantVolumeSecondField.setSuffixComponent(new Span("см³"));
         binder.forField(titrantVolumeSecondField)
             .asRequired("Обязательное поле")

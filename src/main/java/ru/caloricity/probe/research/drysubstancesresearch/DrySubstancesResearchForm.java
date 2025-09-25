@@ -74,6 +74,7 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
 
         NumberField afterDryingFirstField = new NumberField("Масса после высушивания 1 параллель");
         afterDryingFirstField.setSuffixComponent(new Span("г"));
+        updater.setAfterDryingFirstField(afterDryingFirstField);
         binder.forField(afterDryingFirstField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
@@ -82,6 +83,7 @@ public class DrySubstancesResearchForm implements ResearchForm<DrySubstancesRese
 
         NumberField afterDryingSecondField = new NumberField("Масса после высушивания 2 параллель");
         afterDryingSecondField.setSuffixComponent(new Span("г"));
+        updater.setAfterDryingSecondField(afterDryingSecondField);
         binder.forField(afterDryingSecondField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(

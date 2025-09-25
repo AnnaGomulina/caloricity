@@ -42,4 +42,4 @@ pnpmfile.js
 src/main/frontend/generated
 
 *.db
-*.log
+*.log*

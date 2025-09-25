@@ -76,6 +76,7 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
 
         NumberField patronAfterFirstField = new NumberField("Масса патрона после экстракции 1 параллель");
         patronAfterFirstField.setSuffixComponent(new Span("г"));
+        updater.setByuksaAfterDryingParallelFirst(patronAfterFirstField);
         binder.forField(patronAfterFirstField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
@@ -85,6 +86,7 @@ public class FatsResearchForm implements ResearchForm<FatsResearch> {
 
         NumberField patronAfterSecondField = new NumberField("Масса патрона после экстракции 2 параллель");
         patronAfterSecondField.setSuffixComponent(new Span("г"));
+        updater.setByuksaAfterDryingParallelSecond(patronAfterSecondField);
         binder.forField(patronAfterSecondField)
             .asRequired("Обязательное поле")
             .withValidator(new DoubleRangeValidator(
