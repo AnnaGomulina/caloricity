@@ -27,7 +27,7 @@ vaadin {
 
 launch4j {
 	mainClassName = 'ru.caloricity.Application'
-	outfile = "caloricity_0.0.2.exe"
+	outfile = "caloricity_0.1.1.exe"
 	icon = "${projectDir}/src/main/resources/images/ponchik.ico"
 	jreMinVersion = '21'
 
