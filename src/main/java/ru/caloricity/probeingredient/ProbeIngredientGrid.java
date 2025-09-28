@@ -87,6 +87,19 @@ public class ProbeIngredientGrid extends Grid<ProbeIngredient> {
             }
         });
 
+        Button editButton = new Button(LineAwesomeIcon.EDIT.create());
+        editButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        editButton.setTooltipText("Редактировать");
+        editButton.setDisableOnClick(true);
+        editButton.addClickListener(e -> {}
+//                new ProbeIngredientDialog(availableIngredients, probeIngredient -> {
+//                    probe.getProbeIngredients().add(probeIngredient);
+//                    probeIngredient.setProbe(probe);
+//                    grid.setItems(probe.getProbeIngredients());
+//                    updater.trigger();
+//                }).open()
+        );
+
         return deleteButton;
     }
 
