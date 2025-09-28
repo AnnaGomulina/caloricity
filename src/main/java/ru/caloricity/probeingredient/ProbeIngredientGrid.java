@@ -74,6 +74,8 @@ public class ProbeIngredientGrid extends Grid<ProbeIngredient> {
 
         addColumn(new ComponentRenderer<>(this::createActionButtons))
             .setHeader("Действия")
+            .setAutoWidth(true)
+            .setFlexGrow(0)
             .setTextAlign(ColumnTextAlign.CENTER);
     }
 
@@ -90,7 +92,7 @@ public class ProbeIngredientGrid extends Grid<ProbeIngredient> {
         Button editButton = new Button(LineAwesomeIcon.EDIT.create());
         editButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         editButton.setTooltipText("Редактировать");
-        editButton.setDisableOnClick(true);
+        editButton.setEnabled(false);
         editButton.addClickListener(e -> {}
 //                new ProbeIngredientDialog(availableIngredients, probeIngredient -> {
 //                    probe.getProbeIngredients().add(probeIngredient);
@@ -100,7 +102,7 @@ public class ProbeIngredientGrid extends Grid<ProbeIngredient> {
 //                }).open()
         );
 
-        return deleteButton;
+        return new HorizontalLayout(editButton, deleteButton);
     }
 
     private void showDeleteConfirmation(ProbeIngredient probeIngredient) {
