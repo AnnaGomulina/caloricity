@@ -308,10 +308,10 @@
         <insert tableName="ingredients">
             <column name="name" value="Икра кабачковая"/>
             <column name="edible_part" value="1"/>
-            <column name="water" value="155.9"/>
-            <column name="proteins" value="1.6"/>
-            <column name="fats" value="6.3"/>
-            <column name="carbohydrates" value="7.4"/>
+            <column name="water" value="77"/>
+            <column name="proteins" value="1.9"/>
+            <column name="fats" value="8.9"/>
+            <column name="carbohydrates" value="7.7"/>
             <column name="version" value="0"/>
             <column name="created_at" value="2025-09-01T00:00:00"/>
             <column name="updated_at" value="2025-09-01T00:00:00"/>
