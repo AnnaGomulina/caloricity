@@ -30,6 +30,6 @@ public class Protocol {
     }
 
     public String filename() {
-        return "protocol_" + probe.getCode() + "_" + probe.getCreatedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".pdf";
+        return "protocol_" + probe.getId() + "_" + probe.getCreatedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".pdf";
     }
 }
