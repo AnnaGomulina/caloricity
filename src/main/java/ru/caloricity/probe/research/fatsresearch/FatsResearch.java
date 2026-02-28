@@ -15,7 +15,6 @@ import org.hibernate.proxy.HibernateProxy;
 import ru.caloricity.common.AnyNull;
 import ru.caloricity.common.BaseEntity;
 import ru.caloricity.common.FourDigitsFormat;
-import ru.caloricity.common.TwoDigitsFormat;
 import ru.caloricity.probe.Probe;
 
 import java.util.Objects;
@@ -76,7 +75,7 @@ public class FatsResearch extends BaseEntity {
             return null;
         }
         Double c = patronMassBeforeExtractionParallelFirst() - fatsParallelFirst * massNaveskiParallelFirst / probe.massFact();
-        return new TwoDigitsFormat(c).it();
+        return new FourDigitsFormat(c).it();
     }
 
     public Double patronMassAfterExtractionParallelSecond(Double fatsParallelSecond) {
@@ -84,7 +83,7 @@ public class FatsResearch extends BaseEntity {
             return null;
         }
         Double c = patronMassBeforeExtractionParallelSecond() - fatsParallelSecond * massNaveskiParallelFirst / probe.massFact();
-        return new TwoDigitsFormat(c).it();
+        return new FourDigitsFormat(c).it();
     }
 
     public Double fatsParallelFirst() {
