@@ -14,12 +14,14 @@ import java.util.List;
 
 public class ProbeIngredientGridLayout {
     private Probe probe;
+    private final ProbeIngredientService probeIngredientService;
     private final ProbeIngredientGrid grid = new ProbeIngredientGrid();
     private final List<Ingredient> availableIngredients;
     private final VerticalLayout verticalLayout = new VerticalLayout();
     private final Updater updater;
 
-    public ProbeIngredientGridLayout(List<Ingredient> availableIngredients, Updater updater) {
+    public ProbeIngredientGridLayout(ProbeIngredientService probeIngredientService, List<Ingredient> availableIngredients, Updater updater) {
+        this.probeIngredientService = probeIngredientService;
         this.availableIngredients = availableIngredients;
         this.updater = updater;
     }
@@ -31,8 +33,8 @@ public class ProbeIngredientGridLayout {
 
         grid.setDeleteHandler(probeIngredient -> {
             probe.getProbeIngredients().remove(probeIngredient);
-            probeIngredient.setProbe(null);
             grid.setItems(probe.getProbeIngredients());
+            probeIngredientService.delete(probeIngredient);
             updater.trigger();
         });
         addButton.addClickListener(e -> {
