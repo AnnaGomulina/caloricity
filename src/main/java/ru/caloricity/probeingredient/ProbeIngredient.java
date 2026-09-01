@@ -2,7 +2,6 @@ package ru.caloricity.probeingredient;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +24,7 @@ import ru.caloricity.probe.Probe;
 import java.util.Objects;
 
 @Entity
-@Table(name = "probe_ingredient", indexes = @Index(columnList = "probeId, ingredientId", unique = true))
+@Table(name = "probe_ingredient")
 @Getter
 @Setter
 @ToString

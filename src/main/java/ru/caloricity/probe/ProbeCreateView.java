@@ -19,6 +19,7 @@ import ru.caloricity.probe.research.fatsresearch.FatsResearchForm;
 import ru.caloricity.probe.research.proteinsresearch.ProteinsResearch;
 import ru.caloricity.probe.research.proteinsresearch.ProteinsResearchForm;
 import ru.caloricity.probeingredient.ProbeIngredientGridLayout;
+import ru.caloricity.probeingredient.ProbeIngredientService;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,7 +32,7 @@ public class ProbeCreateView extends VerticalLayout {
     private final ProteinsResearchForm proteinsResearchForm;
     private final ProbeService service;
 
-    public ProbeCreateView(ProbeService service, IngredientService ingredientService) {
+    public ProbeCreateView(ProbeService service, IngredientService ingredientService, ProbeIngredientService probeIngredientService) {
         this.service = service;
         Updater updater = new Updater();
 
@@ -100,7 +101,7 @@ public class ProbeCreateView extends VerticalLayout {
         updater.setProbe(probe);
         probeForm.setEntity(probe);
 
-        ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(ingredientService.findAll(), updater);
+        ProbeIngredientGridLayout probeIngredientGridLayout = new ProbeIngredientGridLayout(probeIngredientService, ingredientService.findAll(), updater);
         probeIngredientGridLayout.setProbe(probe);
 
         HorizontalLayout actions = new HorizontalLayout(

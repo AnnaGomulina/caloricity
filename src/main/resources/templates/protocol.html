@@ -93,8 +93,8 @@
             <td th:utext="'Наименование пробы: ' + ${probe.getName()}">Наименование пробы</td>
         </tr>
         <tr>
-            <td th:utext="'Масса пробы теоретическая: ' + ${probe.getMassTheory()}"></td>
-            <td th:utext="'Масса пробы фактическая: ' + ${probe.massFact()}">/</td>
+            <td th:utext="'Масса пробы теоретическая: ' + ${#numbers.formatDecimal(probe.getMassTheory(), 1, 2)}"></td>
+            <td th:utext="'Масса пробы фактическая: ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">/</td>
         </tr>
         </tbody>
     </table>
@@ -110,44 +110,44 @@
             </tr>
             <tr>
                 <td>Масса бюксы без навески, г</td>
-                <td th:text="${probe.getDrySubstancesResearch().getByuksaParallelFirst()}">100</td>
-                <td th:text="${probe.getDrySubstancesResearch().getByuksaParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaParallelFirst(), 1, 2)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaParallelSecond(), 1, 2)}">100</td>
 
             </tr>
             <tr>
                 <td>Масса навески, г</td>
-                <td th:text="${probe.getDrySubstancesResearch().getMassNaveskiParallelFirst()}">100</td>
-                <td th:text="${probe.getDrySubstancesResearch().getMassNaveskiParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getMassNaveskiParallelFirst(), 1, 2)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getMassNaveskiParallelSecond(), 1, 2)}">100</td>
             </tr>
             <tr>
                 <td>Масса бюксы после высушивания, г</td>
-                <td th:text="${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelFirst()}">100</td>
-                <td th:text="${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaAfterDryingParallelFirst(), 1, 2)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaAfterDryingParallelSecond(), 1, 2)}">100</td>
             </tr>
             <tr>
                 <td>Сухие вещества, г/порц.</td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelFirst()} + ' - ' + ${probe.getDrySubstancesResearch().getByuksaParallelFirst()} + ')' + ' × ' + ${probe.massFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaAfterDryingParallelFirst(), 1, 2)} + ' - ' + ${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaParallelFirst(), 1, 2)} + ')' + ' × ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">(10 - 1) × 123</span>
                       <span class="denominator"
-                            th:text="${probe.getDrySubstancesResearch().getMassNaveskiParallelFirst()}">20</span>
+                            th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getMassNaveskiParallelFirst(), 1, 2)}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getDrySubstancesResearch().drySubstancesParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${#numbers.formatDecimal(probe.getDrySubstancesResearch().drySubstancesParallelFirst(), 1, 2)}">= 12</span>
                 </td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getDrySubstancesResearch().getByuksaAfterDryingParallelSecond()} + ' - ' + ${probe.getDrySubstancesResearch().getByuksaParallelSecond()} + ')' + ' × ' + ${probe.massFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaAfterDryingParallelSecond(), 1, 2)} + ' - ' + ${#numbers.formatDecimal(probe.getDrySubstancesResearch().getByuksaParallelSecond(), 1, 2)} + ')' + ' × ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">(10 - 1) × 123</span>
                       <span class="denominator"
-                            th:text="${probe.getDrySubstancesResearch().getMassNaveskiParallelSecond()}">20</span>
+                            th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().getMassNaveskiParallelSecond(), 1, 2)}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getDrySubstancesResearch().drySubstancesParallelSecond()}">= 12</span>
+                    <span th:text="' = ' + ${#numbers.formatDecimal(probe.getDrySubstancesResearch().drySubstancesParallelSecond(), 1, 2)}">= 12</span>
                 </td>
             </tr>
             <tr>
                 <td>Сухие вещества средние, г/порц.</td>
-                <td colspan="2" th:text="${probe.getDrySubstancesResearch().drySubstancesAverage()}">
+                <td colspan="2" th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().drySubstancesAverage(), 1, 2)}">
                     100+100=200
                 </td>
             </tr>
@@ -159,8 +159,8 @@
         <table class="table">
             <tbody>
             <tr>
-                <td th:utext="'Объём контроля: ' + ${probe.getProteinsResearch().getControlVolume()}"></td>
-                <td th:utext="'Коэффициент: ' + ${probe.getProteinsResearch().getCoefficient()}">/</td>
+                <td th:utext="'Объём контроля: ' + ${#numbers.formatDecimal(probe.getProteinsResearch().getControlVolume(), 1, 2)}"></td>
+                <td th:utext="'Коэффициент: ' + ${#numbers.formatDecimal(probe.getProteinsResearch().getCoefficient(), 1, 2)}">/</td>
             </tr>
             </tbody>
         </table>
@@ -173,36 +173,36 @@
             </tr>
             <tr>
                 <td>Масса навески, г</td>
-                <td th:text="${probe.getProteinsResearch().getMassNaveskiParallelFirst()}">100</td>
-                <td th:text="${probe.getProteinsResearch().getMassNaveskiParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getProteinsResearch().getMassNaveskiParallelFirst(), 1, 4)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getProteinsResearch().getMassNaveskiParallelSecond(), 1, 4)}">100</td>
             </tr>
             <tr>
                 <td>Объём титранта, см³</td>
-                <td th:text="${probe.getProteinsResearch().getTitrantVolumeParallelFirst()}">100</td>
-                <td th:text="${probe.getProteinsResearch().getTitrantVolumeParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getProteinsResearch().getTitrantVolumeParallelFirst(), 1, 4)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getProteinsResearch().getTitrantVolumeParallelSecond(), 1, 4)}">100</td>
             </tr>
             <tr>
                 <td>Белки, г/порц.</td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelFirst()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
-                      <span class="denominator" th:text="${probe.getProteinsResearch().getMassNaveskiParallelFirst()}">20</span>
+                            th:text="'0,0014 × 6,25 × '+ ${#numbers.formatDecimal(probe.getProteinsResearch().getCoefficient(), 1, 2)} + ' × ('+ ${#numbers.formatDecimal(probe.getProteinsResearch().getTitrantVolumeParallelFirst(), 1, 2)} + ' - ' + ${#numbers.formatDecimal(probe.getProteinsResearch().getControlVolume(), 1, 2)} + ') × ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">(10 - 1) × 123</span>
+                      <span class="denominator" th:text="${#numbers.formatDecimal(probe.getProteinsResearch().getMassNaveskiParallelFirst(), 1, 2)}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getProteinsResearch().proteinsParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${#numbers.formatDecimal(probe.getProteinsResearch().proteinsParallelFirst(), 1, 2)}">= 12</span>
                 </td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'0,0014 × 6,25 × '+ ${probe.getProteinsResearch().getCoefficient()} + ' × ('+ ${probe.getProteinsResearch().getTitrantVolumeParallelSecond()} + ' - ' + ${probe.getProteinsResearch().getControlVolume()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
-                      <span class="denominator" th:text="${probe.getProteinsResearch().getMassNaveskiParallelSecond()}">20</span>
+                            th:text="'0,0014 × 6,25 × '+ ${#numbers.formatDecimal(probe.getProteinsResearch().getCoefficient(), 1, 2)} + ' × ('+ ${#numbers.formatDecimal(probe.getProteinsResearch().getTitrantVolumeParallelSecond(), 1, 2)} + ' - ' + ${#numbers.formatDecimal(probe.getProteinsResearch().getControlVolume(), 1, 2)} + ') × ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">(10 - 1) × 123</span>
+                      <span class="denominator" th:text="${#numbers.formatDecimal(probe.getProteinsResearch().getMassNaveskiParallelSecond(), 1, 2)}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getProteinsResearch().proteinsParallelSecond()}">= 12</span>
+                    <span th:text="' = ' + ${#numbers.formatDecimal(probe.getProteinsResearch().proteinsParallelSecond(), 1, 2)}">= 12</span>
                 </td>
             </tr>
             <tr>
                 <td>Белки средние, г/порц.</td>
-                <td colspan="2" th:text="${probe.getProteinsResearch().proteinsAverage()}">100+100=200</td>
+                <td colspan="2" th:text="${#numbers.formatDecimal(probe.getProteinsResearch().proteinsAverage(), 1, 2)}">100+100=200</td>
             </tr>
             </tbody>
         </table>
@@ -218,44 +218,44 @@
             </tr>
             <tr>
                 <td>Масса навески, г</td>
-                <td th:text="${probe.getFatsResearch().getMassNaveskiParallelFirst()}">100</td>
-                <td th:text="${probe.getFatsResearch().getMassNaveskiParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getFatsResearch().getMassNaveskiParallelFirst(), 1, 4)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getFatsResearch().getMassNaveskiParallelSecond(), 1, 4)}">100</td>
             </tr>
             <tr>
                 <td>Масса пустого патрона, г</td>
-                <td th:text="${probe.getFatsResearch().getPatronMassEmptyParallelFirst()}">100</td>
-                <td th:text="${probe.getFatsResearch().getPatronMassEmptyParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getFatsResearch().getPatronMassEmptyParallelFirst(), 1, 4)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getFatsResearch().getPatronMassEmptyParallelSecond(), 1, 4)}">100</td>
 
             </tr>
             <tr>
                 <td>Масса патрона после экстракции, г</td>
-                <td th:text="${probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst()}">100</td>
-                <td th:text="${probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond()}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst(), 1, 4)}">100</td>
+                <td th:text="${#numbers.formatDecimal(probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond(), 1, 4)}">100</td>
             </tr>
             <tr>
                 <td>Жиры, г/порц.</td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelFirst()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${#numbers.formatDecimal(probe.getFatsResearch().patronMassBeforeExtractionParallelFirst(), 1, 4)} + ' - ' + ${#numbers.formatDecimal(probe.getFatsResearch().getPatronMassAfterExtractionParallelFirst(), 1, 4)} + ') × ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">(10 - 1) × 123</span>
                       <span class="denominator"
-                            th:text="${probe.getFatsResearch().getMassNaveskiParallelFirst()}">20</span>
+                            th:text="${#numbers.formatDecimal(probe.getFatsResearch().getMassNaveskiParallelFirst(), 1, 2)}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getFatsResearch().fatsParallelFirst()}">= 12</span>
+                    <span th:text="' = ' + ${#numbers.formatDecimal(probe.getFatsResearch().fatsParallelFirst(), 1, 4)}">= 12</span>
                 </td>
                 <td>
                     <span class="frac">
                       <span class="numerator"
-                            th:text="'(' + ${probe.getFatsResearch().patronMassBeforeExtractionParallelSecond()} + ' - ' + ${probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond()} + ') × ' + ${probe.massFact()}">(10 - 1) × 123</span>
+                            th:text="'(' + ${#numbers.formatDecimal(probe.getFatsResearch().patronMassBeforeExtractionParallelSecond(), 1, 4)} + ' - ' + ${#numbers.formatDecimal(probe.getFatsResearch().getPatronMassAfterExtractionParallelSecond(), 1, 4)} + ') × ' + ${#numbers.formatDecimal(probe.massFact(), 1, 2)}">(10 - 1) × 123</span>
                       <span class="denominator"
-                            th:text="${probe.getFatsResearch().getMassNaveskiParallelSecond()}">20</span>
+                            th:text="${#numbers.formatDecimal(probe.getFatsResearch().getMassNaveskiParallelSecond(), 1, 2)}">20</span>
                     </span>
-                    <span th:text="' = ' + ${probe.getFatsResearch().fatsParallelSecond()}">= 12</span>
+                    <span th:text="' = ' + ${#numbers.formatDecimal(probe.getFatsResearch().fatsParallelSecond(), 1, 4)}">= 12</span>
                 </td>
             </tr>
             <tr>
                 <td>Жиры средние, г/порц.</td>
-                <td colspan="2" th:text="${probe.getFatsResearch().fatsAverage()}">100+100=200</td>
+                <td colspan="2" th:text="${#numbers.formatDecimal(probe.getFatsResearch().fatsAverage(), 1, 4)}">100+100=200</td>
             </tr>
             </tbody>
         </table>
@@ -266,10 +266,12 @@
             <tbody>
             <tr>
                 <td>Углеводы, г/порц.</td>
-                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().drySubstancesAverage()} + ' - (' + ${probe.getProteinsResearch().proteinsAverage()} + ' + ' + ${probe.getFatsResearch().fatsAverage()} + ' + ' + ${probe.minerals()} + ')' + ' = ' + ${probe.factCarbohydrates()}">
+                <td th:if="${probe.getType() != probe.getType().THIRD}"
+                    th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().drySubstancesAverage(), 1, 2)} + ' - (' + ${#numbers.formatDecimal(probe.getProteinsResearch().proteinsAverage(), 1, 2)} + ' + ' + ${#numbers.formatDecimal(probe.getFatsResearch().fatsAverage(), 1, 2)} + ' + ' + ${#numbers.formatDecimal(probe.minerals(), 1, 2)} + ')' + ' = ' + ${#numbers.formatDecimal(probe.factCarbohydrates(), 1, 2)}">
                     100
                 </td>
-                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="${probe.getDrySubstancesResearch().drySubstancesAverage()} + ' - ' + ${probe.minerals()} + ' = ' + ${probe.factCarbohydrates()}">
+                <td th:if="${probe.getType() == probe.getType().THIRD}"
+                    th:text="${#numbers.formatDecimal(probe.getDrySubstancesResearch().drySubstancesAverage(), 1, 2)} + ' - ' + ${#numbers.formatDecimal(probe.minerals(), 1, 2)} + ' = ' + ${#numbers.formatDecimal(probe.factCarbohydrates(), 1, 2)}">
                     100
                 </td>
             </tr>
@@ -282,10 +284,12 @@
             <tbody>
             <tr>
                 <td>Энергетическая ценность, ккал/порц.</td>
-                <td th:if="${probe.getType() != probe.getType().THIRD}" th:text="'4 × ' + ${probe.getProteinsResearch().proteinsAverage()} + ' + 9 × ' + ${probe.getFatsResearch().fatsAverage()} + ' + 4 × ' + ${probe.factCarbohydrates()} + ' = ' + ${probe.factCaloricity()}">
+                <td th:if="${probe.getType() != probe.getType().THIRD}"
+                    th:text="'4 × ' + ${#numbers.formatDecimal(probe.getProteinsResearch().proteinsAverage(), 1, 2)} + ' + 9 × ' + ${#numbers.formatDecimal(probe.getFatsResearch().fatsAverage(), 1, 2)} + ' + 4 × ' + ${#numbers.formatDecimal(probe.factCarbohydrates(), 1, 2)} + ' = ' + ${#numbers.formatDecimal(probe.factCaloricity(), 1, 2)}">
                     100
                 </td>
-                <td th:if="${probe.getType() == probe.getType().THIRD}" th:text="'4 × ' + ${probe.factCarbohydrates()} + ' = ' + ${probe.factCaloricity()}">
+                <td th:if="${probe.getType() == probe.getType().THIRD}"
+                    th:text="'4 × ' + ${#numbers.formatDecimal(probe.factCarbohydrates(), 1, 2)} + ' = ' + ${#numbers.formatDecimal(probe.factCaloricity(), 1, 2)}">
                     100
                 </td>
             </tr>
@@ -305,30 +309,30 @@
         </tr>
         <tr>
             <td>Теоретические</td>
-            <td th:utext="${probe.theoryDrySubstances()}">Сухие вещества</td>
-            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${probe.theoryProteins()}">Белки</td>
-            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.theoryFats()}">Жиры</td>
-            <td th:utext="${probe.theoryCarbohydrates()}">Углеводы</td>
-            <td th:utext="${probe.theoryCaloricity()}">Энергетическая ценность</td>
+            <td th:utext="${#numbers.formatDecimal(probe.theoryDrySubstances(), 1, 2)}">Сухие вещества</td>
+            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${#numbers.formatDecimal(probe.theoryProteins(), 1, 2)}">Белки</td>
+            <td th:if="${probe.getFatsResearch()} != null" th:utext="${#numbers.formatDecimal(probe.theoryFats(), 1, 2)}">Жиры</td>
+            <td th:utext="${#numbers.formatDecimal(probe.theoryCarbohydrates(), 1, 2)}">Углеводы</td>
+            <td th:utext="${#numbers.formatDecimal(probe.theoryCaloricity(), 1, 2)}">Энергетическая ценность</td>
         </tr>
         <tr>
             <td>Фактические</td>
-            <td th:utext="${probe.getDrySubstancesResearch().drySubstancesAverage()}">Сухие вещества</td>
+            <td th:utext="${#numbers.formatDecimal(probe.getDrySubstancesResearch().drySubstancesAverage(), 1, 2)}">Сухие вещества</td>
             <td th:if="${probe.getProteinsResearch()} != null"
-                th:utext="${probe.getProteinsResearch().proteinsAverage()}">Белки
+                th:utext="${#numbers.formatDecimal(probe.getProteinsResearch().proteinsAverage(), 1, 2)}">Белки
             </td>
-            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.getFatsResearch().fatsAverage()}">Жиры
+            <td th:if="${probe.getFatsResearch()} != null" th:utext="${#numbers.formatDecimal(probe.getFatsResearch().fatsAverage(), 1, 2)}">Жиры
             </td>
-            <td th:utext="${probe.factCarbohydrates()}">Углеводы</td>
-            <td th:utext="${probe.factCaloricity()}">Энергетическая ценность</td>
+            <td th:utext="${#numbers.formatDecimal(probe.factCarbohydrates(), 1, 2)}">Углеводы</td>
+            <td th:utext="${#numbers.formatDecimal(probe.factCaloricity(), 1, 2)}">Энергетическая ценность</td>
         </tr>
         <tr>
             <td>% отклонения</td>
-            <td th:utext="${probe.drySubstancesDifference()}">Сухие вещества</td>
-            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${probe.proteinsDifference()}">Белки</td>
-            <td th:if="${probe.getFatsResearch()} != null" th:utext="${probe.fatsDifference()}">Жиры</td>
-            <td th:utext="${probe.carbohydratesDifference()}">Углеводы</td>
-            <td th:utext="${probe.caloricityDifference()}">Энергетическая ценность</td>
+            <td th:utext="${#numbers.formatDecimal(probe.drySubstancesDifference(), 1, 2)} + '%'">Сухие вещества</td>
+            <td th:if="${probe.getProteinsResearch()} != null" th:utext="${#numbers.formatDecimal(probe.proteinsDifference(), 1, 2)} + '%'">Белки</td>
+            <td th:if="${probe.getFatsResearch()} != null" th:utext="${#numbers.formatDecimal(probe.fatsDifference(), 1, 2)} + '%'">Жиры</td>
+            <td th:utext="${#numbers.formatDecimal(probe.carbohydratesDifference(), 1, 2)} + '%'">Углеводы</td>
+            <td th:utext="${#numbers.formatDecimal(probe.caloricityDifference(), 1, 2)} + '%'">Энергетическая ценность</td>
         </tr>
         </tbody>
     </table>
